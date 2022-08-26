@@ -1,0 +1,48 @@
+default:
+  image: node:lts-alpine
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths: [node_modules/, .cache]
+
+include:
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: License-Scanning.gitlab-ci.yml
+  - template: Verify/Browser-Performance.gitlab-ci.yml
+
+stages:
+  - build
+  - test
+  - deploy
+  - performance
+
+build:
+  image: node:lts
+  stage: build
+  before_script:
+    - npm install
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - public
+
+deploy:
+  stage: deploy
+  dependencies:
+    - build
+  before_script:
+    - npm install -g wrangler
+  script:
+    - wrangler pages publish public --project-name $CLOUDFLARE_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --commit-hash $CI_COMMIT_SHA
+
+browser_performance:
+  variables:
+      URL: https://credilink.fluxqr.com/bayon
+  cache: {}
+  dependencies: []
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
