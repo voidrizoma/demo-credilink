@@ -30,7 +30,7 @@ const Template = ({ data }) => {
     subject,
     template,
   } = frontmatter;
-  const background = frontmatter.background.childImageSharp.fluid.src;
+  const background = frontmatter?.background?.childImageSharp?.fluid?.src;
   const aux = frontmatter?.aux?.childImageSharp.fluid.src;
   const [dataUser, setDataUser] = useState({
     issuer,
