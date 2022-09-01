@@ -104,7 +104,8 @@ export const HeaderAndFormContainer = styled.div`
 `;
 
 export const Form = styled.form`
-  border: 1px solid #4b2cd3;
+  border: 2px solid #3050A5;
+  border-radius: 8px;
   background: white;
   padding: 20px;
   text-align: center;
@@ -136,7 +137,7 @@ export const B = styled.button`
   padding: 10px;
   border-radius: 20px;
   border: none;
-  background: #4b2cd3;
+  background: #3050A5;
   margin: 10px 0px;
   color: white;
   cursor: pointer;

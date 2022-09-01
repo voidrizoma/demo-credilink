@@ -9,6 +9,6 @@ issuer: "ba29dbab-7c96-4f29-9135-262914bc217c"
 color: "#FDFEFE"
 sender: "Gadgets&Fun"
 subject: "Tu crédito para Gadgets&Fun"
-logo: "https://firebasestorage.googleapis.com/v0/b/regalinks-7429a.appspot.com/o/gyflogo.png?alt=media&token=9ef1355b-e43f-4863-8356-2ce8c0431ccc"
+logo: "https://firebasestorage.googleapis.com/v0/b/regalinks-7429a.appspot.com/o/gyf-logo.png?alt=media&token=6342d108-66bb-4bfe-86b2-c3140cbc993a"
 background: gyfbg.png
 ---
