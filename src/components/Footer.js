@@ -9,7 +9,7 @@ export default function footer(props) {
   return (
     <Footer>
       <img
-        src="https://fluxqr.com/wp-content/uploads/2020/06/flux_blanco.png"
+        src="https://firebasestorage.googleapis.com/v0/b/regalinks-7429a.appspot.com/o/logo_flux_blanco.png?alt=media&token=ccc61afe-ad8b-483c-8443-1aa92b491387"
         height="30px"
         alt="logo"
       />
