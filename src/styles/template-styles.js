@@ -35,7 +35,7 @@ export const BgComponent = styled.header`
 `;
 
 export const LogoContainer = styled.img`
-  padding-top: 10px;
+  padding-top: 20px;
   width: 40%;
 `;
 
@@ -110,7 +110,8 @@ export const Form = styled.form`
   padding: 20px;
   text-align: center;
   color: black;
-  min-height: 400px;
+  min-height: 300px;
+  max-height: 500px;
   margin: auto 20%;
 
   display: flex;
