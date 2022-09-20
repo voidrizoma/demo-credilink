@@ -11,7 +11,7 @@ const MailChimp = process.env.GATSBY_MAILCHIMP;
 const Response = ({ search }) => {
   const { loan } = search;
   const [data, setData] = useState({});
-  const renderQR = `https://s7bljfsnh8.execute-api.us-east-1.amazonaws.com/Prod/qr?string=${encodeURIComponent(data.qr)}`;
+  const renderQR = `https://qr.fluxqr.net/?text=${encodeURIComponent(data.qr)}`;
   const [dataEmail, setDataEmail] = useState({});
   const exp = new Date().toLocaleDateString();
   const expirationDate = `${exp} a las 23:59 horas`;
