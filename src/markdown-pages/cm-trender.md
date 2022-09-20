@@ -9,6 +9,6 @@ issuer: "ba29dbab-7c96-4f29-9135-262914bc217c"
 color: "#101010"
 sender: "Trender"
 subject: "Presenta este código al pagar en caja. Vigencia ó expiración del código en 24 horas."
-logo: "https://firebasestorage.googleapis.com/v0/b/regalinks-7429a.appspot.com/o/trender.png?alt=media&token=d86cc098-ce99-411f-b6d0-789a8a84915d"
+logo: "https://cdn.fluxqr.net/images/commerces/trender.png"
 background: bg-kueski.png
 ---
