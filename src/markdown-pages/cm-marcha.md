@@ -9,6 +9,6 @@ issuer: "ba29dbab-7c96-4f29-9135-262914bc217c"
 color: "#101010"
 sender: "Marcha"
 subject: "Presenta este código al pagar en caja. Vigencia ó expiración del código en 24 horas."
-logo: "https://cdn.fluxqr.net/images/commerces/marcha.png"
+logo: "https://cdn.fluxqr.net/images/commerces/marcha.webp"
 background: bg-kueski.png
 ---
