@@ -147,9 +147,8 @@ const Template = ({ data }) => {
             if (!url) {
               onPetitionError("Error: No se encontró la ruta al crédito");
             }
-            setDataUser("");
+            setDataUser(initialState);
             setisLoading(!isLoading);
-
             window.location.href = url;
           });
         }
