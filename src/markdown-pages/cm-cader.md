@@ -11,4 +11,6 @@ sender: "Vazza"
 subject: "Presenta este código al pagar en caja. Vigencia ó expiración del código en 24 horas."
 logo: "https://cdn.fluxqr.net/images/commerces/vazza.webp"
 background: bg-kueski.png
+min: 500
+max: 9000
 ---

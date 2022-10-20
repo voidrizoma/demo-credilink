@@ -104,7 +104,7 @@ export const HeaderAndFormContainer = styled.div`
 `;
 
 export const Form = styled.form`
-  border: 2px solid #3050A5;
+  border: 2px solid #3050a5;
   border-radius: 8px;
   background: white;
   padding: 20px;
@@ -138,14 +138,57 @@ export const B = styled.button`
   padding: 10px;
   border-radius: 20px;
   border: none;
-  background: #3050A5;
+  background: ${(props) => (props.disabled ? "grey" : "#3050A5")};
+
   margin: 10px 0px;
   color: white;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+`;
+
+export const BContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 60px;
+`;
+
+export const Modal = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalBox = styled.div`
+  display: flex;
+  min-width: 150px;
+  min-height: 150px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  flex-direction: column;
+  padding: 25px;
+`;
+
+export const ModalMsg = styled.div`
+  padding-top: 10%;
+  min-height: 100px;
+  border: none;
+  font-size: 25px;
+`;
+export const ModalBoxBtn = styled.button`
+  background-color: #3050a5;
+  border-radius: 15px;
+  height: 40px;
+  color: white;
+  border: none;
+  font-size: 25px;
   cursor: pointer;
 `;
 
 export const Footer = styled.footer`
-  /* background: rgb(134, 66, 135); */
   background-color: ${(props) => props.sectionColor || "#182c4c"};
   bottom: 0;
   height: 90px;
@@ -161,8 +204,6 @@ export const Footer = styled.footer`
   justify-content: space-between;
   color: white;
   @media only screen and (max-width: 1024px) {
-    background-color: transparent;
-    width: 400px;
     bottom: -10px;
   }
   @media only screen and (max-width: 824px) {

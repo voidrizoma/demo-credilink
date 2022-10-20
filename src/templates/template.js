@@ -3,7 +3,8 @@ import { graphql } from "gatsby";
 import Layout from "../components/Layout";
 import Footer from "../components/Footer";
 import Seo from "../components/Seo";
-import { validateEmail } from "../helpers/validateEmail";
+import { isValidEmail, isValidAmount } from "../helpers/validation";
+import spinner_line from "../images/spinner_line.gif";
 import {
   BgComponent,
   HeaderAndFormContainer,
@@ -13,6 +14,11 @@ import {
   B,
   LogoContainer,
   MobileContainer,
+  BContainer,
+  Modal,
+  ModalBox,
+  ModalBoxBtn,
+  ModalMsg,
 } from "../styles/template-styles";
 import axios from "axios";
 const BASEURL = process.env.GATSBY_BASE_URL;
@@ -32,12 +38,41 @@ const Template = ({ data }) => {
   } = frontmatter;
   const background = frontmatter?.background?.childImageSharp?.fluid?.src;
   const aux = frontmatter?.aux?.childImageSharp.fluid.src;
-  const [dataUser, setDataUser] = useState({
+  const minAmount = frontmatter?.min
+    ? frontmatter.min
+    : process.env.GATSBY_MIN_AMOUNT;
+  const maxAmount = frontmatter?.max
+    ? frontmatter.max
+    : process.env.GATSBY_MAX_AMOUNT;
+  const initialState = {
     issuer,
     commerce,
     amount: "",
     email: "",
-  });
+  };
+  const [dataUser, setDataUser] = useState(initialState);
+  const [isLoading, setisLoading] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
+  const [errMsg, seterrMsg] = useState(null);
+
+  const isDisabledSubmit = () => {
+    if (
+      !dataUser.email?.length ||
+      !dataUser.amount?.length ||
+      !isValidEmail(dataUser.email) ||
+      !isValidAmount(minAmount, maxAmount, dataUser.amount) ||
+      isLoading
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const onPetitionError = (msg) => {
+    setisModalOpen(!isModalOpen);
+    seterrMsg(msg);
+    return;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,8 +84,20 @@ const Template = ({ data }) => {
 
   const sendData = (e) => {
     e.preventDefault();
+    setisLoading(!isLoading);
+
+    // return;
     let token = process.env.GATSBY_TOKEN;
 
+    if (!token) {
+      onPetitionError("Error de refresh token!");
+      return;
+    }
+
+    if (!dataUser?.email?.length) {
+      onPetitionError("Datos inválidos");
+      return;
+    }
     const postData = {
       grantType: "accessToken",
       refreshToken: token,
@@ -66,6 +113,8 @@ const Template = ({ data }) => {
       .post(`${BASEURL}/auth/tokens/refreshToken`, postData, axiosConfig)
       .then((res) => {
         const token = res.data.data.accessToken;
+        if (!token) {
+        }
         const dataCredit = {
           ...dataUser,
           amount: parseFloat(dataUser.amount) * 100,
@@ -89,8 +138,18 @@ const Template = ({ data }) => {
         };
 
         if (dataCredit) {
+          if (!dataCredit) {
+            onPetitionError("Error de carga de datos!");
+            return;
+          }
           axios.post(`${BASEURL}/loans`, dataCredit, config).then((res) => {
-            let url = res.data.data.url;
+            let url = res?.data?.data?.url;
+            if (!url) {
+              onPetitionError("Error: No se encontró la ruta al crédito");
+            }
+            setDataUser("");
+            setisLoading(!isLoading);
+
             window.location.href = url;
           });
         }
@@ -102,6 +161,23 @@ const Template = ({ data }) => {
 
   return (
     <Layout>
+      {isModalOpen && errMsg?.length && (
+        <Modal>
+          <ModalBox>
+            <ModalMsg>{errMsg}</ModalMsg>
+            <ModalBoxBtn
+              onClick={() => {
+                setisModalOpen(!isModalOpen);
+                seterrMsg("");
+                setisLoading(!isLoading);
+                setDataUser(initialState);
+              }}
+            >
+              OK
+            </ModalBoxBtn>
+          </ModalBox>
+        </Modal>
+      )}
       <Seo title={commerceName} />
       <>
         <MobileContainer>
@@ -125,6 +201,7 @@ const Template = ({ data }) => {
                       name="email"
                       placeholder="Correo electrónico"
                       onChange={handleInputChange}
+                      disabled={isLoading}
                     />
                     <span
                       style={{
@@ -140,8 +217,8 @@ const Template = ({ data }) => {
                         }}
                       >
                         {dataUser.email !== "" &&
-                          validateEmail(dataUser?.email) === null &&
-                          "Correo no válido"}
+                          !isValidEmail(dataUser?.email) &&
+                          "Correo inválido"}
                       </p>
                     </span>
 
@@ -152,47 +229,37 @@ const Template = ({ data }) => {
                       placeholder="Monto de crédito"
                       value={dataUser.amount}
                       onChange={handleInputChange}
+                      disabled={isLoading}
                     />
-                    <span
+                    <div
                       style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        height: "15px",
+                        height: "25px",
                       }}
                     >
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "13px",
-                        }}
-                      >
-                        {dataUser.amount !== "" &&
-                          !isNaN(parseInt(dataUser.amount)) &&
-                          (parseInt(dataUser.amount) <
-                            process.env.GATSBY_MIN_AMOUNT ||
-                            parseInt(dataUser.amount) >=
-                              process.env.GATSBY_MAX_AMOUNT ||
-                            parseInt(dataUser.amount) % 100 !== 0) &&
-                          `Ingresa un monto entre ${parseInt(
-                            process.env.GATSBY_MIN_AMOUNT
-                          )} y ${
-                            process.env.GATSBY_MAX_AMOUNT
-                          } que sea múltiplo de 100`}
-                      </p>
-                    </span>
-                    <B
-                      type="submit"
-                      disabled={
-                        validateEmail(dataUser?.email) === null ||
-                        parseInt(dataUser.amount) <
-                          process.env.GATSBY_MIN_AMOUNT ||
-                        parseInt(dataUser.amount) >=
-                          process.env.GATSBY_MAX_AMOUNT ||
-                        parseInt(dataUser.amount) % 100 !== 0
-                      }
-                    >
-                      Quiero mi crédito
-                    </B>
+                      {dataUser.amount !== "" &&
+                        isValidAmount(minAmount, maxAmount, dataUser.amount) ===
+                          false && (
+                          <div>
+                            <p
+                              style={{
+                                color: "red",
+                                fontSize: "13px",
+                              }}
+                            >
+                              {`Ingresa un monto entre ${minAmount} y ${maxAmount}, que sea múltiplo de 100`}
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <BContainer>
+                      {isLoading ? (
+                        <img src={spinner_line} alt=""></img>
+                      ) : (
+                        <B type="submit" disabled={isDisabledSubmit()}>
+                          Quiero mi crédito
+                        </B>
+                      )}
+                    </BContainer>
                   </>
                 </Form>
                 <Footer
@@ -223,6 +290,8 @@ export const pageQuery = graphql`
         template
         logo
         TYC
+        max
+        min
         background {
           childImageSharp {
             fluid(maxWidth: 1000) {
