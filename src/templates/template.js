@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { graphql } from "gatsby";
+import { graphql, navigate } from "gatsby";
 import Layout from "../components/Layout";
 import Footer from "../components/Footer";
 import Seo from "../components/Seo";
@@ -134,6 +134,7 @@ const Template = ({ data }) => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
+            'X-Referer': window.location.href,
           },
         };
 
@@ -149,7 +150,7 @@ const Template = ({ data }) => {
             }
             setDataUser(initialState);
             setisLoading(!isLoading);
-            window.location.href = url;
+            navigate(url);
           });
         }
       })
