@@ -104,7 +104,11 @@ export const HeaderAndFormContainer = styled.div`
 `;
 
 export const Form = styled.form`
-  border: 2px solid #3050a5;
+  /* border: 2px solid #3050a5; */
+  border: ${(props) =>
+    props?.sectionColor
+      ? `2px solid ${props.sectionColor}`
+      : "2px solid #3050a5"};
   border-radius: 8px;
   background: white;
   padding: 20px;
@@ -112,7 +116,7 @@ export const Form = styled.form`
   color: black;
   min-height: 300px;
   max-height: 500px;
-  margin: auto 20%;
+  margin: auto 20% auto;
 
   display: flex;
   flex-direction: column;
@@ -134,11 +138,17 @@ export const Input = styled.input`
   margin: 5px 0px;
 `;
 export const B = styled.button`
+  box-sizing: border-box !important;
   font-size: 14px;
   padding: 10px;
   border-radius: 20px;
   border: none;
-  background: ${(props) => (props.disabled ? "grey" : "#3050A5")};
+  background: ${(props) =>
+    props.disabled
+      ? "grey"
+      : props?.sectionColor
+      ? props.sectionColor
+      : "#3050A5"};
 
   margin: 10px 0px;
   color: white;
@@ -163,6 +173,7 @@ export const Modal = styled.div`
 
 export const ModalBox = styled.div`
   display: flex;
+  justify-content: center;
   min-width: 150px;
   min-height: 150px;
   border-radius: 12px;
@@ -189,7 +200,9 @@ export const ModalBoxBtn = styled.button`
 `;
 
 export const Footer = styled.footer`
-  background-color: ${(props) => props.sectionColor || "#182c4c"};
+  background-color: ${(props) => props.sectionColor};
+  font-size: smaller;
+  margin-top: 10% !important;
   bottom: 0;
   height: 90px;
   color: white;
@@ -197,12 +210,11 @@ export const Footer = styled.footer`
   padding: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   /* width: 800px; */
   width: 100%;
   margin: 0;
   justify-content: space-between;
-  color: white;
   @media only screen and (max-width: 1024px) {
     bottom: -10px;
   }
@@ -224,6 +236,12 @@ export const Footer = styled.footer`
   }
 `;
 
+export const AuxLogo = styled.img`
+  max-width: 200% !important;
+  max-height: 200% !important;
+  width: auto !important;
+`;
+
 export const AnchordContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -240,7 +258,7 @@ export const ResponseContainer = styled.div`
   padding: 20px;
   background: white;
   width: 500px;
-  height: 600px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -254,3 +272,13 @@ export const ResponseContainer = styled.div`
     width: 95%;
   }
 `;
+
+export const FooterPoweredByLogo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+`;
+
+

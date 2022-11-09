@@ -37,7 +37,8 @@ const Template = ({ data }) => {
     template,
   } = frontmatter;
   const background = frontmatter?.background?.childImageSharp?.fluid?.src;
-  const aux = frontmatter?.aux?.childImageSharp.fluid.src;
+  const color2 = frontmatter?.color2;
+  const aux = frontmatter?.aux;
   const minAmount = frontmatter?.min
     ? frontmatter.min
     : process.env.GATSBY_MIN_AMOUNT;
@@ -123,7 +124,7 @@ const Template = ({ data }) => {
         const infoEmail = {
           subject,
           sender,
-          logo,
+          logo: template === "aplazo" && aux?.length ? aux : logo,
           template,
           amount: dataUser.amount,
           email: dataUser.email,
@@ -134,7 +135,7 @@ const Template = ({ data }) => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
-            'X-Referer': window.location.href,
+            "X-Referer": window.location.href,
           },
         };
 
@@ -143,19 +144,34 @@ const Template = ({ data }) => {
             onPetitionError("Error de carga de datos!");
             return;
           }
-          axios.post(`${BASEURL}/loans`, dataCredit, config).then((res) => {
-            let url = res?.data?.data?.url;
-            if (!url) {
-              onPetitionError("Error: No se encontró la ruta al crédito");
-            }
-            setDataUser(initialState);
-            setisLoading(!isLoading);
-            navigate(url);
-          });
+          axios
+            .post(`${BASEURL}/loans`, dataCredit, config)
+            .then((res) => {
+              let url = res?.data?.data?.url;
+
+              if (!url) {
+                onPetitionError("Error: No se encontró la ruta al crédito");
+                return;
+              }
+              setDataUser(initialState);
+              setisLoading(!isLoading);
+              navigate(url);
+            })
+            .catch((err) => {
+              onPetitionError(
+                `Error ${
+                  err?.status !== undefined ? err?.status.toString() : ""
+                }: ${err?.message}`
+              );
+            });
         }
       })
       .catch((err) => {
-        console.error(err);
+        onPetitionError(
+          `Error ${err?.status !== undefined ? err?.status.toString() : ""}: ${
+            err?.message
+          }`
+        );
       });
   };
 
@@ -188,84 +204,95 @@ const Template = ({ data }) => {
               ></BgComponent>
               <FormContainer sectionColor={color} background={background}>
                 <LogoContainer src={logo} />
-                <Form onSubmit={sendData} autoComplete="off">
-                  <>
-                    <h2>¡Llévate eso que tanto te gustó!</h2>
-                    <p>
-                      En {commerceName} compra en quincenas, paga sin intereses.
-                      Obtén tu crédito en menos de 5 minutos.
+                <Form
+                  onSubmit={sendData}
+                  sectionColor={color2}
+                  autoComplete="off"
+                >
+                  <h2>
+                    {frontmatter?.formTitle ||
+                      `¡Llévate eso que tanto te gustó!`}
+                  </h2>
+                  <p>
+                    {frontmatter?.formTextBody ||
+                      `En ${commerceName} compra en quincenas, paga sin intereses.
+                      Obtén tu crédito en menos de 5 minutos.`}
+                  </p>
+                  <Input
+                    value={dataUser.email}
+                    type="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      height: "15px",
+                    }}
+                  >
+                    <p
+                      style={{
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {dataUser.email !== "" &&
+                        !isValidEmail(dataUser?.email) &&
+                        "Correo inválido"}
                     </p>
-                    <Input
-                      value={dataUser.email}
-                      type="email"
-                      name="email"
-                      placeholder="Correo electrónico"
-                      onChange={handleInputChange}
-                      disabled={isLoading}
-                    />
-                    <span
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        height: "15px",
-                      }}
-                    >
-                      <p
-                        style={{
-                          color: "red",
-                          fontSize: "13px",
-                        }}
-                      >
-                        {dataUser.email !== "" &&
-                          !isValidEmail(dataUser?.email) &&
-                          "Correo inválido"}
-                      </p>
-                    </span>
+                  </span>
 
-                    <Input
-                      id="amount"
-                      type="number"
-                      name="amount"
-                      placeholder="Monto de crédito"
-                      value={dataUser.amount}
-                      onChange={handleInputChange}
-                      disabled={isLoading}
-                    />
-                    <div
-                      style={{
-                        height: "25px",
-                      }}
-                    >
-                      {dataUser.amount !== "" &&
-                        isValidAmount(minAmount, maxAmount, dataUser.amount) ===
-                          false && (
-                          <div>
-                            <p
-                              style={{
-                                color: "red",
-                                fontSize: "13px",
-                              }}
-                            >
-                              {`Ingresa un monto entre ${minAmount} y ${maxAmount}, que sea múltiplo de 100`}
-                            </p>
-                          </div>
-                        )}
-                    </div>
-                    <BContainer>
-                      {isLoading ? (
-                        <img src={spinner_line} alt=""></img>
-                      ) : (
-                        <B type="submit" disabled={isDisabledSubmit()}>
-                          Quiero mi crédito
-                        </B>
+                  <Input
+                    id="amount"
+                    type="number"
+                    name="amount"
+                    placeholder="Monto de crédito"
+                    value={dataUser.amount}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
+                  <div
+                    style={{
+                      height: "25px",
+                    }}
+                  >
+                    {dataUser.amount !== "" &&
+                      isValidAmount(minAmount, maxAmount, dataUser.amount) ===
+                        false && (
+                        <div>
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "13px",
+                            }}
+                          >
+                            {`Ingresa un monto entre ${minAmount} y ${maxAmount}, que sea múltiplo de 100`}
+                          </p>
+                        </div>
                       )}
-                    </BContainer>
-                  </>
+                  </div>
+                  <BContainer>
+                    {isLoading ? (
+                      <img src={spinner_line} alt=""></img>
+                    ) : (
+                      <B
+                        type="submit"
+                        disabled={isDisabledSubmit()}
+                        sectionColor={color2}
+                      >
+                        Quiero mi crédito
+                      </B>
+                    )}
+                  </BContainer>
                 </Form>
                 <Footer
-                  sectionColor={color}
-                  background={background}
+                  sectionColor={color2}
                   aux={aux}
+                  noFlux={frontmatter?.noFlux || false}
+                  template={frontmatter?.template}
                 />
               </FormContainer>
             </HeaderAndFormContainer>
@@ -284,22 +311,20 @@ export const pageQuery = graphql`
         issuer
         commerceName
         color
+        color2
         commerce
         subject
         sender
         template
         logo
+        aux
         TYC
         max
         min
+        noFlux
+        formTitle
+        formTextBody
         background {
-          childImageSharp {
-            fluid(maxWidth: 1000) {
-              src
-            }
-          }
-        }
-        aux {
           childImageSharp {
             fluid(maxWidth: 1000) {
               src

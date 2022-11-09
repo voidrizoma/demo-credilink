@@ -2,6 +2,11 @@ require("dotenv").config({
 path: `.env.${process.env.NODE_ENV}`,
 });
 
+// this comment is only to remember that this lines are required in develop 
+// require("dotenv").config({
+// path: `.env`,
+// });
+
 module.exports = {
   siteMetadata: {
     title: `Credilink`,
