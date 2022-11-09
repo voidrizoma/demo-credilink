@@ -1,20 +1,40 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import Layout from "../components/Layout";
 import Location from "../components/Location";
 import Aproved from "../components/aproved";
 import Error from "../components/error";
 import Rejected from "../components/rejected";
-import axios from "axios";
+import {
+  Modal,
+  ModalBox,
+  ModalBoxBtn,
+  ModalMsg,
+} from "../styles/template-styles";
+import spinner_line from "../images/spinner_line.gif";
+
 const BASEURL = process.env.GATSBY_BASE_URL;
 const MailChimp = process.env.GATSBY_MAILCHIMP;
 
 const Response = ({ search }) => {
   const { loan } = search;
+  const [hasLoan, sethasLoan] = useState(true);
   const [data, setData] = useState({});
   const renderQR = `https://qr.fluxqr.net/?text=${encodeURIComponent(data.qr)}`;
   const [dataEmail, setDataEmail] = useState({});
   const exp = new Date().toLocaleDateString();
   const expirationDate = `${exp} a las 23:59 horas`;
+  const [isLoading, setisLoading] = useState(false);
+  const [isModalOpen, setisModalOpen] = useState(false);
+  const [errMsg, seterrMsg] = useState(null);
+
+  const onPetitionError = (msg) => {
+    setisLoading(false);
+    setisModalOpen(true);
+    seterrMsg(msg);
+    return;
+  };
 
   useEffect(() => {
     if (typeof window === "object" || typeof window !== "undefined") {
@@ -25,8 +45,13 @@ const Response = ({ search }) => {
 
   useEffect(() => {
     if (loan) {
+      setisModalOpen(true);
+      setisLoading(true);
+
       const fetchData = () => {
         let token = process.env.GATSBY_TOKEN;
+
+        !token && onPetitionError("No token found");
 
         const postData = {
           grantType: "accessToken",
@@ -49,13 +74,35 @@ const Response = ({ search }) => {
                 Authorization: `Bearer ${token}`,
               },
             };
-            axios.get(`${BASEURL}/loans/${loan}`, config).then((res) => {
-              setData(res.data.data);
-            });
+            axios
+              .get(`${BASEURL}/loans/${loan}`, config)
+              .then((res) => {
+                setisLoading(false);
+                setisModalOpen(false);
+                setData(res.data.data);
+              })
+              .catch((err) => {
+                onPetitionError(
+                  `Error ${
+                    err?.status !== undefined ? err?.status.toString() : ""
+                  }: ${err?.message}`
+                );
+              });
+          })
+          .catch((err) => {
+            onPetitionError(
+              `Error ${
+                err?.status !== undefined ? err?.status.toString() : ""
+              }: ${err?.message}`
+            );
           });
       };
 
       fetchData();
+    } else {
+      setTimeout(() => {
+        sethasLoan(false)
+      }, 2000);
     }
   }, [setData, loan]);
 
@@ -71,8 +118,8 @@ const Response = ({ search }) => {
             email: dataEmail.email,
           },
           {
-            email: process.env.GATSBY_BBC_EMAIL
-          }
+            email: process.env.GATSBY_BBC_EMAIL,
+          },
         ],
         globalMergeVars: [
           {
@@ -112,16 +159,12 @@ const Response = ({ search }) => {
       }
     };
     if (dataEmail) {
+      console.log("sending email")
       mailchimpSender();
     }
   }, [data, dataEmail, expirationDate]);
 
-  return !loan ? (
-    <Layout>
-
-      <Error />
-    </Layout>
-  ) : (
+  return loan ? (
     <Layout>
       <div
         style={{
@@ -131,13 +174,40 @@ const Response = ({ search }) => {
           display: "flex",
           padding: "20px",
           justifyContent: "center",
-          alignContent: "center"
-        }}>
-
+          alignContent: "center",
+        }}
+      >
+        {isModalOpen && (
+          <Modal>
+            <ModalBox>
+              {isLoading && <img src={spinner_line} alt=""></img>}
+              {errMsg?.length && <ModalMsg>{errMsg}</ModalMsg>}
+              {errMsg?.length && (
+                <ModalBoxBtn
+                  onClick={() => {
+                    setisModalOpen(false);
+                    seterrMsg("");
+                    setisLoading(false);
+                  }}
+                >
+                  OK
+                </ModalBoxBtn>
+              )}
+            </ModalBox>
+          </Modal>
+        )}
         {(() => {
           switch (data.status) {
             case "approved":
-              return <Aproved amount={dataEmail.amount} qrCode={renderQR} exp={expirationDate} logo={dataEmail.logo} />;
+              return (
+                <Aproved
+                  amount={dataEmail.amount}
+                  qrCode={renderQR}
+                  exp={expirationDate}
+                  template={dataEmail.template}
+                  logo={dataEmail.logo}
+                />
+              );
             case "rejected":
               return <Rejected />;
             default:
@@ -145,6 +215,8 @@ const Response = ({ search }) => {
         })()}
       </div>
     </Layout>
+  ) : (
+    <Layout>{!hasLoan && <Error />}</Layout>
   );
 };
 
