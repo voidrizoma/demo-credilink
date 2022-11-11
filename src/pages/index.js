@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { navigate } from "gatsby";
 import axios from "axios";
 
 import Layout from "../components/Layout";
@@ -23,8 +24,6 @@ const Response = ({ search }) => {
   const [data, setData] = useState({});
   const renderQR = `https://qr.fluxqr.net/?text=${encodeURIComponent(data.qr)}`;
   const [dataEmail, setDataEmail] = useState({});
-  const exp = new Date().toLocaleDateString();
-  const expirationDate = `${exp} a las 23:59 horas`;
   const [isLoading, setisLoading] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [errMsg, seterrMsg] = useState(null);
@@ -101,13 +100,16 @@ const Response = ({ search }) => {
       fetchData();
     } else {
       setTimeout(() => {
-        sethasLoan(false)
+        sethasLoan(false);
+        navigate("https://www.fluxqr.com/")
       }, 2000);
     }
   }, [setData, loan]);
 
   useEffect(() => {
     const mailchimpSender = () => {
+      setisModalOpen(true);
+      setisLoading(true);
       const MailContent = JSON.stringify({
         template: dataEmail.template,
         subject: dataEmail.subject,
@@ -136,7 +138,7 @@ const Response = ({ search }) => {
           },
           {
             name: "expiration",
-            content: expirationDate,
+            content: dataEmail.expirationDate,
           },
         ],
       });
@@ -147,22 +149,31 @@ const Response = ({ search }) => {
           "Access-Control-Allow-Headers": "POST",
         },
       };
-      if (data.status === "approved") {
-        axios
-          .post(`${MailChimp}`, MailContent, config)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
+
+      // POST - SENDS THE EMAIL
+      axios
+        .post(`${MailChimp}`, MailContent, config)
+        .then((res) => {
+          setisModalOpen(false);
+          setisLoading(false);
+        })
+        .catch((err) => {
+          onPetitionError(
+            `Error ${
+              err?.status !== undefined ? err?.status.toString() : "(email not sent)"
+            }: ${err?.message}`
+          );
+        });
     };
-    if (dataEmail) {
-      console.log("sending email")
-      mailchimpSender();
+    if (loan && dataEmail && data?.status === "approved") {
+      if (!dataEmail?.loan) {
+        const exp = new Date().toLocaleDateString();
+        const expirationDate = `${exp} a las 23:59 horas`;
+        localStorage.setItem("data", JSON.stringify({ ...dataEmail, loan, expirationDate }));
+        mailchimpSender();
+      }
     }
-  }, [data, dataEmail, expirationDate]);
+  }, [loan, data, dataEmail]);
 
   return loan ? (
     <Layout>
@@ -203,7 +214,7 @@ const Response = ({ search }) => {
                 <Aproved
                   amount={dataEmail.amount}
                   qrCode={renderQR}
-                  exp={expirationDate}
+                  exp={dataEmail.expirationDate}
                   template={dataEmail.template}
                   logo={dataEmail.logo}
                 />

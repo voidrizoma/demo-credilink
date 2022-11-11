@@ -7,6 +7,7 @@ export default function aproved({ amount, qrCode, exp, template, logo }) {
 
   return (
     <ResponseContainer>
+      <title>Credilink - Crédito aprobado</title>
       <img
         style={{ width: "300px", marginBottom: "20px" }}
         src={template === "aplazo" ? aplazoLogo : kueskiLogo}

@@ -55,6 +55,7 @@ const Template = ({ data }) => {
   const [isLoading, setisLoading] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [errMsg, seterrMsg] = useState(null);
+  const [emailInputBlurred, setemailInputBlurred] = useState(false);
 
   const isDisabledSubmit = () => {
     if (
@@ -224,6 +225,9 @@ const Template = ({ data }) => {
                     name="email"
                     placeholder="Correo electrónico"
                     onChange={handleInputChange}
+                    onBlur={() => {
+                      setemailInputBlurred(true);
+                    }}
                     disabled={isLoading}
                   />
                   <span
@@ -239,9 +243,11 @@ const Template = ({ data }) => {
                         fontSize: "13px",
                       }}
                     >
-                      {dataUser.email !== "" &&
-                        !isValidEmail(dataUser?.email) &&
-                        "Correo inválido"}
+                      {emailInputBlurred &&
+                      dataUser.email !== "" &&
+                      !isValidEmail(dataUser?.email)
+                        ? "Correo inválido"
+                        : ""}
                     </p>
                   </span>
 
