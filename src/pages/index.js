@@ -169,7 +169,9 @@ const Response = ({ search }) => {
       if (!dataEmail?.loan) {
         const exp = new Date().toLocaleDateString();
         const expirationDate = `${exp} a las 23:59 horas`;
-        localStorage.setItem("data", JSON.stringify({ ...dataEmail, loan, expirationDate }));
+        const newLocalStorageData = { ...dataEmail, loan, expirationDate }
+        setDataEmail(newLocalStorageData); 
+        localStorage.setItem("data", JSON.stringify(newLocalStorageData));
         mailchimpSender();
       }
     }
