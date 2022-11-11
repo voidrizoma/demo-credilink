@@ -225,7 +225,7 @@ const { loan } =  search;
 
 El componente Response recibe un query-param para identificar el ID que regresa Kueski. Dentro del response, hay dos datos que nos importan: *status y qr*. El QR se mandará al correo del usuario. Los demas datos, se almacenan en *localstorage* desde el llenado del form.
 
-En caso que el status sea aprobado, la pagina *index*, va a pintar lso datos del crádito solicitado y tendrá que mandarse el correo por medio de *Flux-Notifier* con la siguiente estructura.
+En caso que el status sea aprobado, la pagina *index*, va a pintar los datos del crédito solicitado y tendrá que mandarse el correo por medio de *Flux-Notifier* con la siguiente estructura.
 
 ````JS
 const MailContent = JSON.stringify({
