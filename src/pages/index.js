@@ -101,77 +101,82 @@ const Response = ({ search }) => {
     } else {
       setTimeout(() => {
         sethasLoan(false);
-        navigate("https://www.fluxqr.com/")
+        navigate("https://www.fluxqr.com/");
       }, 2000);
     }
   }, [setData, loan]);
 
   useEffect(() => {
-    const mailchimpSender = () => {
-      setisModalOpen(true);
-      setisLoading(true);
-      const MailContent = JSON.stringify({
-        template: dataEmail.template,
-        subject: dataEmail.subject,
-        senderName: dataEmail.sender,
-        sender: "regalink@fluxqr.com",
-        to: [
-          {
-            email: dataEmail.email,
-          },
-          {
-            email: process.env.GATSBY_BBC_EMAIL,
-          },
-        ],
-        globalMergeVars: [
-          {
-            name: "amount",
-            content: data.amount / 100,
-          },
-          {
-            name: "cupon",
-            content: encodeURIComponent(data.qr),
-          },
-          {
-            name: "logoCommerce",
-            content: dataEmail.logo,
-          },
-          {
-            name: "expiration",
-            content: dataEmail.expirationDate,
-          },
-        ],
-      });
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Headers": "POST",
-        },
-      };
-
-      // POST - SENDS THE EMAIL
-      axios
-        .post(`${MailChimp}`, MailContent, config)
-        .then((res) => {
-          setisModalOpen(false);
-          setisLoading(false);
-        })
-        .catch((err) => {
-          onPetitionError(
-            `Error ${
-              err?.status !== undefined ? err?.status.toString() : "(email not sent)"
-            }: ${err?.message}`
-          );
-        });
-    };
     if (loan && dataEmail && data?.status === "approved") {
       if (!dataEmail?.loan) {
         const exp = new Date().toLocaleDateString();
         const expirationDate = `${exp} a las 23:59 horas`;
-        const newLocalStorageData = { ...dataEmail, loan, expirationDate }
-        setDataEmail(newLocalStorageData); 
+        const newLocalStorageData = { ...dataEmail, loan, expirationDate };
+        setDataEmail(newLocalStorageData);
         localStorage.setItem("data", JSON.stringify(newLocalStorageData));
+
+        // mailchimp function and exec
+        const mailchimpSender = () => {
+          setisModalOpen(true);
+          setisLoading(true);
+          const MailContent = JSON.stringify({
+            template: dataEmail.template,
+            subject: dataEmail.subject,
+            senderName: dataEmail.sender,
+            sender: "regalink@fluxqr.com",
+            to: [
+              {
+                email: dataEmail.email,
+              },
+              {
+                email: process.env.GATSBY_BBC_EMAIL,
+              },
+            ],
+            globalMergeVars: [
+              {
+                name: "amount",
+                content: data.amount / 100,
+              },
+              {
+                name: "cupon",
+                content: encodeURIComponent(data.qr),
+              },
+              {
+                name: "logoCommerce",
+                content: dataEmail.logo,
+              },
+              {
+                name: "expiration",
+                content: expirationDate,
+              },
+            ],
+          });
+
+          const config = {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Headers": "POST",
+            },
+          };
+
+          // POST - SENDS THE EMAIL
+          axios
+            .post(`${MailChimp}`, MailContent, config)
+            .then((res) => {
+              setisModalOpen(false);
+              setisLoading(false);
+            })
+            .catch((err) => {
+              onPetitionError(
+                `Error ${
+                  err?.status !== undefined
+                    ? err?.status.toString()
+                    : "(email not sent)"
+                }: ${err?.message}`
+              );
+            });
+        };
+
         mailchimpSender();
       }
     }
