@@ -35,7 +35,7 @@ export const BgComponent = styled.header`
 `;
 
 export const LogoContainer = styled.img`
-  padding-top: 20px;
+  padding: 20px 0 10px 0;
   width: 40%;
 `;
 
