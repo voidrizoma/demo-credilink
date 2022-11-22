@@ -14,7 +14,7 @@ formTitle: "¡Estrena hoy, paga a plazos!"
 formTextBody: "Sin tarjeta de crédito. Obtén tu crédito en menos de 5 minutos."
 logo: "https://firebasestorage.googleapis.com/v0/b/newflutter-549c4.appspot.com/o/Logo-Aplazo-mod.png?alt=media&token=5176eff1-a360-4c94-b1f7-1f41dc45a0c6"
 background: aplazo-bg.png
-min: 500
+min: 100
 max: 9000
 aux: "https://firebasestorage.googleapis.com/v0/b/newflutter-549c4.appspot.com/o/billpocket_logo.png?alt=media&token=edc3e7a6-4d32-4ce0-9dfc-35cdad6a2aa2"
 noFlux: true
