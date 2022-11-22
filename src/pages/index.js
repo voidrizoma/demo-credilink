@@ -35,7 +35,13 @@ const Response = ({ search }) => {
     return;
   };
 
+  
   useEffect(() => {
+    // removes issuer's IFrame
+    var frame = document.getElementById("customIframe");
+    if (frame !== null) {
+      frame.parentNode.removeChild(frame);
+    }
     if (typeof window === "object" || typeof window !== "undefined") {
       const contentEmail = JSON.parse(localStorage.getItem("data"));
       setDataEmail(contentEmail);
@@ -155,7 +161,8 @@ const Response = ({ search }) => {
           const config = {
             headers: {
               "Content-Type": "application/json",
-              "Access-Control-Allow-Headers": "POST",
+              "Access-Control-Allow-Origin":
+                "https://paywithflux-services-notifier-staging.services.k8s.fluxqr.net/",
             },
           };
 
