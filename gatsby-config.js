@@ -1,11 +1,11 @@
-require("dotenv").config({
-path: `.env.${process.env.NODE_ENV}`,
-});
+// require("dotenv").config({
+// path: `.env.${process.env.NODE_ENV}`,
+// });
 
 // this comment is only to remember that this lines are required in develop 
-// require("dotenv").config({
-// path: `.env`,
-// });
+require("dotenv").config({
+path: `.env`,
+});
 
 module.exports = {
   siteMetadata: {
@@ -17,7 +17,8 @@ module.exports = {
     {
       resolve: "gatsby-plugin-google-tagmanager",
       options: {
-        id: process.env.GATSBY_GOOGLE_TAGMANAGER_ID,
+        // id: process.env.GATSBY_GOOGLE_TAGMANAGER_ID,
+        id: "GTM-W2DL3ZJ",
   
         // Include GTM in development.
         //
@@ -44,6 +45,34 @@ module.exports = {
         enableWebVitalsTracking: true,
         // Defaults to https://www.googletagmanager.com
         // selfHostedOrigin: "YOUR_SELF_HOSTED_ORIGIN",
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          // process.env.GATSBY_GOOGLE_GA_MEASSUREMENT_ID
+          "G-05HR44FZTL"
+        ],
+        // This object gets passed directly to the gtag config command
+        // This config will be shared across all trackingIds
+        // gtagConfig: {
+        //   optimize_id: "OPT_CONTAINER_ID",
+        //   anonymize_ip: true,
+        //   cookie_expires: 0,
+        // },
+        // This object is used for configuration specific to this plugin
+        pluginConfig: {
+          // Puts tracking script in the head instead of the body
+          head: true,
+          // Setting this parameter is also optional
+          // respectDNT: true,
+          // Avoids sending pageview hits from custom paths
+          // exclude: ["/preview/**", "/do-not-track/me/too/"],
+          // Defaults to https://www.googletagmanager.com
+          // origin: "YOUR_SELF_HOSTED_ORIGIN",
+        },
       },
     },
     `gatsby-plugin-react-helmet`,

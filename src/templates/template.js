@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { graphql } from "gatsby";
-// import { graphql, navigate } from "gatsby";
+import React, { useState, useEffect } from "react";
+import { graphql, navigate } from "gatsby";
 import Layout from "../components/Layout";
 import Footer from "../components/Footer";
 import Seo from "../components/Seo";
@@ -20,8 +19,6 @@ import {
   ModalBox,
   ModalBoxBtn,
   ModalMsg,
-  IFrameDiv,
-  IFrameContainer,
 } from "../styles/template-styles";
 import axios from "axios";
 const BASEURL = process.env.GATSBY_BASE_URL;
@@ -59,7 +56,6 @@ const Template = ({ data }) => {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [errMsg, seterrMsg] = useState(null);
   const [emailInputBlurred, setemailInputBlurred] = useState(false);
-  const [iframeUrl, setiframeUrl] = useState("");
 
   const isDisabledSubmit = () => {
     if (
@@ -133,6 +129,8 @@ const Template = ({ data }) => {
           template,
           amount: dataUser.amount,
           email: dataUser.email,
+          commerce: commerceName
+
         };
         localStorage.setItem("data", JSON.stringify(infoEmail));
 
@@ -160,9 +158,7 @@ const Template = ({ data }) => {
               }
               setDataUser(initialState);
               setisLoading(!isLoading);
-
-              // navigate(url);
-              setiframeUrl(url);
+              navigate(url);
             })
             .catch((err) => {
               onPetitionError(
@@ -182,152 +178,141 @@ const Template = ({ data }) => {
       });
   };
 
+
+  useEffect(() => {
+    window.gtag !== undefined && console.log('gTag working')
+    process.env.GATSBY_TOKEN !== undefined && console.log('envs working')
+  }, [])
+
   return (
     <Layout>
-      {iframeUrl === "" ? (
-        <>
-          {isModalOpen && errMsg?.length && (
-            <Modal>
-              <ModalBox>
-                <ModalMsg>{errMsg}</ModalMsg>
-                <ModalBoxBtn
-                  onClick={() => {
-                    setisModalOpen(!isModalOpen);
-                    seterrMsg("");
-                    setisLoading(!isLoading);
-                    setDataUser(initialState);
-                  }}
-                >
-                  OK
-                </ModalBoxBtn>
-              </ModalBox>
-            </Modal>
-          )}
-          <Seo title={commerceName} />
-          <>
-            <MobileContainer>
-              <>
-                <HeaderAndFormContainer>
-                  <BgComponent
-                    style={{ backgroundImage: `url(${background})` }}
-                  ></BgComponent>
-                  <FormContainer sectionColor={color} background={background}>
-                    <LogoContainer src={logo} />
-                    <Form
-                      onSubmit={sendData}
-                      sectionColor={color2}
-                      autoComplete="off"
-                    >
-                      <h2>
-                        {frontmatter?.formTitle ||
-                          `¡Llévate eso que tanto te gustó!`}
-                      </h2>
-                      <p>
-                        {frontmatter?.formTextBody ||
-                          `En ${commerceName} compra en quincenas, paga sin intereses.
-                      Obtén tu crédito en menos de 5 minutos.`}
-                      </p>
-                      <Input
-                        value={dataUser.email}
-                        type="email"
-                        name="email"
-                        placeholder="Correo electrónico"
-                        onChange={handleInputChange}
-                        onBlur={() => {
-                          setemailInputBlurred(true);
-                        }}
-                        disabled={isLoading}
-                      />
-                      <span
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          height: "15px",
-                        }}
-                      >
-                        <p
-                          style={{
-                            color: "red",
-                            fontSize: "13px",
-                          }}
-                        >
-                          {emailInputBlurred &&
-                          dataUser.email !== "" &&
-                          !isValidEmail(dataUser?.email)
-                            ? "Correo inválido"
-                            : ""}
-                        </p>
-                      </span>
-
-                      <Input
-                        id="amount"
-                        type="number"
-                        name="amount"
-                        placeholder="Monto de crédito"
-                        value={dataUser.amount}
-                        onChange={handleInputChange}
-                        disabled={isLoading}
-                      />
-                      <div
-                        style={{
-                          height: "25px",
-                        }}
-                      >
-                        {dataUser.amount !== "" &&
-                          isValidAmount(
-                            minAmount,
-                            maxAmount,
-                            dataUser.amount
-                          ) === false && (
-                            <div>
-                              <p
-                                style={{
-                                  color: "red",
-                                  fontSize: "13px",
-                                }}
-                              >
-                                {`Ingresa un monto entre ${minAmount} y ${maxAmount}, que sea múltiplo de 100`}
-                              </p>
-                            </div>
-                          )}
-                      </div>
-                      <BContainer>
-                        {isLoading ? (
-                          <img src={spinner_line} alt=""></img>
-                        ) : (
-                          <B
-                            type="submit"
-                            disabled={isDisabledSubmit()}
-                            sectionColor={color2}
-                          >
-                            Quiero mi crédito
-                          </B>
-                        )}
-                      </BContainer>
-                    </Form>
-                    <Footer
-                      sectionColor={color2}
-                      aux={aux}
-                      noFlux={frontmatter?.noFlux || false}
-                      template={frontmatter?.template}
-                    />
-                  </FormContainer>
-                </HeaderAndFormContainer>
-              </>
-            </MobileContainer>
-          </>
-        </>
-      ) : (
-        <IFrameDiv>
-          <IFrameContainer
-            title="myframe"
-            id="customIframe"
-            name="crediFrame"
-            allow=""
-            src={iframeUrl}
-          ></IFrameContainer>
-        </IFrameDiv>
+      {isModalOpen && errMsg?.length && (
+        <Modal>
+          <ModalBox>
+            <ModalMsg>{errMsg}</ModalMsg>
+            <ModalBoxBtn
+              onClick={() => {
+                setisModalOpen(!isModalOpen);
+                seterrMsg("");
+                setisLoading(!isLoading);
+                setDataUser(initialState);
+              }}
+            >
+              OK
+            </ModalBoxBtn>
+          </ModalBox>
+        </Modal>
       )}
+      <Seo title={commerceName} />
+      <>
+        <MobileContainer>
+          <>
+            <HeaderAndFormContainer>
+              <BgComponent
+                style={{ backgroundImage: `url(${background})` }}
+              ></BgComponent>
+              <FormContainer sectionColor={color} background={background}>
+                <LogoContainer src={logo} />
+                <Form
+                  onSubmit={sendData}
+                  sectionColor={color2}
+                  autoComplete="off"
+                >
+                  <h2>
+                    {frontmatter?.formTitle ||
+                      `¡Llévate eso que tanto te gustó!`}
+                  </h2>
+                  <p>
+                    {frontmatter?.formTextBody ||
+                      `En ${commerceName} compra en quincenas, paga sin intereses.
+                      Obtén tu crédito en menos de 5 minutos.`}
+                  </p>
+                  <Input
+                    value={dataUser.email}
+                    type="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    onChange={handleInputChange}
+                    onBlur={() => {
+                      setemailInputBlurred(true);
+                    }}
+                    disabled={isLoading}
+                  />
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      height: "15px",
+                    }}
+                  >
+                    <p
+                      style={{
+                        color: "red",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {emailInputBlurred &&
+                      dataUser.email !== "" &&
+                      !isValidEmail(dataUser?.email)
+                        ? "Correo inválido"
+                        : ""}
+                    </p>
+                  </span>
+
+                  <Input
+                    id="amount"
+                    type="number"
+                    name="amount"
+                    placeholder="Monto de crédito"
+                    value={dataUser.amount}
+                    onChange={handleInputChange}
+                    disabled={isLoading}
+                  />
+                  <div
+                    style={{
+                      height: "25px",
+                    }}
+                  >
+                    {dataUser.amount !== "" &&
+                      isValidAmount(minAmount, maxAmount, dataUser.amount) ===
+                        false && (
+                        <div>
+                          <p
+                            style={{
+                              color: "red",
+                              fontSize: "13px",
+                            }}
+                          >
+                            {`Ingresa un monto entre ${minAmount} y ${maxAmount}, que sea múltiplo de 100`}
+                          </p>
+                        </div>
+                      )}
+                  </div>
+                  <BContainer>
+                    {isLoading ? (
+                      <img src={spinner_line} alt=""></img>
+                    ) : (
+                      <B
+                        type="submit"
+                        disabled={isDisabledSubmit()}
+                        sectionColor={color2}
+                      >
+                        Quiero mi crédito
+                      </B>
+                    )}
+                  </BContainer>
+                </Form>
+                <Footer
+                  sectionColor={color2}
+                  aux={aux}
+                  noFlux={frontmatter?.noFlux || false}
+                  template={frontmatter?.template}
+                />
+              </FormContainer>
+            </HeaderAndFormContainer>
+          </>
+        </MobileContainer>
+      </>
     </Layout>
   );
 };
