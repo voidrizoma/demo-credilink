@@ -10,8 +10,6 @@ interface IProps {
   slug: string;
 }
 
-
-
 export default component$((props: IProps) => {
   const api = "https://flux-api-six.vercel.app"
   const resource = useResource$<any>(async ({ cleanup }) => {
