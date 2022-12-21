@@ -19,9 +19,9 @@ export interface IProps {
 }
 
 
-const api = "https://flux-api-six.vercel.app"
 
 export default component$((props: IProps) => {
+  const api = "https://flux-api-six.vercel.app"
   const store = useStore<UserData>(initialUserData);
   const validationStore = useStore<Validation>(initValidation);
 

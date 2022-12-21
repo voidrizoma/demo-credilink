@@ -8,9 +8,9 @@ export interface IProps {
   loan: string;
 }
 
-const api = "https://flux-api-six.vercel.app"
 
 export default component$((props: IProps) => {
+  const api = "https://flux-api-six.vercel.app"
   const resource = useResource$<any>(async ({ cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
