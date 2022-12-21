@@ -10,12 +10,15 @@ interface IProps {
   slug: string;
 }
 
+const api = "https://flux-api-six.vercel.app"
+
+
 export default component$((props: IProps) => {
   
   const resource = useResource$<any>(async ({ cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
-    const res = await fetch(`http://127.0.0.1:3000/credilink/${props.slug}`, {
+    const res = await fetch(`${api}/credilink/${props.slug}`, {
       signal: abortController.signal,
     });
     return res.json();

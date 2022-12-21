@@ -18,6 +18,9 @@ export interface IProps {
   credilink: Credilink;
 }
 
+
+const api = "https://flux-api-six.vercel.app"
+
 export default component$((props: IProps) => {
   const store = useStore<UserData>(initialUserData);
   const validationStore = useStore<Validation>(initValidation);
@@ -56,7 +59,7 @@ export default component$((props: IProps) => {
     };
 
     axios
-      .post("http://127.0.0.1:3000/auth/tokens/refreshToken", reqBody, headers1)
+      .post(`${api}/auth/tokens/refreshToken`, reqBody, headers1)
       .then((res) => {
         console.log("POST TOKEN");
         // 2nd REQ to post: generate QR and send email
@@ -73,7 +76,7 @@ export default component$((props: IProps) => {
           amount: parseFloat(store.amount) * 100,
         };
         axios
-          .post("http://127.0.0.1:3000/loans", dataCredit, headers2)
+          .post(`${api}/loans`, dataCredit, headers2)
           .then((res) => {
             console.log("POST QR");
             const url = res?.data;
