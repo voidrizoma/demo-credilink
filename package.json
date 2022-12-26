@@ -9,9 +9,8 @@
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
-    "build.server": "vite build -c adaptors/netlify-edge/vite.config.ts",
     "build.types": "tsc --incremental --noEmit",
-    "deploy": "netlify deploy",
+    "deploy": "echo 'Run \"npm run qwik add\" to install a server adaptor'",
     "dev": "vite --mode ssr",
     "dev.debug": "node --inspect-brk ./node_modules/vite/bin/vite.js --mode ssr --force",
     "fmt": "prettier --write .",
@@ -19,27 +18,29 @@
     "lint": "eslint \"src/**/*.ts*\"",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
-    "qwik": "qwik"
+    "qwik": "qwik",
+    "partytown": "partytown copylib public/~partytown"
   },
   "devDependencies": {
-    "@builder.io/qwik": "0.16.1",
+    "@builder.io/qwik": "0.15.2",
     "@builder.io/qwik-city": "0.0.128",
     "@types/eslint": "8.4.10",
-    "@types/node": "^18.11.16",
-    "@types/node-fetch": "latest",
-    "@typescript-eslint/eslint-plugin": "5.46.1",
-    "@typescript-eslint/parser": "5.46.1",
+    "@types/node": "latest",
+    "@typescript-eslint/eslint-plugin": "5.45.0",
+    "@typescript-eslint/parser": "5.45.0",
     "autoprefixer": "10.4.11",
-    "eslint": "8.30.0",
-    "eslint-plugin-qwik": "0.16.1",
-    "netlify-cli": "^12.0.11",
+    "eslint": "8.28.0",
+    "eslint-plugin-qwik": "0.15.2",
     "node-fetch": "3.3.0",
     "postcss": "^8.4.16",
-    "prettier": "2.8.1",
+    "prettier": "2.8.0",
     "tailwindcss": "^3.1.8",
-    "typescript": "4.9.4",
-    "undici": "5.14.0",
-    "vite": "4.0.1",
+    "typescript": "4.9.3",
+    "vite": "3.2.4",
     "vite-tsconfig-paths": "3.5.0"
+  },
+  "dependencies": {
+    "@builder.io/partytown": "^0.7.3",
+    "axios": "^1.2.1"
   }
 }
