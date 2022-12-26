@@ -1,34 +1,20 @@
 import { component$ } from '@builder.io/qwik';
 import { useDocumentHead, useLocation } from '@builder.io/qwik-city';
-import { Gtm } from './gtm';
 
+/**
+ * The RouterHead component is placed inside of the document `<head>` element.
+ */
 export const RouterHead = component$(() => {
-  const { href } = useLocation();
   const head = useDocumentHead();
-  const title = head.title ? `${head.title} - Qwik` : `Qwik - Framework reimagined for the edge`;
-  const description =
-    head.meta.find((m) => m.name === 'description')?.content ||
-    `No hydration, auto lazy-loading, edge-optimized, and fun 🎉!`;
+  const loc = useLocation();
 
   return (
     <>
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={href} />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="apple-mobile-web-app-title" content="Qwik" />
-      <meta name="application-name" content="Qwik" />
-      <meta name="apple-mobile-web-app-title" content="Qwik" />
-      <meta name="theme-color" content="#006ce9" />
+      <title>{head.title}</title>
 
-      <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
-      <link rel="icon" href="/favicons/favicon.svg" type="image/svg+xml" />
-
-      {import.meta.env.PROD && (
-        <>
-          <Gtm />
-        </>
-      )}
+      <link rel="canonical" href={loc.href} />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
       {head.meta.map((m) => (
         <meta {...m} />
