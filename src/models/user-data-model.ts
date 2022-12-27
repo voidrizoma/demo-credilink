@@ -5,8 +5,8 @@ export interface UserData {
   commerce: string;
 }
 export const initialUserData = <UserData>{
-  email: "e@e.com",
-  amount: "100",
+  email: "",
+  amount: "",
   issuer: "",
   commerce: "",
 };

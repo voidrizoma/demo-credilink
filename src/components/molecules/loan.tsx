@@ -29,7 +29,7 @@ export default component$((props: IProps) => {
           <div class="flex place-content-center h-screen p-8">
             <div class="flex flex-col p-8 gap-8 place-content-center border-2 rounded-md h-[300px] w-[300px]">
               <p class="text-4xl text-center">¡Lo sentimos!</p>
-              <a href="https://www.w3schools.com">
+              <a href="https://www.fluxqr.com/">
                 <p class="text-xl text-center text-blue-600 underline underline-offset-2">
                   Visita FluxQR
                 </p>
