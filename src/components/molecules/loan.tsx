@@ -9,7 +9,7 @@ export interface IProps {
 }
 
 export default component$((props: IProps) => {
-  const api = "https://flux-o6q4cnuw9-fg0611.vercel.app/"
+  const api = "https://flux-api-six.vercel.app/"
 
   const resource = useResource$<any>(async ({ cleanup }) => {
     const abortController = new AbortController();

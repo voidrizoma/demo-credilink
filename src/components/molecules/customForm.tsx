@@ -4,7 +4,6 @@ import CustomText from "../atoms/customText";
 import CustomTitle from "../atoms/customTitle";
 import Email from "../atoms/email";
 import Amount from "../atoms/amount";
-// import axios from "axios";
 import { Credilink } from "~/models/credilink-model";
 import { initialUserData, UserData } from "~/models/user-data-model";
 import {
@@ -19,7 +18,8 @@ export interface IProps {
 }
 
 export default component$((props: IProps) => {
-  // const api = "https://flux-o6q4cnuw9-fg0611.vercel.app/"
+  const api = "https://flux-api-six.vercel.app/";
+  // const api = "http://127.0.0.1:3000/";
   const store = useStore<UserData>(initialUserData);
   const validationStore = useStore<Validation>(initValidation);
 
@@ -40,45 +40,43 @@ export default component$((props: IProps) => {
     }
   });
 
-  const submitData = $(() => {
+  const submitData = $(async () => {
     store.commerce = props.credilink.commerce;
     store.issuer = props.credilink.issuer;
 
-    // const refreshToken =
-    //   "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
-    // const reqBody = {
-    //   grantType: "accessToken",
-    //   refreshToken,
-    // };
-    // const headers1 = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
+    const refreshToken =
+      "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
+    const reqBody = {
+      grantType: "accessToken",
+      refreshToken,
+    };
 
-    // axios
-    //   .post(`${api}auth/tokens/refreshToken`, reqBody, headers1)
-    //   .then((res) => {
-    //     // 2nd REQ to post: generate QR and send email
-    //     const token = res.data.data.accessToken;
-    //     const headers2 = {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`,
-    //         // "X-Referer": window.location.href,
-    //       },
-    //     };
-    //     const dataCredit = {
-    //       ...store,
-    //       amount: parseFloat(store.amount) * 100,
-    //     };
-    //     axios
-    //       .post(`${api}loans`, dataCredit, headers2)
-    //       .then((res) => {
-    //         const url = res?.data;
-    //         if (url?.length) window.location.href = url;
-    //       });
-    //   });
+    await fetch(`${api}auth/tokens/refreshToken`, {
+      method: "POST",
+      // mode: "no-cors",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify(reqBody),
+    }).then(async (res) => {
+      const {data} = await res.json();
+
+      // LOAN CREATION PROC
+      const dataCredit = {
+        ...store,
+        amount: parseFloat(store.amount) * 100,
+      };
+      
+      await fetch(`${api}loans`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": `Bearer ${data.accessToken}`,
+        },
+        body: JSON.stringify(dataCredit),
+      }).then(async res =>{
+        const {data} = await res.json();
+        if (data.url?.length) window.location.href = data.url;        
+      })
+    });
   });
 
   return (
