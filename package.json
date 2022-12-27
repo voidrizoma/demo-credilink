@@ -43,6 +43,7 @@
     "vite-tsconfig-paths": "3.5.0"
   },
   "dependencies": {
-    "@builder.io/partytown": "^0.7.3"
+    "@builder.io/partytown": "^0.7.3",
+    "axios": "^1.2.1"
   }
 }
