@@ -1,6 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { useDocumentHead, useLocation } from '@builder.io/qwik-city';
-import { Gtm } from './gtm';
+// import { Gtm } from './gtm';
 
 export const RouterHead = component$(() => {
   const { href } = useLocation();
@@ -24,11 +24,11 @@ export const RouterHead = component$(() => {
       <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
       <link rel="icon" href="/favicons/favicon.svg" type="image/svg+xml" />
 
-      {import.meta.env.PROD && (
+      {/* {import.meta.env.PROD && (
         <>
           <Gtm />
         </>
-      )}
+      )} */}
 
       {head.meta.map((m) => (
         <meta {...m} />
