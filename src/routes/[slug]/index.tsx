@@ -9,10 +9,11 @@ import Loader from "~/components/atoms/loader";
 import CustomForm from "~/components/molecules/customForm";
 import Sorry from "~/components/molecules/sorry";
 import type { Credilink } from "~/models/credilink-model";
+import { envVars } from "~/models/global-vars";
 
 export const onGet: RequestHandler<Credilink | null> = async ({ params }) => {
   const res = await fetch(
-    `${import.meta.env.VITE_API}credilink/${params.slug}`
+    `${envVars.apiUrl}credilink/${params.slug}`
   );
   if (res.status > 299 || res.status < 200) {
     return null;
