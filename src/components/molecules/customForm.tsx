@@ -1,37 +1,40 @@
 import { component$, useStore, $, useWatch$ } from "@builder.io/qwik";
-import Btn from "../atoms/btn";
 import CustomText from "../atoms/customText";
-import CustomTitle from "../atoms/customTitle";
 import Email from "../atoms/email";
 import Amount from "../atoms/amount";
 import { Credilink } from "~/models/credilink-model";
-import { initialUserData, UserData } from "~/models/user-data-model";
+import { initialStoreData, StoreData } from "~/models/store-data-model";
 import {
   initValidation,
   isValidAmount,
   isValidEmail,
   Validation,
 } from "~/helpers/validation";
+import Logo from "../atoms/logo";
+import Modal from "../atoms/modal";
+import { envVars } from "~/models/global-vars";
+import Issuers from "../atoms/issuers";
+import LinkText from "../atoms/linkText";
+// import Btn from "../atoms/btn";
 
 export interface IProps {
   credilink: Credilink;
 }
 
 export default component$((props: IProps) => {
-  const api = "https://flux-api-six.vercel.app/";
-  // const api = "http://127.0.0.1:3000/";
-  const store = useStore<UserData>(initialUserData);
+  const api = envVars.apiUrl;
+  const store = useStore<StoreData>(initialStoreData);
   const validationStore = useStore<Validation>(initValidation);
 
   useWatch$(({ track }) => {
     const formState = track(() => store);
-    if (formState.email?.length && !isValidEmail(formState.email)) {
+    if (formState.email?.length > 0 && !isValidEmail(formState.email)) {
       validationStore.validEmail = false;
     } else {
       validationStore.validEmail = true;
     }
     if (
-      formState.amount?.length &&
+      formState.amount?.length > 0 &&
       !isValidAmount(props.credilink.min, props.credilink.max, formState.amount)
     ) {
       validationStore.validAmount = false;
@@ -41,70 +44,123 @@ export default component$((props: IProps) => {
   });
 
   const submitData = $(async () => {
+    store.isLoading = true;
     store.commerce = props.credilink.commerce;
     store.issuer = props.credilink.issuer;
 
-    const refreshToken =
-      "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
-    const reqBody = {
-      grantType: "accessToken",
-      refreshToken,
-    };
-
-    await fetch(`${api}auth/tokens/refreshToken`, {
-      method: "POST",
-      // mode: "no-cors",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(reqBody),
-    }).then(async (res) => {
-      const {data} = await res.json();
-
-      // LOAN CREATION PROC
-      const dataCredit = {
-        ...store,
-        amount: parseFloat(store.amount) * 100,
+    setTimeout(async () => {
+      const refreshToken =
+        "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
+      const reqBody = {
+        grantType: "accessToken",
+        refreshToken,
       };
-      
-      await fetch(`${api}loans`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          "Authorization": `Bearer ${data.accessToken}`,
-        },
-        body: JSON.stringify(dataCredit),
-      }).then(async res =>{
-        const {data} = await res.json();
-        if (data.url?.length) window.location.href = data.url;        
-      })
-    });
+
+      try {
+        await fetch(`${api}auth/tokens/refreshToken`, {
+          method: "POST",
+          // mode: "no-cors",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(reqBody),
+        }).then(async (res) => {
+          if (res.status === 200) {
+            const { data } = await res.json();
+            console.log(data);
+            // LOAN CREATION PROC
+            const dataCredit = {
+              ...store,
+              amount: parseFloat(store.amount) * 100,
+            };
+
+            await fetch(`${api}loans`, {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${data.accessToken}`,
+              },
+              body: JSON.stringify(dataCredit),
+            }).then(async (res) => {
+              const { data } = await res.json();
+              if (data.url?.length > 0) window.location.href = data.url;
+            });
+          } else {
+            store.isLoading = false;
+            store.error = "Ocurrió un error";
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }, 2000);
   });
 
   return (
-    <div class="flex flex-col place-content-center rounded-[20px] m-6 p-8 gap-6 bg-white">
-      <CustomTitle
-        title={props.credilink.title}
-        color={props.credilink.colorSecondary}
-      />
-      <CustomText text={props.credilink.description} color="black" />
-      <Email
-        placeholder="Correo electrónico"
-        store={store}
-        validationStore={validationStore}
-      />
-      <Amount
-        placeholder="Monto"
-        store={store}
-        validationStore={validationStore}
-        min={props.credilink.min}
-        max={props.credilink.max}
-      />
-      <Btn
-        text="!Quiero mi crédito¡"
-        store={store}
-        validationStore={validationStore}
-        bgColor={props.credilink.colorPrimary}
-        submitData={submitData}
-      />
-    </div>
+    <>
+      {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
+      <div
+        class="flex flex-col place-content-center rounded-[5px] pb-4 pt-4 gap-3"
+        style={{ background: props.credilink.colorSecondary }}
+      >
+        <div class="flex place-content-center h-[80px]">
+          {props.credilink.logo?.length > 0 ? (
+            <Logo url={props.credilink.logo} />
+          ) : (
+            <CustomText text={props.credilink.commerceName} />
+          )}
+        </div>
+        <div class="flex flex-col place-content-center bg-white h-[300px]">
+          <CustomText
+            text={props.credilink.title}
+            color="black"
+            size="24px"
+            weight="800"
+          />
+          <div class="flex flex-col gap-1 px-6 pt-3 pb-1">
+            <CustomText
+              text={props.credilink.description}
+              color="black"
+              size="15px"
+              weight="300"
+            />
+            <div class="flex flex-col gap-4 px-4 pb-1">
+              <Email
+                placeholder="Ingresa tu correo"
+                store={store}
+                validationStore={validationStore}
+              />
+              <Amount
+                placeholder="Monto del crédito"
+                store={store}
+                validationStore={validationStore}
+                min={props.credilink.min}
+                max={props.credilink.max}
+              />
+            </div>
+          </div>
+        </div>
+        {/* variable called "type" to change issuer's UI appearance */}
+        <Issuers issuers={props.credilink.issuers} store={store} />
+        {/* <Btn
+          text="Continuar"
+          store={store}
+          validationStore={validationStore}
+          bgColor={props.credilink.colorPrimary}
+          submitData={submitData}
+        /> */}
+        <div
+          class="py-0 my-0 mx-4 text-white text-[12px] font-[500]"
+          style={{ borderTop: "1px solid" }}
+        >
+          <p class="text-white text-[12px] font-[500]">
+            Servicio porporcionado por Flux QR. Por favor lee nuestros
+          </p>
+          <LinkText
+            text="Términos y
+          Condiciones."
+            url={props.credilink.tyc}
+          />
+        </div>
+      </div>
+    </>
   );
 });
