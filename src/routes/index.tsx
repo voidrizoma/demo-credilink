@@ -1,39 +1,33 @@
-import { component$ } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
+import { component$, useClientEffect$ } from "@builder.io/qwik";
+import { DocumentHead, useLocation } from "@builder.io/qwik-city";
 import Loan from "../components/molecules/loan";
+import Sorry from "~/components/molecules/sorry";
 
 export default component$(() => {
   const loc = useLocation();
 
+  useClientEffect$(() => {
+    // Only runs in the client
+    if (!loc.query.loan || !loc.query.loan?.length) {
+      if (typeof window !== "undefined") {
+        window.location.href = "https://www.fluxqr.com/";
+      }
+    }
+  });
+
   return (
-    <div>
+    <div class="flex w-screen h-screen place-content-center">
       {loc.query?.loan ? (
-        // {loc.query?.loan ? (
         <div>
           <Loan loan={loc.query.loan} />
         </div>
       ) : (
-          <div class="flex place-content-center h-screen p-8">
-            <div class="flex flex-col p-8 gap-8 place-content-center border-2 rounded-md h-[300px] w-[300px]">
-              <p class="text-4xl text-center">¡Lo sentimos!</p>
-              <a href="https://www.fluxqr.com/">
-                <p class="text-xl text-center text-blue-600 underline underline-offset-2">
-                  Visita FluxQR
-                </p>
-              </a>
-            </div>
-          </div>
+        <Sorry />
       )}
     </div>
   );
 });
 
-// export const head: DocumentHead = {
-//   title: 'Qwik Practice',
-//   meta: [
-//     {
-//       name: 'description',
-//       content: 'Qwik site description',
-//     },
-//   ],
-// };
+export const head: DocumentHead = {
+  title: "FluxQR",
+};

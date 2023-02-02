@@ -1,5 +1,6 @@
 export interface Loan {
   id: string;
+  commerce: string;
   logoIssuer: string;
   logoCommerce: string;
   title: string;
@@ -13,6 +14,7 @@ export interface Loan {
 
 export const initialLoan = {
   id: "abc",
+  commerce: "",
   logoIssuer: "",
   logoCommerce: "",
   title: "",

@@ -1,3 +1,5 @@
+import { Issuer } from "./issuer-model";
+
 export interface Credilink {
     slug: string;
     template: string;
@@ -12,9 +14,11 @@ export interface Credilink {
     title: string;
     description: string;
     logo: string;
+    tyc: string;
     bg: string;
     min: number;
     max: number;
+    issuers: Issuer[]
   }
 
   export const initialCredilink = {
@@ -32,6 +36,7 @@ export interface Credilink {
     description: "",
     logo: "",
     bg: "",
+    tyc: "",
     min: 0,
     max: 0,
   }

@@ -1,15 +1,19 @@
-import { component$, Resource, useResource$ } from "@builder.io/qwik";
+import { component$, Resource, useResource$} from "@builder.io/qwik";
 import { Loan } from "../../models/loan-model";
 import Logo from "../atoms/logo";
 import Qr from "../atoms/qr";
 import CustomFooter from "./customFooter";
+import Sorry from "./sorry";
+import { envVars } from "~/models/global-vars";
 
 export interface IProps {
   loan: string;
 }
 
+
+
 export default component$((props: IProps) => {
-  const api = "https://flux-api-six.vercel.app/"
+  const api = envVars.apiUrl;
 
   const resource = useResource$<any>(async ({ cleanup }) => {
     const abortController = new AbortController();
@@ -26,16 +30,7 @@ export default component$((props: IProps) => {
         value={resource}
         onPending={() => <div>Loading...</div>}
         onRejected={() => (
-          <div class="flex place-content-center h-screen p-8">
-            <div class="flex flex-col p-8 gap-8 place-content-center border-2 rounded-md h-[300px] w-[300px]">
-              <p class="text-4xl text-center">¡Lo sentimos!</p>
-              <a href="https://www.fluxqr.com/">
-                <p class="text-xl text-center text-blue-600 underline underline-offset-2">
-                  Visita FluxQR
-                </p>
-              </a>
-            </div>
-          </div>
+          <Sorry />
         )}
         onResolved={(found: Loan) => {
           return (
@@ -48,7 +43,7 @@ export default component$((props: IProps) => {
                 <p class="flex place-content-center text-center">
                   {found.text1}
                 </p>
-                <p class="flex place-content-center">{found.text2}</p>
+                <p class="flex place-content-center">{`${found.text2} ${found.commerce}`}</p>
                 <Qr
                   url={`https://qr.fluxqr.net/?text=${encodeURIComponent(
                     found.qr
@@ -58,7 +53,7 @@ export default component$((props: IProps) => {
                   {"Monto aprobado: $" + found.amount}
                 </p>
                 <p class="flex place-content-center">
-                  {"Vigencia: " + found.expiration}
+                  {`Expira el ${found.expiration}`}
                 </p>
               </div>
               <CustomFooter bgColor={found.bg} logoCommerce={found.logoCommerce}/>

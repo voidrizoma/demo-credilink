@@ -9,7 +9,7 @@ export interface IProps {
 export default component$((props: IProps) => {
   return (
     <div
-      class="flex justify-between place-content-center p-4"
+      class="flex justify-between items-center p-4"
       style={{ background: props.bgColor }}
     >
       <img
@@ -18,11 +18,11 @@ export default component$((props: IProps) => {
         alt="logo"
       />
       {props.logoCommerce ? (
-        <img class="h-[30px] md:h-[40px] bg-white-400" src={props.logoCommerce} alt="" />
+        <img class="h-[15px] md:h-[20px]" src={props.logoCommerce} alt="" />
       ) : (
         <div class="flex place-content-center flex-col">
           <LinkText
-            text="Terminos y condiciones"
+            text="©Copyright. 2022 Flux QR. Todos los derechos reservados"
             url="https://fluxqr.com/politica-de-privacidad/"
           />
           <LinkText
