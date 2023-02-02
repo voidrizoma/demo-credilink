@@ -1,14 +1,14 @@
 import { component$ } from "@builder.io/qwik";
 
 export interface IProps {
-  text: string;
-  url: string;
+  title: string;
+  color: string;
 }
 
 export default component$((props: IProps) => {
   return (
-      <a href={props.url} class="text-white text-center text-xs sm:text-base">
-        {props.text}
-      </a>
+      <p class="flex place-content-center"
+      style={{ color: props.color }}
+      >{props.title}</p>
   );
 });
