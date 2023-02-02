@@ -100,28 +100,28 @@ export default component$((props: IProps) => {
     <>
       {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
       <div
-        class="flex flex-col place-content-center rounded-[5px] pb-4 pt-4 gap-3"
+        class="flex flex-col place-content-center rounded-[5px] pb-4 pt-4 gap-2"
         style={{ background: props.credilink.colorSecondary }}
       >
-        <div class="flex place-content-center h-[80px]">
+        <div class="flex place-content-center h-[30px]">
           {props.credilink.logo?.length > 0 ? (
             <Logo url={props.credilink.logo} />
           ) : (
             <CustomText text={props.credilink.commerceName} />
           )}
         </div>
-        <div class="flex flex-col place-content-center bg-white h-[300px]">
+        <div class="flex flex-col place-content-center bg-white h-[250px]">
           <CustomText
             text={props.credilink.title}
             color="black"
-            size="24px"
+            size="20px"
             weight="800"
           />
-          <div class="flex flex-col gap-1 px-6 pt-3 pb-1">
+          <div class="flex flex-col gap-2 px-6 pt-3 pb-1">
             <CustomText
               text={props.credilink.description}
               color="black"
-              size="15px"
+              size="14px"
               weight="300"
             />
             <div class="flex flex-col gap-4 px-4 pb-1">

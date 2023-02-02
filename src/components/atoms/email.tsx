@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { isValidEmail, Validation } from "~/helpers/validation";
+import { Validation, isValidEmail } from "~/helpers/validation";
 import { StoreData } from "~/models/store-data-model";
 
 export interface IProps {
@@ -13,7 +13,7 @@ export default component$((props: IProps) => {
   return (
     <div class="flex flex-col gap-2 place-content-center">
       <input
-        class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
+        class="rounded-[5px] h-[35px] p-3 border-solid border-[1px] border-black w-full"
         placeholder={props.placeholder}
         value={props.store.email}
         onInput$={(ev) =>

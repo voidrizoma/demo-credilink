@@ -24,10 +24,10 @@ export default component$((props: IProps) => {
 
   return (
     <>
-    <div class="flex place-content-center p-[10%]">
+    <div class="flex place-content-center p-[3%]">
       <CustomText text="Selecciona una opción:" size="16px" weight="700"/>
     </div>
-      <div class="flex justify-center flex-wrap self-center gap-10">
+      <div class="flex justify-center flex-wrap self-center gap-5">
         {props.issuers.map((el, elIndex) => (
           <button
             class={`flex border-2 place-content-center border-none ${
