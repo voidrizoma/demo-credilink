@@ -15,6 +15,7 @@ import Modal from "../atoms/modal";
 import { envVars } from "~/models/global-vars";
 import Issuers from "../atoms/issuers";
 import LinkText from "../atoms/linkText";
+import Btn from "../atoms/btn";
 // import Btn from "../atoms/btn";
 
 export interface IProps {
@@ -25,6 +26,7 @@ export default component$((props: IProps) => {
   const api = envVars.apiUrl;
   const store = useStore<StoreData>(initialStoreData);
   const validationStore = useStore<Validation>(initValidation);
+  const nobtn = false
 
   useWatch$(({ track }) => {
     const formState = track(() => store);
@@ -140,13 +142,13 @@ export default component$((props: IProps) => {
         </div>
         {/* variable called "type" to change issuer's UI appearance */}
         <Issuers issuers={props.credilink.issuers} store={store} />
-        {/* <Btn
+        {nobtn && <Btn
           text="Continuar"
           store={store}
           validationStore={validationStore}
           bgColor={props.credilink.colorPrimary}
           submitData={submitData}
-        /> */}
+        />}
         <div
           class="py-0 my-0 mx-4 text-white text-[12px] font-[500]"
           style={{ borderTop: "1px solid" }}

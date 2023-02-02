@@ -5,7 +5,7 @@ import {
   useEndpoint,
 } from "@builder.io/qwik-city";
 import Loader from "~/components/atoms/loader";
-import CustomFooter from "~/components/molecules/customFooter";
+// import CustomFooter from "~/components/molecules/customFooter";
 import CustomForm from "~/components/molecules/customForm";
 import Sorry from "~/components/molecules/sorry";
 import type { Credilink } from "~/models/credilink-model";
