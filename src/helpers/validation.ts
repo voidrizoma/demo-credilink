@@ -9,6 +9,11 @@ export const initValidation = {
 }
 
 export const isValidEmail = (email: string) => {
+  
+  if (email === "") {
+    return false
+  }
+
   const result = String(email)
     .toLowerCase()
     .match(
@@ -21,6 +26,9 @@ export const isValidEmail = (email: string) => {
 };
 
 export const isValidAmount = (min: number, max: number, amount: string) => {
+  if (amount === "") {
+    return false
+  }
   if (
     parseInt(amount) < min ||
     parseInt(amount) > max ||

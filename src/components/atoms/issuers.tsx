@@ -1,14 +1,19 @@
+/* eslint-disable qwik/valid-lexical-scope */
 import { component$, useStore } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { Issuer } from "~/models/issuer-model";
 import { StoreData } from "~/models/store-data-model";
 import CustomText from "./customText";
-// import { FacebookIcon, FacebookShareButton } from "react-share";
+import { Validation, isValidAmount, isValidEmail } from "~/helpers/validation";
+import { Credilink } from "~/models/credilink-model";
 
 export interface IProps {
   issuers: Issuer[];
   store: StoreData;
+  validationStore: Validation;
+  credilink: Credilink;
+  submitData: () => void;
 }
 
 export default component$((props: IProps) => {
@@ -24,10 +29,10 @@ export default component$((props: IProps) => {
 
   return (
     <>
-    <div class="flex place-content-center p-[3%]">
-      <CustomText text="Selecciona una opción:" size="16px" weight="700"/>
-    </div>
-      <div class="flex justify-center flex-wrap self-center gap-5">
+      <div class="flex place-content-center p-[3%]">
+        <CustomText text="Selecciona una opción:" size="16px" weight="700" />
+      </div>
+      <div class="flex justify-center flex-wrap self-center gap-10">
         {props.issuers.map((el, elIndex) => (
           <button
             class={`flex border-2 place-content-center border-none ${
@@ -37,12 +42,33 @@ export default component$((props: IProps) => {
             }`}
             disabled={elIndex === selected?.index ? true : false}
             onClick$={() => {
-              selected.index = elIndex;
+              if (
+                props.store.email?.length > 0 &&
+                props.store.amount?.length > 0 &&
+                props.validationStore.validEmail &&
+                props.validationStore.validAmount
+              ) {
+                selected.index = elIndex;
+                props.submitData();
+              } else {
+                if (!isValidEmail(props.store.email)) {
+                  props.validationStore.validEmail = false;
+                } else {
+                  props.validationStore.validEmail = true;
+                }
+                if (
+                  !isValidAmount(props.credilink.min, props.credilink.max, props.store.amount)
+                ) {
+                  props.validationStore.validAmount = false;
+                } else {
+                  props.validationStore.validAmount = true;
+                }
+              }
             }}
           >
-            <div class="flex flex-col place-content-center p-2 w-[150px] h-[150px] bg-white rounded-[15px]">
+            <div class="flex flex-col place-content-center shadow-[5px_5px_#0e0d0d] p-2 w-[150px] h-[150px] bg-white rounded-[15px]">
               <img class="flex p-1" src={issuerLogoFinder(el)} alt="" />
-              <p class="flex text-center text-[12px] text-black p-1">
+              <p class="flex text-center text-[14px] text-[#777171] p-1">
                 {el.proposal}
               </p>
             </div>

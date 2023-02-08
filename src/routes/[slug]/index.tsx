@@ -62,7 +62,7 @@ export default component$(() => {
 });
 
 export const head: DocumentHead<Credilink> = ({ data }) => {
-  const title = `${data?.commerce || "not found"} - Credilink`;
+  const title = `${data?.commerceName || "not found"} - Credilink`;
   const description = data?.description || "not found";
 
   return {

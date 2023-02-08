@@ -23,7 +23,7 @@ export default component$((props: IProps) => {
         </a>
       ) : (
           <img
-            class="self-center w-[35%] sm:w-[40%]"
+            class="self-center w-[35%] sm:w-[40%] rounded-[5px]"
             src={props?.url}
             alt="no image found"
             loading="lazy"

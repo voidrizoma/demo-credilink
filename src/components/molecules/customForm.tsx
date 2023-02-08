@@ -15,7 +15,6 @@ import Modal from "../atoms/modal";
 import { envVars } from "~/models/global-vars";
 import Issuers from "../atoms/issuers";
 import LinkText from "../atoms/linkText";
-import Btn from "../atoms/btn";
 // import Btn from "../atoms/btn";
 
 export interface IProps {
@@ -26,7 +25,6 @@ export default component$((props: IProps) => {
   const api = envVars.apiUrl;
   const store = useStore<StoreData>(initialStoreData);
   const validationStore = useStore<Validation>(initValidation);
-  const nobtn = false
 
   useWatch$(({ track }) => {
     const formState = track(() => store);
@@ -35,8 +33,7 @@ export default component$((props: IProps) => {
     } else {
       validationStore.validEmail = true;
     }
-    if (
-      formState.amount?.length > 0 &&
+    if (formState.amount?.length > 0 &&
       !isValidAmount(props.credilink.min, props.credilink.max, formState.amount)
     ) {
       validationStore.validAmount = false;
@@ -45,7 +42,7 @@ export default component$((props: IProps) => {
     }
   });
 
-  const submitData = $(async () => {
+  const submitData$ = $(async () => {
     store.isLoading = true;
     store.commerce = props.credilink.commerce;
     store.issuer = props.credilink.issuer;
@@ -67,13 +64,13 @@ export default component$((props: IProps) => {
         }).then(async (res) => {
           if (res.status === 200) {
             const { data } = await res.json();
-            console.log(data);
+            console.log("OK == auth/tokens/refreshToken");
             // LOAN CREATION PROC
             const dataCredit = {
               ...store,
               amount: parseFloat(store.amount) * 100,
             };
-
+            
             await fetch(`${api}loans`, {
               method: "POST",
               headers: {
@@ -82,7 +79,9 @@ export default component$((props: IProps) => {
               },
               body: JSON.stringify(dataCredit),
             }).then(async (res) => {
+              console.log(`${api}loans`);
               const { data } = await res.json();
+              console.log(data);
               if (data.url?.length > 0) window.location.href = data.url;
             });
           } else {
@@ -100,28 +99,28 @@ export default component$((props: IProps) => {
     <>
       {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
       <div
-        class="flex flex-col place-content-center rounded-[5px] pb-4 pt-4 gap-2"
+        class="flex flex-col place-content-center rounded-[5px] pb-4 pt-4 gap-3"
         style={{ background: props.credilink.colorSecondary }}
       >
-        <div class="flex place-content-center h-[30px]">
+        <div class="flex place-content-center h-[80px]">
           {props.credilink.logo?.length > 0 ? (
             <Logo url={props.credilink.logo} />
           ) : (
             <CustomText text={props.credilink.commerceName} />
           )}
         </div>
-        <div class="flex flex-col place-content-center bg-white h-[250px]">
+        <div class="flex flex-col place-content-center bg-white h-[300px]">
           <CustomText
             text={props.credilink.title}
             color="black"
-            size="20px"
+            size="24px"
             weight="800"
           />
-          <div class="flex flex-col gap-2 px-6 pt-3 pb-1">
+          <div class="flex flex-col gap-1 px-6 pt-3 pb-1">
             <CustomText
               text={props.credilink.description}
               color="black"
-              size="14px"
+              size="15px"
               weight="300"
             />
             <div class="flex flex-col gap-4 px-4 pb-1">
@@ -141,14 +140,20 @@ export default component$((props: IProps) => {
           </div>
         </div>
         {/* variable called "type" to change issuer's UI appearance */}
-        <Issuers issuers={props.credilink.issuers} store={store} />
-        {nobtn && <Btn
+        <Issuers
+          issuers={props.credilink.issuers}
+          store={store}
+          validationStore={validationStore}
+          submitData={submitData$}
+          credilink={props.credilink}
+        />
+        {/* <Btn
           text="Continuar"
           store={store}
           validationStore={validationStore}
           bgColor={props.credilink.colorPrimary}
           submitData={submitData}
-        />}
+        /> */}
         <div
           class="py-0 my-0 mx-4 text-white text-[12px] font-[500]"
           style={{ borderTop: "1px solid" }}
