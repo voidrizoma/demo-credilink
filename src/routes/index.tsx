@@ -8,6 +8,7 @@ export default component$(() => {
 
   useClientEffect$(() => {
     console.log(window.location.href);
+    console.log(loc.query)
     if (!window.location.href.includes("?loan=")) {
       console.log("inside the includes() ", window.location.href);
       console.log(loc)
