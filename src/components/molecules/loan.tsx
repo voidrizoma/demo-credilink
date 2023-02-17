@@ -43,7 +43,8 @@ export default component$((props: IProps) => {
                 <p class="flex place-content-center text-center">
                   {found.text1}
                 </p>
-                <p class="flex place-content-center">{`${found.text2} ${found.commerce}`}</p>
+                <p class="flex place-content-center">{`${found.text2}`}</p>
+                {/* <p class="flex place-content-center">{`${found.text2} en ${found.commerce}`}</p> */}
                 <Qr
                   url={`https://qr.fluxqr.net/?text=${encodeURIComponent(
                     found.qr
