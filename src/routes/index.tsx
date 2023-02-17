@@ -1,14 +1,14 @@
 import { component$, useClientEffect$ } from "@builder.io/qwik";
 import { DocumentHead, useLocation } from "@builder.io/qwik-city";
 import Loan from "../components/molecules/loan";
-import Sorry from "~/components/molecules/sorry";
+// import Sorry from "~/components/molecules/sorry";
 
 export default component$(() => {
   const loc = useLocation();
 
   useClientEffect$(() => {
     console.log(window.location.href);
-    if (!window.location.href.includes("loan=")) {
+    if (!window.location.href.includes("?loan=")) {
       console.log("inside the includes() ", window.location.href);
       console.log(loc)
       // window.location.href = "https://www.fluxqr.com/";
@@ -27,7 +27,8 @@ export default component$(() => {
           <Loan loan={loc.query.loan} />
         </div>
       ) : (
-        <Sorry />
+        // <Sorry />
+        <div>Sorry</div>
       )}
     </div>
   );
