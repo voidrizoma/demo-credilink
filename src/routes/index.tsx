@@ -9,7 +9,9 @@ export default component$(() => {
   useClientEffect$(() => {
     console.log(window.location.href);
     if (!window.location.href.includes("loan=")) {
-      window.location.href = "https://www.fluxqr.com/";
+      console.log("inside the includes() ", window.location.href);
+      console.log(loc)
+      // window.location.href = "https://www.fluxqr.com/";
     }
     // if (!loc.query.loan || !loc.query.loan?.length) {
     //   if (typeof window !== "undefined") {
