@@ -4,19 +4,17 @@ import {
   RequestHandler,
   useEndpoint,
 } from "@builder.io/qwik-city";
-import Loader from "~/components/atoms/loader";
 import Checkout from "~/components/molecules/checkout";
 // import CustomFooter from "~/components/molecules/customFooter";
 import CustomForm from "~/components/molecules/customForm";
+import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
 import { CheckoutModel, initialCheckout } from "~/models/checkout-model";
 import type { Credilink } from "~/models/credilink-model";
 import { envVars } from "~/models/global-vars";
 
 export const onGet: RequestHandler<Credilink | null> = async ({ params }) => {
-  const res = await fetch(
-    `${envVars.apiUrl}credilink/${params.slug}`
-  );
+  const res = await fetch(`${envVars.apiUrl}credilink/${params.slug}`);
   if (res.status > 299 || res.status < 200) {
     return null;
   } else {
@@ -27,12 +25,12 @@ export const onGet: RequestHandler<Credilink | null> = async ({ params }) => {
 export default component$(() => {
   const resource = useEndpoint<Credilink>();
   const checkoutStore: CheckoutModel = useStore(initialCheckout);
-  
+
   return (
     <div class="flex place-content-center m-0 p-0">
       <Resource
         value={resource}
-        onPending={() => <Loader />}
+        onPending={() => <ModalLoading />}
         onRejected={() => (
           <>
             <Sorry />
@@ -40,15 +38,18 @@ export default component$(() => {
         )}
         onResolved={(found: Credilink) => (
           <>
-            {!found || !found?.commerce?.length &&
-              <Sorry />
-        }
+            {!found?.commerce?.length && <Sorry />}
 
-              {checkoutStore.isCheckout ? <Checkout credilink={found} checkout={checkoutStore} /> : <div class="flex flex-col">
+            {checkoutStore.isCheckout && (
+              <Checkout credilink={found} checkout={checkoutStore} />
+            )}
+
+            {!checkoutStore.isCheckout && found?.commerce?.length > 0 && (
+              <div class="flex flex-col">
                 <div class="flex flex-col place-content-center">
                   <div
                     class="flex flex-col place-content-center"
-                    style={{ backgroundImage: `url(${found.bg})` }}
+                    // style={{ backgroundImage: `url(${found.bg})` }}
                   >
                     <div class="flex place-content-center">
                       <CustomForm credilink={found} checkout={checkoutStore} />
@@ -56,7 +57,8 @@ export default component$(() => {
                   </div>
                   {/* <CustomFooter bgColor={found.colorPrimary} /> */}
                 </div>
-              </div>}
+              </div>
+            )}
           </>
         )}
       />

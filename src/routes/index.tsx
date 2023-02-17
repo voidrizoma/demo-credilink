@@ -13,8 +13,8 @@ export default component$(() => {
   useClientEffect$(() => {
     if (window.location.href.includes("?loan=")) {
       state.loan = window.location.href.split("=")[1];
-      state.isLoading = false;
     }
+    state.isLoading = false;
   });
 
   return (
