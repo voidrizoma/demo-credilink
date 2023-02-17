@@ -26,15 +26,15 @@ export const isValidEmail = (email: string) => {
 };
 
 export const isValidAmount = (min: number, max: number, amount: string) => {
-  if (amount === "") {
+  if (!amount?.length || parseInt(amount) < 0) {
     return false
   }
-  if (
-    parseInt(amount) < min ||
-    parseInt(amount) > max ||
-    parseInt(amount) % 100 !== 0
-  ) {
-    return false;
-  }
+  // if (
+  //   parseInt(amount) < min ||
+  //   parseInt(amount) > max ||
+  //   parseInt(amount) % 100 !== 0
+  // ) {
+  //   return false;
+  // }
   return true;
 };

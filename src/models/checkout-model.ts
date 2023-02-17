@@ -18,7 +18,7 @@ export const initialCheckout = {
     color: "#1d294c",
   },
   userData: {
-    email: "fg0611@gmail.com",
-    amount: "100",
+    email: "",
+    amount: "",
   },
 };
