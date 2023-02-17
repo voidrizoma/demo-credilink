@@ -1,31 +1,33 @@
 /* eslint-disable qwik/valid-lexical-scope */
 import { component$, useStore } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
+// import { useLocation } from "@builder.io/qwik-city";
 import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { Issuer } from "~/models/issuer-model";
 import { StoreData } from "~/models/store-data-model";
 import CustomText from "./customText";
 import { Validation, isValidAmount, isValidEmail } from "~/helpers/validation";
 import { Credilink } from "~/models/credilink-model";
+import { CheckoutModel } from "~/models/checkout-model";
 
 export interface IProps {
   issuers: Issuer[];
   store: StoreData;
   validationStore: Validation;
   credilink: Credilink;
+  checkout: CheckoutModel;
   submitData: () => void;
 }
 
 export default component$((props: IProps) => {
-  const location = useLocation();
-  const urlStore = useStore({ url: "" });
+  // const location = useLocation();
+  // const urlStore = useStore({ url: "" });
   const selected = useStore({ index: -1 });
 
-  if (location?.href?.length) {
+  // if (location?.href?.length) {
     // Do the thing
     // console.log(`location is = ${location.href}`)
-    urlStore.url = location.href;
-  }
+  //   urlStore.url = location.href;
+  // }
 
   return (
     <>
@@ -33,7 +35,7 @@ export default component$((props: IProps) => {
         <CustomText text="Selecciona una opción:" size="16px" weight="700" />
       </div>
       <div class="flex justify-center flex-wrap self-center gap-10">
-        {props.issuers.map((el, elIndex) => (
+        {props.issuers.map((el: Issuer, elIndex) => (
           <button
             class={`flex border-2 place-content-center border-none ${
               elIndex !== selected?.index
@@ -44,25 +46,31 @@ export default component$((props: IProps) => {
             onClick$={() => {
               if (
                 props.store.email?.length > 0 &&
-                props.store.amount?.length > 0 &&
-                props.validationStore.validEmail &&
-                props.validationStore.validAmount
+                props.store.amount?.length > 0
               ) {
-                selected.index = elIndex;
-                props.submitData();
-              } else {
-                if (!isValidEmail(props.store.email)) {
-                  props.validationStore.validEmail = false;
-                } else {
-                  props.validationStore.validEmail = true;
-                }
+                props.validationStore.validEmail = isValidEmail(
+                  props.store.email
+                );
+                props.validationStore.validAmount = isValidAmount(
+                  props.credilink.min,
+                  props.credilink.max,
+                  props.store.amount
+                );
                 if (
-                  !isValidAmount(props.credilink.min, props.credilink.max, props.store.amount)
+                  props.validationStore.validEmail &&
+                  props.validationStore.validAmount
                 ) {
-                  props.validationStore.validAmount = false;
-                } else {
-                  props.validationStore.validAmount = true;
+                  selected.index = elIndex;
+                  props.checkout.issuer = el;
+                  props.checkout.userData = {
+                    email: props.store.email,
+                    amount: props.store.amount,
+                  }
+                  props.submitData();
                 }
+              } else {
+                props.validationStore.validEmail = false;
+                props.validationStore.validAmount = false;
               }
             }}
           >

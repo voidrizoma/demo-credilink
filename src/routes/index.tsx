@@ -1,24 +1,20 @@
 import { component$, useClientEffect$, useStore } from "@builder.io/qwik";
 import { DocumentHead } from "@builder.io/qwik-city";
-import Loan from "../components/molecules/loan";
-// import Sorry from "~/components/molecules/sorry";
+import Loan from "~/components/molecules/loan";
+import { ModalLoading } from "~/components/molecules/modalLoading";
+import Sorry from "~/components/molecules/sorry";
 
 export default component$(() => {
-  // const loc = useLocation();
   const state = useStore({
     loan: "",
+    isLoading: true,
   });
 
   useClientEffect$(() => {
-    console.log(window.location.href);
     if (window.location.href.includes("?loan=")) {
       state.loan = window.location.href.split("=")[1];
+      state.isLoading = false;
     }
-    // if (!loc.query.loan || !loc.query.loan?.length) {
-    //   if (typeof window !== "undefined") {
-    //     window.location.href = "https://www.google.com/";
-    //   }
-    // }
   });
 
   return (
@@ -27,10 +23,8 @@ export default component$(() => {
         <div>
           <Loan loan={state.loan} />
         </div>
-      ) : (
-        // <Sorry />
-        <div>Sorry</div>
-      )}
+      ): <ModalLoading/>}
+      {!state?.loan?.length && !state.isLoading && <Sorry />}
     </div>
   );
 });

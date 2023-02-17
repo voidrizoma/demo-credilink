@@ -11,18 +11,18 @@ import {
   Validation,
 } from "~/helpers/validation";
 import Logo from "../atoms/logo";
-import Modal from "../atoms/modal";
-import { envVars } from "~/models/global-vars";
+import Modal from "../atoms/modal2";
+// import { envVars } from "~/models/global-vars";
 import Issuers from "../atoms/issuers";
 import LinkText from "../atoms/linkText";
-// import Btn from "../atoms/btn";
-
+import { CheckoutModel } from "~/models/checkout-model";
 export interface IProps {
   credilink: Credilink;
+  checkout: CheckoutModel
 }
 
 export default component$((props: IProps) => {
-  const api = envVars.apiUrl;
+  // const api = envVars.apiUrl;
   const store = useStore<StoreData>(initialStoreData);
   const validationStore = useStore<Validation>(initValidation);
 
@@ -33,7 +33,8 @@ export default component$((props: IProps) => {
     } else {
       validationStore.validEmail = true;
     }
-    if (formState.amount?.length > 0 &&
+    if (
+      formState.amount?.length > 0 &&
       !isValidAmount(props.credilink.min, props.credilink.max, formState.amount)
     ) {
       validationStore.validAmount = false;
@@ -42,58 +43,65 @@ export default component$((props: IProps) => {
     }
   });
 
-  const submitData$ = $(async () => {
+  const submitData = $(async () => {
+    console.log("SUBMIT OK")
+
     store.isLoading = true;
-    store.commerce = props.credilink.commerce;
-    store.issuer = props.credilink.issuer;
 
-    setTimeout(async () => {
-      const refreshToken =
-        "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
-      const reqBody = {
-        grantType: "accessToken",
-        refreshToken,
-      };
-
-      try {
-        await fetch(`${api}auth/tokens/refreshToken`, {
-          method: "POST",
-          // mode: "no-cors",
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify(reqBody),
-        }).then(async (res) => {
-          if (res.status === 200) {
-            const { data } = await res.json();
-            console.log("OK == auth/tokens/refreshToken");
-            // LOAN CREATION PROC
-            const dataCredit = {
-              ...store,
-              amount: parseFloat(store.amount) * 100,
-            };
-            
-            await fetch(`${api}loans`, {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${data.accessToken}`,
-              },
-              body: JSON.stringify(dataCredit),
-            }).then(async (res) => {
-              console.log(`${api}loans`);
-              const { data } = await res.json();
-              console.log(data);
-              if (data.url?.length > 0) window.location.href = data.url;
-            });
-          } else {
-            store.isLoading = false;
-            store.error = "Ocurrió un error";
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
+    setTimeout(() => {
+      props.checkout.isCheckout = true;
     }, 2000);
+
   });
+
+  //   const submitData$ = $(async () => {
+  //   store.isLoading = true;
+  //   store.commerce = props.credilink.commerce;
+  //   store.issuer = props.credilink.issuer;
+
+  //   setTimeout(async () => {
+  //     const refreshToken =
+  //       "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
+  //     const reqBody = {
+  //       grantType: "accessToken",
+  //       refreshToken,
+  //     };
+
+  //     try {
+  //       await fetch(`${api}auth/tokens/refreshToken`, {
+  //         method: "POST",
+  //         // mode: "no-cors",
+  //         headers: { "Content-type": "application/json" },
+  //         body: JSON.stringify(reqBody),
+  //       }).then(async (res) => {
+  //         if (res.status === 200) {
+  //           const { data } = await res.json();
+  //           const dataCredit = {
+  //             ...store,
+  //             amount: parseFloat(store.amount) * 100,
+  //           };
+
+  //           await fetch(`${api}loans`, {
+  //             method: "POST",
+  //             headers: {
+  //               "Content-type": "application/json",
+  //               Authorization: `Bearer ${data.accessToken}`,
+  //             },
+  //             body: JSON.stringify(dataCredit),
+  //           }).then(async (res) => {
+  //             const { data } = await res.json();
+  //             if (data.url?.length > 0) window.location.href = data.url;
+  //           });
+  //         } else {
+  //           store.isLoading = false;
+  //           store.error = "Ocurrió un error";
+  //         }
+  //       });
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }, 2000);
+  // });
 
   return (
     <>
@@ -144,28 +152,26 @@ export default component$((props: IProps) => {
           issuers={props.credilink.issuers}
           store={store}
           validationStore={validationStore}
-          submitData={submitData$}
-          credilink={props.credilink}
-        />
-        {/* <Btn
-          text="Continuar"
-          store={store}
-          validationStore={validationStore}
-          bgColor={props.credilink.colorPrimary}
           submitData={submitData}
-        /> */}
+          credilink={props.credilink}
+          checkout={props.checkout}
+        />
         <div
           class="py-0 my-0 mx-4 text-white text-[12px] font-[500]"
           style={{ borderTop: "1px solid" }}
         >
           <p class="text-white text-[12px] font-[500]">
-            Servicio porporcionado por Flux QR. Por favor lee nuestros
+            Servicio porporcionado por Flux QR.
           </p>
-          <LinkText
-            text="Términos y
+
+          <div class="flex flex-row gap-1">
+            <div>Por favor lee nuestros</div>
+            <LinkText
+              text="Términos y
           Condiciones."
-            url={props.credilink.tyc}
-          />
+              url={props.credilink.tyc}
+            />
+          </div>
         </div>
       </div>
     </>
