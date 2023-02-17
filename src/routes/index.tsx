@@ -1,19 +1,18 @@
-import { component$, useClientEffect$ } from "@builder.io/qwik";
-import { DocumentHead, useLocation } from "@builder.io/qwik-city";
+import { component$, useClientEffect$, useStore } from "@builder.io/qwik";
+import { DocumentHead } from "@builder.io/qwik-city";
 import Loan from "../components/molecules/loan";
 // import Sorry from "~/components/molecules/sorry";
 
 export default component$(() => {
-  const loc = useLocation();
+  // const loc = useLocation();
+  const state = useStore({
+    loan: "",
+  });
 
   useClientEffect$(() => {
     console.log(window.location.href);
-    console.log(loc.query?.loan)
-    console.log(JSON.stringify(loc.query))
-    if (!window.location.href.includes("?loan=")) {
-      console.log("inside the includes() ", window.location.href);
-      console.log(loc)
-      // window.location.href = "https://www.fluxqr.com/";
+    if (window.location.href.includes("?loan=")) {
+      state.loan = window.location.href.split("=")[1];
     }
     // if (!loc.query.loan || !loc.query.loan?.length) {
     //   if (typeof window !== "undefined") {
@@ -24,9 +23,9 @@ export default component$(() => {
 
   return (
     <div class="flex w-screen h-screen place-content-center">
-      {loc.query?.loan ? (
+      {state?.loan?.length > 0 ? (
         <div>
-          <Loan loan={loc.query.loan} />
+          <Loan loan={state.loan} />
         </div>
       ) : (
         // <Sorry />
