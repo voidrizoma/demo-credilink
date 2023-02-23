@@ -47,9 +47,10 @@ export default component$((props: IProps) => {
     console.log("SUBMIT OK")
 
     store.isLoading = true;
-
+    
     setTimeout(() => {
-      props.checkout.isCheckout = true;
+      store.isLoading = false;
+      props.checkout.isLogin = true;
     }, 2000);
 
   });

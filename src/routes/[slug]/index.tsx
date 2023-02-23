@@ -7,6 +7,7 @@ import {
 import Checkout from "~/components/molecules/checkout";
 // import CustomFooter from "~/components/molecules/customFooter";
 import CustomForm from "~/components/molecules/customForm";
+import Login from "~/components/molecules/login";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
 import { CheckoutModel, initialCheckout } from "~/models/checkout-model";
@@ -38,25 +39,38 @@ export default component$(() => {
         )}
         onResolved={(found: Credilink) => (
           <>
+            {checkoutStore.isLoading && <ModalLoading />}
+
             {!found?.commerce?.length && <Sorry />}
 
             {checkoutStore.isCheckout && (
               <Checkout credilink={found} checkout={checkoutStore} />
             )}
 
-            {!checkoutStore.isCheckout && found?.commerce?.length > 0 && (
-              <div class="flex flex-col">
-                <div class="flex flex-col place-content-center">
-                  <div
-                    class="flex flex-col place-content-center"
-                    // style={{ backgroundImage: `url(${found.bg})` }}
-                  >
-                    <div class="flex place-content-center">
-                      <CustomForm credilink={found} checkout={checkoutStore} />
+            {!checkoutStore.isCheckout &&
+              !checkoutStore.isLogin &&
+              found?.commerce?.length > 0 && (
+                <div class="flex flex-col">
+                  <div class="flex flex-col place-content-center">
+                    <div
+                      class="flex flex-col place-content-center"
+                      // style={{ backgroundImage: `url(${found.bg})` }}
+                    >
+                      <div class="flex place-content-center">
+                        <CustomForm
+                          credilink={found}
+                          checkout={checkoutStore}
+                        />
+                      </div>
                     </div>
+                    {/* <CustomFooter bgColor={found.colorPrimary} /> */}
                   </div>
-                  {/* <CustomFooter bgColor={found.colorPrimary} /> */}
                 </div>
+              )}
+
+            {checkoutStore.isLogin && (
+              <div>
+                <Login checkout={checkoutStore} />
               </div>
             )}
           </>

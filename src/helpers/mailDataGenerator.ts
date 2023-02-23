@@ -37,7 +37,7 @@ export const prepareMailData = (
       },
     ],
   });
-  console.log(result)
+  // console.log(result)
   return result;
 };
 

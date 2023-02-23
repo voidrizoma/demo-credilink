@@ -1,5 +1,7 @@
 export interface CheckoutModel {
+  isLoading: boolean;
   isCheckout: boolean;
+  isLogin: boolean;
   issuer: {
     id: string;
     name: string;
@@ -10,6 +12,8 @@ export interface CheckoutModel {
 }
 
 export const initialCheckout = {
+  isLoading: false,
+  isLogin: false,
   isCheckout: false,
   issuer: {
     id: "kueski-id",

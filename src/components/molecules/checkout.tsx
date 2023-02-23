@@ -14,10 +14,10 @@ export default component$((props: IProps) => {
 
   const state = useStore({
     currentRadio: "",
+    id: "",
   });
 
   const checkoutSubmit = $(async (loanId: string) => {
-
     const expiresIn = new Date();
     expiresIn.setHours(23, 59, 59, 0).toLocaleString();
     const mailServiceUrl =
@@ -31,29 +31,74 @@ export default component$((props: IProps) => {
     // };
 
     try {
-      await fetch(mailServiceUrl, {
+      const baseUrl = "https://sandbox.fluxqr.com/v3";
+      const token =
+        "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
+
+      const authData = {
+        grantType: "accessToken",
+        refreshToken: token,
+      };
+
+      const appJsonHeader = { "Content-type": "application/json" };
+
+      await fetch(`${baseUrl}/auth/tokens/refreshToken`, {
         method: "POST",
-        // mode: "no-cors",
-        headers: {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": mailServiceUrl,
-        },
-        body: prepareMailData(
-          props.credilink,
-          props.checkout,
-          expiresIn.toString(),
-          ""
-        ),
+        headers: new Headers(appJsonHeader),
+        body: JSON.stringify(authData),
       }).then(async (res) => {
         if (res.status >= 200 && res.status < 300) {
           const { data } = await res.json();
-          console.log("mailsent", JSON.stringify(data));
+          const resToken = data?.accessToken;
+          console.log("resToken: ", resToken);
+
+          const dataCoupon = {
+            commerce: props.credilink.commerce,
+            amount: parseInt(props.checkout.userData.amount) * 100,
+            expiration: "2023-02-23T23:05:00.000Z",
+            isPayable: true,
+            customer: {
+              name: "Usuario de prueba",
+              email: props.checkout.userData.email,
+            },
+          };
+
+          await fetch(`${baseUrl}/coupons`, {
+            method: "POST",
+            headers: new Headers({
+              ...appJsonHeader,
+              Authorization: `Bearer ${resToken}`,
+            }),
+            body: JSON.stringify(dataCoupon),
+          }).then(async (res) => {
+            const { data } = await res.json();
+            state.id = data.id;
+            console.log("DATOS DEL CUPÓN: ", data);
+            await fetch(mailServiceUrl, {
+              method: "POST",
+              headers: {
+                "Content-type": "application/json",
+                "Access-Control-Allow-Origin": mailServiceUrl,
+              },
+              body: prepareMailData(
+                props.credilink,
+                props.checkout,
+                expiresIn.toString(),
+                ""
+              ),
+            }).then(async (res) => {
+              if (res.status >= 200 && res.status < 300) {
+                const { data } = await res.json();
+                console.log("mailsent", JSON.stringify(data));
+              }
+            });
+          });
         }
       });
     } catch (err) {
       console.log(err);
     }
-    window.location.href = `/?loan=${loanId}`;
+    window.location.href = `/?loan=${state.id?.length > 0 ? state.id : loanId}`;
   });
 
   return (
@@ -100,10 +145,10 @@ export default component$((props: IProps) => {
                   }}
                 />
               </div>
-              <div class="px-2 text-[18px] font-bold text-blue-500">{`1 Quincena de $${
-                parseFloat(props.checkout.userData.amount) * 0.8 +
-                parseFloat(props.checkout.userData.amount) * 0.8 * (0.27 / 100)
-              }`}</div>
+              <div class="px-2 text-[18px] font-bold text-blue-500">{`1 Quincena de $${(
+                parseFloat(props.checkout.userData.amount) +
+                parseFloat(props.checkout.userData.amount) * (0.27 / 100)
+              ).toFixed(2)}`}</div>
             </div>
             <div class="flex flex-row text-[14px]">
               <div class="flex flex-auto p-2 border-t-4 border-r-4 border-b-0 border-l-0 border-[#c2c2c2] ">
@@ -131,36 +176,40 @@ export default component$((props: IProps) => {
                   }}
                 />
               </div>
-              <div class="px-2 text-[18px] font-bold text-blue-500">{`2 Quincenas de $${
-                (parseFloat(props.checkout.userData.amount) * 0.8) / 2 +
-                ((parseFloat(props.checkout.userData.amount) * 0.8) / 2) *
-                  (0.27 / 100)
-              }`}</div>
+              <div class="px-2 text-[18px] font-bold text-blue-500">{`2 Quincenas de $${(
+                parseFloat(props.checkout.userData.amount) / 2 +
+                (parseFloat(props.checkout.userData.amount) / 2) * (0.27 / 100)
+              ).toFixed(2)}`}</div>
             </div>
           </div>
 
           <div class="flex flex-col border-4 border-[#c2c2c2] rounded-md">
             <div class="flex flex-row p-3">
               <div class="flex place-content-center">
-                <input type="radio"
+                <input
+                  type="radio"
                   class="scale-[1.8]"
                   checked={state.currentRadio === "q3"}
                   onClick$={() => {
                     state.currentRadio = "q3";
-                  }} />
+                  }}
+                />
               </div>
-              <div class="px-2 text-[18px] font-bold text-blue-500">{`3 Quincenas de $${
-                (parseFloat(props.checkout.userData.amount) * 0.8) / 3 +
-                ((parseFloat(props.checkout.userData.amount) * 0.8) / 3) *
-                  (0.27 / 100)
-              }`}</div>
+              <div class="px-2 text-[18px] font-bold text-blue-500">{`3 Quincenas de $${(
+                parseFloat(props.checkout.userData.amount) / 3 +
+                (parseFloat(props.checkout.userData.amount) / 3) * (0.27 / 100)
+              ).toFixed(2)}`}</div>
             </div>
           </div>
 
           <div class="flex place-content-center text-[20px] font-semibold pt-3">
             <button
               class="text-white rounded-[20px] border-none h-[40px] w-full"
-              style={{ background: state.currentRadio?.length ? props.credilink.colorPrimary : "#c2c2c2" }}
+              style={{
+                background: state.currentRadio?.length
+                  ? props.credilink.colorPrimary
+                  : "#c2c2c2",
+              }}
               preventdefault:click
               onClick$={() => {
                 checkoutSubmit(props.checkout.issuer.id);

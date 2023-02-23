@@ -5,12 +5,11 @@ import Qr from "../atoms/qr";
 import CustomFooter from "./customFooter";
 import Sorry from "./sorry";
 import { envVars } from "~/models/global-vars";
+import { ModalLoading } from "./modalLoading";
 
 export interface IProps {
   loan: string;
 }
-
-
 
 export default component$((props: IProps) => {
   const api = envVars.apiUrl;
@@ -28,7 +27,7 @@ export default component$((props: IProps) => {
     <div class="flex flex-col place-content-center text-black ">
       <Resource
         value={resource}
-        onPending={() => <div>Loading...</div>}
+        onPending={() => <ModalLoading/>}
         onRejected={() => (
           <Sorry />
         )}
@@ -51,7 +50,7 @@ export default component$((props: IProps) => {
                   )}`}
                 />
                 <p class="flex place-content-center text-center">
-                  {"Monto aprobado: $" + found.amount}
+                  {"Monto aprobado: $" + parseFloat(found.amount).toFixed(2)}
                 </p>
                 <p class="flex place-content-center">
                   {`Expira el ${found.expiration}`}
