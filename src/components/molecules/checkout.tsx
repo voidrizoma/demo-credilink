@@ -33,8 +33,7 @@ export default component$((props: IProps) => {
 
     try {
       const baseUrl = envVars.apiUrlFlux;
-      const token =
-        "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
+      const token = envVars.tokenFlux;
 
       const authData = {
         grantType: "accessToken",
