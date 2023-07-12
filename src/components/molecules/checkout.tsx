@@ -3,6 +3,7 @@ import { Credilink } from "~/models/credilink-model";
 import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { CheckoutModel } from "~/models/checkout-model";
 import { prepareMailData } from "~/helpers/mailDataGenerator";
+import { envVars } from "~/models/global-vars";
 
 export interface IProps {
   credilink: Credilink;
@@ -31,7 +32,7 @@ export default component$((props: IProps) => {
     // };
 
     try {
-      const baseUrl = "https://sandbox.fluxqr.com/v3";
+      const baseUrl = envVars.apiUrlFlux;
       const token =
         "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
 
@@ -55,7 +56,7 @@ export default component$((props: IProps) => {
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: parseInt(props.checkout.userData.amount) * 100,
-            expiration: "2023-02-23T23:05:00.000Z",
+            expiration: "2023-12-12T23:05:00.000Z",
             isPayable: true,
             customer: {
               name: "Usuario de prueba",

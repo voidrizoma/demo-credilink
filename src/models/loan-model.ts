@@ -7,7 +7,7 @@ export interface Loan {
   text1: string;
   text2: string;
   qr: string;
-  amount: string;
+  amount: string | number;
   expiration: string;
   bg: string
 }

@@ -50,7 +50,7 @@ export default component$((props: IProps) => {
                   )}`}
                 />
                 <p class="flex place-content-center text-center">
-                  {"Monto aprobado: $" + parseFloat(found.amount).toFixed(2)}
+                  {"Monto aprobado: $" + parseFloat(found.amount/100).toFixed(2)}
                 </p>
                 <p class="flex place-content-center">
                   {`Expira el ${found.expiration}`}
