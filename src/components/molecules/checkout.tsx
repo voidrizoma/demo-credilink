@@ -106,11 +106,13 @@ export default component$((props: IProps) => {
     <>
       <div class="flex w-[100%] place-content-center">
         <div class="flex flex-col gap-4 rounded m-8 p-4">
-          <img
-            class="pb-3 h-[10%]"
-            src={issuerLogoFinder(props.checkout.issuer)}
-            alt=""
-          />
+          <div class="flex self-center w-[150px] h-[150px]">
+            <img
+              class="pb-3"
+              src={issuerLogoFinder(props.checkout.issuer)}
+              alt=""
+            />
+          </div>
 
           <div class="text-[20px] font-medium grid grid-cols-2 gap-4 bg-[#f5f6fb] rounded border-[#ffffff] border-[1px] p-3">
             {/* C1 */}

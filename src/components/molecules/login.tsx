@@ -11,26 +11,34 @@ export default component$((props: IProps) => {
     <>
       <div class="flex w-[100%] place-content-center">
         <div class="flex flex-col place-content-center gap-6 rounded-md m-8 p-4 bg-[#f5f6fb]">
-          <img
-            class="pb-3 h-[15%]"
-            src={issuerLogoFinder(props.checkout.issuer)}
-            alt=""
-          />
+          <div class="flex self-center w-[150px] h-[150px]">
+            <img
+              class="pb-3"
+              src={issuerLogoFinder(props.checkout.issuer)}
+              alt=""
+            />
+          </div>
 
           <div class="flex flex-col gap-6 text-[20px] font-medium rounded p-3">
             {/* C1 */}
             <div>
-              <label class="font-semibold" for="email">Email</label>
+              <label class="font-semibold" for="email">
+                Email
+              </label>
               <input
                 class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
-                placeholder={props.checkout.userData.email || "user@company.com"}
+                placeholder={
+                  props.checkout.userData.email || "user@company.com"
+                }
                 disabled
               />
             </div>
 
             {/* C2 */}
             <div>
-              <label class="font-semibold" for="password">Contraseña</label>
+              <label class="font-semibold" for="password">
+                Contraseña
+              </label>
               <input
                 class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
                 value="password"
