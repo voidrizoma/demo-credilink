@@ -50,19 +50,29 @@ export default component$((props: IProps) => {
         if (res.status >= 200 && res.status < 300) {
           const { data } = await res.json();
           const resToken = data?.accessToken;
-          console.log("resToken: ", resToken);
-
+          // console.log("resToken: ", resToken);
+          // {
+          //   "commerce": "188e2df4-b923-4398-9b81-812866ec08a1",
+          //   "amount": 200,
+          //   "expiration": "2023-12-12T05:59:59.999Z",
+          //   "isPayable": true,
+          //   "customer": {
+          //     "name": "fran",
+          //     "email": "fgu0611@gmail.com"
+          //   }
+          // }
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: parseInt(props.checkout.userData.amount) * 100,
-            expiration: "2023-12-12T23:05:00.000Z",
+            // expiration: "2023-12-12T23:05:00.000Z",
+            expiration: "2023-12-12T05:59:59.999Z",
             isPayable: true,
             customer: {
               name: "Usuario de prueba",
               email: props.checkout.userData.email,
             },
           };
-
+          // console.log(dataCoupon);
           await fetch(`${baseUrl}/coupons`, {
             method: "POST",
             headers: new Headers({
@@ -73,25 +83,25 @@ export default component$((props: IProps) => {
           }).then(async (res) => {
             const { data } = await res.json();
             state.id = data.id;
-            console.log("DATOS DEL CUPÓN: ", data);
-            await fetch(mailServiceUrl, {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-                "Access-Control-Allow-Origin": mailServiceUrl,
-              },
-              body: prepareMailData(
-                props.credilink,
-                props.checkout,
-                expiresIn.toString(),
-                ""
-              ),
-            }).then(async (res) => {
-              if (res.status >= 200 && res.status < 300) {
-                const { data } = await res.json();
-                console.log("mailsent", JSON.stringify(data));
-              }
-            });
+            // console.log("DATOS DEL CUPÓN: ", data);
+            // await fetch(mailServiceUrl, {
+            //   method: "POST",
+            //   headers: {
+            //     "Content-type": "application/json",
+            //     "Access-Control-Allow-Origin": mailServiceUrl,
+            //   },
+            //   body: prepareMailData(
+            //     props.credilink,
+            //     props.checkout,
+            //     expiresIn.toString(),
+            //     ""
+            //   ),
+            // }).then(async (res) => {
+            //   if (res.status >= 200 && res.status < 300) {
+            //     const { data } = await res.json();
+            //     console.log("mailsent", JSON.stringify(data));
+            //   }
+            // });
           });
         }
       });

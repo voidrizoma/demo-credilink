@@ -3,9 +3,9 @@ export interface EnvVars {
 }
 
 // const apiExt= globalVars.apiUrl;
-const apiLocal = import.meta.env.VITE_API || "https://flux-api-six.vercel.app/";
-// const apiLocal = import.meta.env.VITE_API || "http://localhost:3000/";
-const apiFlux = import.meta.env.VITE_API_FLUX || "https://sandbox.fluxqr.com/v3";
+// const apiLocal = import.meta.env.VITE_API || "https://flux-api-six.vercel.app/";
+const apiLocal = import.meta.env.VITE_API;
+const apiFlux = import.meta.env.VITE_API_FLUX;
 const tokenFlux = import.meta.env.VITE_TOKEN;
 
 export const envVars = {
