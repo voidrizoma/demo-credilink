@@ -2,8 +2,9 @@ import { component$, $, useStore } from "@builder.io/qwik";
 import { Credilink } from "~/models/credilink-model";
 import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { CheckoutModel } from "~/models/checkout-model";
-import { prepareMailData } from "~/helpers/mailDataGenerator";
 import { envVars } from "~/models/global-vars";
+import { ModalLoading } from "./modalLoading";
+// import { prepareMailData } from "~/helpers/mailDataGenerator";
 
 export interface IProps {
   credilink: Credilink;
@@ -16,13 +17,15 @@ export default component$((props: IProps) => {
   const state = useStore({
     currentRadio: "",
     id: "",
+    isLoading: false,
   });
 
   const checkoutSubmit = $(async (loanId: string) => {
+    state.isLoading = true;
     const expiresIn = new Date();
     expiresIn.setHours(23, 59, 59, 0).toLocaleString();
-    const mailServiceUrl =
-      "https://paywithflux-services-notifier-staging.services.k8s.fluxqr.net/";
+    // const mailServiceUrl =
+    //   "https://paywithflux-services-notifier-staging.services.k8s.fluxqr.net/";
 
     // const config = {
     //   headers: {
@@ -113,6 +116,7 @@ export default component$((props: IProps) => {
 
   return (
     <>
+      {state.isLoading && <ModalLoading />}
       <div class="flex w-[100%] place-content-center">
         <div class="flex flex-col gap-4 rounded m-8 p-4">
           <div class="flex self-center w-[150px] h-[150px]">
@@ -226,7 +230,7 @@ export default component$((props: IProps) => {
               onClick$={() => {
                 checkoutSubmit(props.checkout.issuer.id);
               }}
-              disabled={!state.currentRadio?.length}
+              disabled={state.isLoading || !state.currentRadio?.length}
             >
               Continuar
             </button>
