@@ -66,7 +66,7 @@ export default component$((props: IProps) => {
             amount: parseInt(props.checkout.userData.amount) * 100,
             // expiration: "2023-12-12T23:05:00.000Z",
             expiration: "2023-12-12T05:59:59.999Z",
-            isPayable: true,
+            isPayable: false,
             customer: {
               name: "Usuario de prueba",
               email: props.checkout.userData.email,
