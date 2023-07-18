@@ -13,4 +13,5 @@
 * {
   font-family: 'Jost', sans-serif;
   transition-duration: 300ms;
+  scroll-behavior: smooth;
 }

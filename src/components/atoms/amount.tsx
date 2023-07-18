@@ -22,6 +22,12 @@ export default component$((props: IProps) => {
         onInput$={(ev) =>
           (props.store.amount = (ev.target as HTMLInputElement).value)
         }
+        onFocus$={() => {
+          setTimeout(() => {
+            const el = document?.getElementById(`flux-scroll-here`);
+            el !== null && el?.scrollIntoView();
+          }, 1000);
+        }}
         onBlur$={() => {
           if (props.store.amount?.length > 0) {
             if (!isValidAmount(props.min, props.max, props.store.amount)) {
@@ -32,9 +38,12 @@ export default component$((props: IProps) => {
           }
         }}
       />
-      
-        <p class={`${!props.validationStore.validAmount ? "text-red-600": "hidden"} text-[13px]`}>{`Ingresa un monto entre ${props.min} y ${props.max} pesos, que sea múltiplo de 100`}</p>
-      
+
+      <p
+        class={`${
+          !props.validationStore.validAmount ? "text-red-600" : "hidden"
+        } text-[13px]`}
+      >{`Ingresa un monto entre ${props.min} y ${props.max} pesos, que sea múltiplo de 100`}</p>
     </div>
   );
 });

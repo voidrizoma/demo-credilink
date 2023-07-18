@@ -18,7 +18,7 @@ import LinkText from "../atoms/linkText";
 import { CheckoutModel } from "~/models/checkout-model";
 export interface IProps {
   credilink: Credilink;
-  checkout: CheckoutModel
+  checkout: CheckoutModel;
 }
 
 export default component$((props: IProps) => {
@@ -44,15 +44,14 @@ export default component$((props: IProps) => {
   });
 
   const submitData = $(async () => {
-    console.log("SUBMIT OK")
+    console.log("SUBMIT OK");
 
     store.isLoading = true;
-    
+
     setTimeout(() => {
       store.isLoading = false;
       props.checkout.isLogin = true;
     }, 2000);
-
   });
 
   //   const submitData$ = $(async () => {
@@ -138,13 +137,17 @@ export default component$((props: IProps) => {
                 store={store}
                 validationStore={validationStore}
               />
-              <Amount
-                placeholder="Monto del crédito"
-                store={store}
-                validationStore={validationStore}
-                min={props.credilink.min}
-                max={props.credilink.max}
-              />
+              <div id="flux-scroll-here" class="flex flex-col">
+                <div class="h-[10px]">
+                  <Amount
+                    placeholder="Monto del crédito"
+                    store={store}
+                    validationStore={validationStore}
+                    min={props.credilink.min}
+                    max={props.credilink.max}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

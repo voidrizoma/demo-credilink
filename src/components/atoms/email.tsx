@@ -13,6 +13,7 @@ export default component$((props: IProps) => {
   return (
     <div class="flex flex-col gap-2 place-content-center">
       <input
+        type="email"
         class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
         placeholder={props.placeholder}
         value={props.store.email}
