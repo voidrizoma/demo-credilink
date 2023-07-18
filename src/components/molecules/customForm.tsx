@@ -138,15 +138,14 @@ export default component$((props: IProps) => {
                 validationStore={validationStore}
               />
               <div id="flux-scroll-here" class="flex flex-col">
-                <div class="h-[10px]">
-                  <Amount
-                    placeholder="Monto del crédito"
-                    store={store}
-                    validationStore={validationStore}
-                    min={props.credilink.min}
-                    max={props.credilink.max}
-                  />
-                </div>
+                <div class="h-[10px]"></div>
+                <Amount
+                  placeholder="Monto del crédito"
+                  store={store}
+                  validationStore={validationStore}
+                  min={props.credilink.min}
+                  max={props.credilink.max}
+                />
               </div>
             </div>
           </div>
