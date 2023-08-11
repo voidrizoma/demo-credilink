@@ -117,6 +117,7 @@ export default component$((props: IProps) => {
             <CustomText text={props.credilink.commerceName} />
           )}
         </div>
+        <div>estas en demo2</div>
         <div class="flex flex-col place-content-center bg-white h-[300px]">
           <CustomText
             text={props.credilink.title}
