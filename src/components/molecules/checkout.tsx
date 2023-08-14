@@ -4,7 +4,6 @@ import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { CheckoutModel } from "~/models/checkout-model";
 import { envVars } from "~/models/global-vars";
 import { ModalLoading } from "./modalLoading";
-// import { prepareMailData } from "~/helpers/mailDataGenerator";
 
 export interface IProps {
   credilink: Credilink;
@@ -13,7 +12,6 @@ export interface IProps {
 
 export default component$((props: IProps) => {
   // NAVIGATES TO /?loan=<ID>
-
   const state = useStore({
     currentRadio: "",
     id: "",
@@ -24,15 +22,6 @@ export default component$((props: IProps) => {
     state.isLoading = true;
     const expiresIn = new Date();
     expiresIn.setHours(23, 59, 59, 0).toLocaleString();
-    // const mailServiceUrl =
-    //   "https://paywithflux-services-notifier-staging.services.k8s.fluxqr.net/";
-
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Origin": mailServiceUrl,
-    //   },
-    // };
 
     try {
       const baseUrl = envVars.apiUrlFlux;
@@ -53,21 +42,9 @@ export default component$((props: IProps) => {
         if (res.status >= 200 && res.status < 300) {
           const { data } = await res.json();
           const resToken = data?.accessToken;
-          // console.log("resToken: ", resToken);
-          // {
-          //   "commerce": "188e2df4-b923-4398-9b81-812866ec08a1",
-          //   "amount": 200,
-          //   "expiration": "2023-12-12T05:59:59.999Z",
-          //   "isPayable": true,
-          //   "customer": {
-          //     "name": "fran",
-          //     "email": "fgu0611@gmail.com"
-          //   }
-          // }
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: parseInt(props.checkout.userData.amount) * 100,
-            // expiration: "2023-12-12T23:05:00.000Z",
             expiration: "2023-12-12T05:59:59.999Z",
             isPayable: false,
             customer: {
@@ -86,30 +63,21 @@ export default component$((props: IProps) => {
           }).then(async (res) => {
             const { data } = await res.json();
             state.id = data.id;
-            // console.log("DATOS DEL CUPÓN: ", data);
-            // await fetch(mailServiceUrl, {
-            //   method: "POST",
-            //   headers: {
-            //     "Content-type": "application/json",
-            //     "Access-Control-Allow-Origin": mailServiceUrl,
-            //   },
-            //   body: prepareMailData(
-            //     props.credilink,
-            //     props.checkout,
-            //     expiresIn.toString(),
-            //     ""
-            //   ),
-            // }).then(async (res) => {
-            //   if (res.status >= 200 && res.status < 300) {
-            //     const { data } = await res.json();
-            //     console.log("mailsent", JSON.stringify(data));
-            //   }
-            // });
           });
         }
       });
     } catch (err) {
       console.log(err);
+    }
+    if (state.id?.length > 0) {
+      console.log("");
+      await fetch(envVars.urlZapier, {
+        method: "POST",
+        body: JSON.stringify({
+          tel: props.checkout.userData.phone,
+          id: state.id,
+        }),
+      });
     }
     window.location.href = `/?loan=${state.id?.length > 0 ? state.id : loanId}`;
   });

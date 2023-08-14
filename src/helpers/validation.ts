@@ -1,11 +1,13 @@
 export interface Validation {
   validEmail: boolean;
-  validAmount: boolean
+  validAmount: boolean;
+  validPhone: boolean;
 }
 
 export const initValidation = {
   validEmail: true,
-  validAmount: true
+  validAmount: true,
+  validPhone: true
 }
 
 export const isValidEmail = (email: string) => {
@@ -29,12 +31,13 @@ export const isValidAmount = (min: number, max: number, amount: string) => {
   if (!amount?.length || parseInt(amount) < 0) {
     return false
   }
-  // if (
-  //   parseInt(amount) < min ||
-  //   parseInt(amount) > max ||
-  //   parseInt(amount) % 100 !== 0
-  // ) {
-  //   return false;
-  // }
+  return true;
+};
+
+export const isValidPhone = (phone: string) => {
+  if (!phone?.length) {
+    console.log('no phone')
+    return false
+  }
   return true;
 };

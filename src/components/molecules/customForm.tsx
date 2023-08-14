@@ -1,21 +1,22 @@
 import { component$, useStore, $, useWatch$ } from "@builder.io/qwik";
 import CustomText from "../atoms/customText";
-import Email from "../atoms/email";
+// import Email from "../atoms/email";
 import Amount from "../atoms/amount";
 import { Credilink } from "~/models/credilink-model";
 import { initialStoreData, StoreData } from "~/models/store-data-model";
 import {
   initValidation,
   isValidAmount,
-  isValidEmail,
+  // isValidEmail,
+  isValidPhone,
   Validation,
 } from "~/helpers/validation";
 import Logo from "../atoms/logo";
 import Modal from "../atoms/modal2";
-// import { envVars } from "~/models/global-vars";
 import Issuers from "../atoms/issuers";
 import LinkText from "../atoms/linkText";
 import { CheckoutModel } from "~/models/checkout-model";
+import Phone from "../atoms/phone";
 export interface IProps {
   credilink: Credilink;
   checkout: CheckoutModel;
@@ -28,11 +29,11 @@ export default component$((props: IProps) => {
 
   useWatch$(({ track }) => {
     const formState = track(() => store);
-    if (formState.email?.length > 0 && !isValidEmail(formState.email)) {
-      validationStore.validEmail = false;
-    } else {
-      validationStore.validEmail = true;
-    }
+    // if (formState.email?.length > 0 && !isValidEmail(formState.email)) {
+    //   validationStore.validEmail = false;
+    // } else {
+    //   validationStore.validEmail = true;
+    // }
     if (
       formState.amount?.length > 0 &&
       !isValidAmount(props.credilink.min, props.credilink.max, formState.amount)
@@ -40,6 +41,14 @@ export default component$((props: IProps) => {
       validationStore.validAmount = false;
     } else {
       validationStore.validAmount = true;
+    }
+    if (
+      formState.phone?.length > 0 &&
+      !isValidPhone(formState.phone)
+    ) {
+      validationStore.validPhone = false;
+    } else {
+      validationStore.validPhone = true;
     }
   });
 
@@ -53,55 +62,6 @@ export default component$((props: IProps) => {
       props.checkout.isLogin = true;
     }, 2000);
   });
-
-  //   const submitData$ = $(async () => {
-  //   store.isLoading = true;
-  //   store.commerce = props.credilink.commerce;
-  //   store.issuer = props.credilink.issuer;
-
-  //   setTimeout(async () => {
-  //     const refreshToken =
-  //       "F4GgY2dLYp3Y5Ca1XWoRL6tnqFN2NxwY8PCiQevklrowgcB8Vf9UBENbMTAH4NJS8vQCx6xyjMOERENpQSSsTdSRXYl1ZRShL9uZIXsC7o8Xii5wHdbrwzEGurhY0vdF";
-  //     const reqBody = {
-  //       grantType: "accessToken",
-  //       refreshToken,
-  //     };
-
-  //     try {
-  //       await fetch(`${api}auth/tokens/refreshToken`, {
-  //         method: "POST",
-  //         // mode: "no-cors",
-  //         headers: { "Content-type": "application/json" },
-  //         body: JSON.stringify(reqBody),
-  //       }).then(async (res) => {
-  //         if (res.status === 200) {
-  //           const { data } = await res.json();
-  //           const dataCredit = {
-  //             ...store,
-  //             amount: parseFloat(store.amount) * 100,
-  //           };
-
-  //           await fetch(`${api}loans`, {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-type": "application/json",
-  //               Authorization: `Bearer ${data.accessToken}`,
-  //             },
-  //             body: JSON.stringify(dataCredit),
-  //           }).then(async (res) => {
-  //             const { data } = await res.json();
-  //             if (data.url?.length > 0) window.location.href = data.url;
-  //           });
-  //         } else {
-  //           store.isLoading = false;
-  //           store.error = "Ocurrió un error";
-  //         }
-  //       });
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }, 2000);
-  // });
 
   return (
     <>
@@ -117,7 +77,7 @@ export default component$((props: IProps) => {
             <CustomText text={props.credilink.commerceName} />
           )}
         </div>
-        <div>estas en demo2</div>
+        <div class="flex place-content-center text-white">DEMO</div>
         <div class="flex flex-col place-content-center bg-white h-[300px]">
           <CustomText
             text={props.credilink.title}
@@ -133,15 +93,20 @@ export default component$((props: IProps) => {
               weight="300"
             />
             <div class="flex flex-col gap-4 px-4 pb-1">
-              <Email
-                placeholder="Ingresa tu correo"
+              <Phone
+                placeholder="Teléfono de Whatsapp"
                 store={store}
                 validationStore={validationStore}
               />
+              {/* <Email
+                placeholder="Ingresa tu correo"
+                store={store}
+                validationStore={validationStore}
+              /> */}
               <div id="flux-scroll-here" class="flex flex-col">
                 <div class="h-[10px]"></div>
                 <Amount
-                  placeholder="Monto del crédito"
+                  placeholder="Monto de tu compra"
                   store={store}
                   validationStore={validationStore}
                   min={props.credilink.min}

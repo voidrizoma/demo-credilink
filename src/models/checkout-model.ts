@@ -8,7 +8,7 @@ export interface CheckoutModel {
     proposal: string;
     color: string;
   };
-  userData: { email: string; amount: string };
+  userData: { email: string; amount: string; phone: string };
 }
 
 export const initialCheckout = {
@@ -24,5 +24,6 @@ export const initialCheckout = {
   userData: {
     email: "",
     amount: "",
+    phone: "",
   },
 };

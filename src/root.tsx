@@ -31,7 +31,14 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
         <RouterHead />
       </head>
-      <body lang="en">
+      <body
+        lang="en"
+        style={{
+          background: "#969696",
+          userSelect: "none",
+          backgroundImage: "linear-gradient(135deg, #b1b1b1, #222)",
+        }}
+      >
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WCJD478"
