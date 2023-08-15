@@ -65,7 +65,7 @@ export default component$((props: IProps) => {
     <>
       {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
       <div
-        class="flex flex-col place-content-center rounded-[5px] pb-4 pt-4 gap-3"
+        class="flex flex-col h-screen place-content-center pb-4 pt-4 gap-3"
         style={{ background: props.credilink.colorSecondary }}
       >
         <div class="flex place-content-center h-[80px]">
