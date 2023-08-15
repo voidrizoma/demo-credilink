@@ -1,4 +1,4 @@
-import { component$, Resource, useResource$} from "@builder.io/qwik";
+import { component$, Resource, useResource$ } from "@builder.io/qwik";
 import { Loan } from "../../models/loan-model";
 import Logo from "../atoms/logo";
 import Qr from "../atoms/qr";
@@ -24,19 +24,17 @@ export default component$((props: IProps) => {
   });
 
   return (
-    <div class="flex flex-col place-content-center text-black ">
+    <div class="flex flex-col text-black ">
       <Resource
         value={resource}
-        onPending={() => <ModalLoading/>}
-        onRejected={() => (
-          <Sorry />
-        )}
+        onPending={() => <ModalLoading />}
+        onRejected={() => <Sorry />}
         onResolved={(found: Loan) => {
           return (
             <div>
-              <div class="flex flex-col py-[2%] px-[10%] place-content-center h-screen gap-2">
-                  <Logo url={found.logoIssuer} />
-                <p class="flex place-content-center text-center font-bold">
+              <div class="flex flex-col py-[2%] px-[10%] mt-[4%] h-screen gap-2">
+                <Logo url={found.logoIssuer} />
+                <p class="flex place-content-center text-center font-bold pt-[5%]">
                   {found.title}
                 </p>
                 <p class="flex place-content-center text-center">
@@ -49,14 +47,20 @@ export default component$((props: IProps) => {
                     found.qr
                   )}`}
                 />
-                <p class="flex place-content-center text-center">
-                  {"Monto aprobado: $" + parseFloat(found.amount/100).toFixed(2)}
-                </p>
+                {parseFloat(found?.amount as any) > 0 && (
+                  <p class="flex place-content-center text-center">
+                    {"Monto aprobado: $" +
+                      (parseFloat(found.amount as any)/100).toFixed(2)}
+                  </p>
+                )}
                 <p class="flex place-content-center">
                   {`Expira el ${found.expiration}`}
                 </p>
               </div>
-              <CustomFooter bgColor={found.bg} logoCommerce={found.logoCommerce}/>
+              <CustomFooter
+                bgColor={found.bg}
+                logoCommerce={found.logoCommerce}
+              />
             </div>
           );
         }}

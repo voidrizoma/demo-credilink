@@ -4,6 +4,7 @@ import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { CheckoutModel } from "~/models/checkout-model";
 import { envVars } from "~/models/global-vars";
 import { ModalLoading } from "./modalLoading";
+import { initialLoan } from "~/models/loan-model";
 
 export interface IProps {
   credilink: Credilink;
@@ -16,6 +17,7 @@ export default component$((props: IProps) => {
     currentRadio: "",
     id: "",
     isLoading: false,
+    qrData: initialLoan,
   });
 
   const checkoutSubmit = $(async (loanId: string) => {
@@ -63,30 +65,40 @@ export default component$((props: IProps) => {
           }).then(async (res) => {
             const { data } = await res.json();
             state.id = data.id;
+            state.qrData = data;
           });
         }
       });
     } catch (err) {
       console.log(err);
     }
-    if (state.id?.length > 0) {
+    if (state.id?.length > 0 && state.qrData.commerce?.length) {
       try {
         const response = await fetch(envVars.urlZapier, {
           method: "POST",
           body: JSON.stringify({
             tel: `+52${props.checkout.userData.phone}`,
-            id: state.id,
+            id: state.qrData.amount,
+            imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
+              state.qrData.qr
+            )}`,
+            amount: state.qrData.amount,
+            commerce: state.qrData.commerce,
+            expiration: state.qrData.expiration,
+            qr: state.qrData.qr,
           }),
         });
         const result = await response.json();
         console.log("success", result);
         if (response?.status === 200) {
+          console.log(state.qrData);
           window.location.href = `/?loan=${state.id}`;
         }
       } catch (e) {
         console.log("error", e);
       }
     } else {
+      console.log(state.qrData);
       window.location.href = `/?loan=${loanId}`;
     }
   });
