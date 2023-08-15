@@ -74,7 +74,7 @@ export default component$((props: IProps) => {
         const response = await fetch(envVars.urlZapier, {
           method: "POST",
           body: JSON.stringify({
-            tel: props.checkout.userData.phone,
+            tel: `+52${props.checkout.userData.phone}`,
             id: state.id,
           }),
         });
