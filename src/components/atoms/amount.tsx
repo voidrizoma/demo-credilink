@@ -43,7 +43,8 @@ export default component$((props: IProps) => {
         class={`${
           !props.validationStore.validAmount ? "text-red-600" : "hidden"
         } text-[13px]`}
-      >{`Ingresa un monto entre ${props.min} y ${props.max} pesos, que sea múltiplo de 100`}</p>
+      >{`Ingresa un monto`}</p>
+      {/* >{`Ingresa un monto entre ${props.min} y ${props.max} pesos`}</p> */}
       <p class="text-black text-[13px]">
         Tip: usa el monto exacto, con centavos si es necesario
       </p>

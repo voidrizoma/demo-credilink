@@ -17,6 +17,7 @@ import Issuers from "../atoms/issuers";
 import LinkText from "../atoms/linkText";
 import { CheckoutModel } from "~/models/checkout-model";
 import Phone from "../atoms/phone";
+// import { envVars } from "~/models/global-vars";
 export interface IProps {
   credilink: Credilink;
   checkout: CheckoutModel;
@@ -42,10 +43,7 @@ export default component$((props: IProps) => {
     } else {
       validationStore.validAmount = true;
     }
-    if (
-      formState.phone?.length > 0 &&
-      !isValidPhone(formState.phone)
-    ) {
+    if (formState.phone?.length > 0 && !isValidPhone(formState.phone)) {
       validationStore.validPhone = false;
     } else {
       validationStore.validPhone = true;
@@ -113,6 +111,26 @@ export default component$((props: IProps) => {
                   max={props.credilink.max}
                 />
               </div>
+              {/* <div class="flex place-content-center">
+                <button
+                class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                  onClick$={async () => {
+                    try {
+                      const response = await fetch(envVars.urlZapier, {
+                        method: "POST",
+                        body: JSON.stringify({
+                          tel: "12345678",
+                          id: "ee7db378-3dbc-4947-b65e-fe78b990592e",
+                        }),
+                      });
+                      const result = await response.json();
+                      console.log("success", result);
+                    } catch (e) {
+                      console.log("error", e);
+                    }
+                  }}
+                >WP btn</button>
+              </div> */}
             </div>
           </div>
         </div>

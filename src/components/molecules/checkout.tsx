@@ -70,16 +70,25 @@ export default component$((props: IProps) => {
       console.log(err);
     }
     if (state.id?.length > 0) {
-      console.log("");
-      await fetch(envVars.urlZapier, {
-        method: "POST",
-        body: JSON.stringify({
-          tel: props.checkout.userData.phone,
-          id: state.id,
-        }),
-      });
+      try {
+        const response = await fetch(envVars.urlZapier, {
+          method: "POST",
+          body: JSON.stringify({
+            tel: props.checkout.userData.phone,
+            id: state.id,
+          }),
+        });
+        const result = await response.json();
+        console.log("success", result);
+        if (response?.status === 200) {
+          window.location.href = `/?loan=${state.id}`;
+        }
+      } catch (e) {
+        console.log("error", e);
+      }
+    } else {
+      window.location.href = `/?loan=${loanId}`;
     }
-    window.location.href = `/?loan=${state.id?.length > 0 ? state.id : loanId}`;
   });
 
   return (

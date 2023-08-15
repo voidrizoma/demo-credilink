@@ -35,8 +35,9 @@ export const isValidAmount = (min: number, max: number, amount: string) => {
 };
 
 export const isValidPhone = (phone: string) => {
-  if (!phone?.length) {
-    console.log('no phone')
+  console.log(phone?.length)
+  if (phone?.length !== 10 ) {
+    console.log('')
     return false
   }
   return true;
