@@ -50,11 +50,18 @@ export default component$((props: IProps) => {
                 {parseFloat(found?.amount as any) > 0 && (
                   <p class="flex place-content-center text-center">
                     {"Monto aprobado: $" +
-                      (parseFloat(found.amount as any)/100).toFixed(2)}
+                      (parseFloat(found.amount as any) / 100).toFixed(2)}
                   </p>
                 )}
                 <p class="flex place-content-center">
-                  {`Expira el ${found.expiration}`}
+                  {`Expira el ${new Date(found.expiration).toLocaleString(
+                    "es-MX",
+                    {
+                      timeZone: "America/Mexico_City",
+                      dateStyle: "long",
+                      timeStyle: "short",
+                    }
+                  )}hrs`}
                 </p>
               </div>
               <CustomFooter
