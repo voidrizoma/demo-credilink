@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { CheckoutModel } from "~/models/checkout-model";
+import { envVars } from "~/models/global-vars";
 
 export interface IProps {
   checkout: CheckoutModel;
@@ -28,7 +29,7 @@ export default component$((props: IProps) => {
               <input
                 class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
                 placeholder={
-                  props.checkout.userData.email || "user@company.com"
+                  props.checkout.userData.email || envVars.fixedEmail
                 }
                 disabled
               />
