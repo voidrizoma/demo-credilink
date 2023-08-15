@@ -41,9 +41,21 @@ export default component$((props: IProps) => {
         if (res.status >= 200 && res.status < 300) {
           const { data } = await res.json();
           const resToken = data?.accessToken;
+          // console.log("resToken: ", resToken);
+          // {
+          //   "commerce": "188e2df4-b923-4398-9b81-812866ec08a1",
+          //   "amount": 200,
+          //   "expiration": "2023-12-12T05:59:59.999Z",
+          //   "isPayable": true,
+          //   "customer": {
+          //     "name": "fran",
+          //     "email": "fgu0611@gmail.com"
+          //   }
+          // }
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: parseInt(props.checkout.userData.amount) * 100,
+            // expiration: "2023-12-12T23:05:00.000Z",
             expiration: "2023-12-12T05:59:59.999Z",
             isPayable: false,
             customer: {
@@ -61,7 +73,7 @@ export default component$((props: IProps) => {
             body: JSON.stringify(dataCoupon),
           }).then(async (res) => {
             const { data } = await res.json();
-            if (data.id?.length > 0 && data.commerce?.length) {
+            if (data?.id?.length) {
               try {
                 const zapierData = {
                   tel: `+52${props.checkout.userData.phone}`,
@@ -88,6 +100,7 @@ export default component$((props: IProps) => {
               } catch (e) {
                 console.log("error", e);
               }
+              // window.location.href = `/?loan=${data.id}`;
             } else {
               window.location.href = `/?loan=${loanId}`;
             }
