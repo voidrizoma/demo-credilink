@@ -13,9 +13,9 @@ export default component$((props: IProps) => {
   return (
     <div class="flex flex-col gap-2 place-content-center">
       <div class="flex flex-row gap-1">
-        <button class="bg-transparent text-black font-semibold py-2 px-4 border border-black rounded cursor-not-allowed">
+        {/* <button class="bg-transparent text-black font-semibold py-2 px-4 border border-black rounded cursor-not-allowed">
           +52
-        </button>
+        </button> */}
         <input
           type="phone"
           autoComplete="true"
