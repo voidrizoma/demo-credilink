@@ -6,6 +6,7 @@ import { ModalLoading } from "../modalLoading";
 import mp1 from "../../../assets/checkout/mp1.png";
 import mp2 from "../../../assets/checkout/mp2.png";
 import mp22 from "../../../assets/checkout/mp22.png";
+import mp23 from "../../../assets/checkout/mp23.png";
 import mp3 from "../../../assets/checkout/mp3.png";
 import CustomText from "~/components/atoms/customText";
 
@@ -120,33 +121,43 @@ export default component$((props: IProps) => {
   return (
     <>
       {state.isLoading && <ModalLoading />}
-      <div class="flex w-[100%] place-content-center">
-        <div class="flex flex-col rounded m-8 p-4 max-w-[500px]">
-          <img src={mp1} alt="mp-top-image-logo" />
-          <div class="flex flex-row justify-between place-content-center px-8 py-3">
-            <CustomText
-              text={props.credilink.commerceName}
-              color="#646464"
-              size="18px"
-            />
-            <CustomText
-              text={`$${parseFloat(props.checkout.userData.amount).toFixed(2)}`}
-              color="#646464"
-              size="18px"
-            />
+      <div class="flex flex-col rounded max-w-[500px]">
+        <img src={mp1} alt="mp-top-image-logo" />
+        <div class="flex flex-row justify-between place-content-center px-8 py-3">
+          <CustomText
+            text={props.credilink.commerceName}
+            color="#646464"
+            size="18px"
+          />
+          <CustomText
+            text={`$${parseFloat(props.checkout.userData.amount).toFixed(2)}`}
+            color="#646464"
+            size="18px"
+          />
+        </div>
+        <div class="bg-[#f0f0f0] p-6">
+          <div class="flex justify-center">
+            <img class="max-w-[320px]" src={mp2} alt="mp-middle-image-logo" />
           </div>
-          <div class="bg-[#f0f0f0] p-6">
-            <img src={mp2} alt="mp-middle-image-logo" />
-            <div class="p-3 bg-white">
-              <img src={mp22} alt="mp-middle2-image-logo" />
-              <div class="flex flex-col pt-3 px-4">
-                <p class="text-[16px] text-[#444444]">Meses</p>
+          <div class="py-3 bg-white rounded-[5px]">
+            <img src={mp22} alt="mp22-image" />
+            <div class="flex items-center">
+              <div class="flex justify-center items-center mx-2 w-[54px] h-[54px] rounded-[50px] border-[#c2c0c0] border-[1px]">
+                <p class='text-[18px] text-[#02b1e9] font-bold p-0 m-0'>
+                  {!state.currentOption?.length
+                    ? "1x"
+                    : state.currentOption.slice(0, 3)}
+                </p>
+              </div>
+              <div class="flex flex-col py-3 px-4">
+                <p class="text-[18px] text-[#444444]">Meses</p>
                 <select
-                onChange$={(e)=>{
-                    console.log(e.target.value)
-                    state.currentOption = e.target.value
-                }}
-                class="py-3 px-2 max-w-[400px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]">
+                  onChange$={(e) => {
+                    console.log(e.target.value);
+                    state.currentOption = e.target.value;
+                  }}
+                  class="mb-6 px-2 max-w-[400px] min-h-[60px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]"
+                >
                   {fees.map((e) => (
                     <option>{`${e.cuotes}x $ ${(
                       (e.factor * parseFloat(props.checkout.userData.amount)) /
@@ -159,9 +170,11 @@ export default component$((props: IProps) => {
               </div>
             </div>
           </div>
-
           {/* QUOTES */}
-          <div class="flex place-content-center text-[20px] font-semibold pt-3">
+          <div class="flex flex-col items-center text-[20px] font-semibold pt-3">
+            <div class="max-w-[350px]">
+              <img class="py-8" src={mp23} alt="mp23-image-logo" />
+            </div>
             <button
               class="text-white rounded-[5px] border-none h-[40px] w-full bg-[#02b1e9]"
               preventdefault:click
@@ -172,9 +185,9 @@ export default component$((props: IProps) => {
             >
               Pagar
             </button>
-          </div>
-          <div class="max-w-[120px] self-center">
-            <img src={mp3} alt="mp-end-image-logo" />
+            <div class="max-w-[120px]">
+              <img src={mp3} alt="mp3-image" />
+            </div>
           </div>
         </div>
       </div>
