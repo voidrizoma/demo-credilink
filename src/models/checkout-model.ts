@@ -14,16 +14,16 @@ export interface CheckoutModel {
 export const initialCheckout = {
   isLoading: false,
   isLogin: false,
-  isCheckout: true,
+  isCheckout: false,
   issuer: {
-    id: "mp-id",
-    name: "mp",
+    id: "kueski-id",
+    name: "kueski",
     proposal: "Paga en quincenas desde 0% de interés",
     color: "#1d294c",
   },
   userData: {
     email: "",
-    amount: "1",
+    amount: "",
     phone: "",
   },
 };
