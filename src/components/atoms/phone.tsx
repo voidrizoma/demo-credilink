@@ -17,7 +17,7 @@ export default component$((props: IProps) => {
           +52
         </button> */}
         <input
-          type="phone"
+          type="number"
           autoComplete="true"
           class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
           placeholder={props.placeholder}
@@ -41,7 +41,7 @@ export default component$((props: IProps) => {
           !props.validationStore.validPhone ? "text-red-600" : "hidden"
         } text-[13px]`}
       >
-        Ingresa un teléfono de almenos 10 digitos
+        Ingresa un teléfono de al menos 10 digitos
       </p>
     </div>
   );

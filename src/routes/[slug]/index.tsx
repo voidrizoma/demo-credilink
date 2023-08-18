@@ -5,9 +5,11 @@ import {
   useEndpoint,
 } from "@builder.io/qwik-city";
 import Checkout from "~/components/molecules/checkout";
+import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 // import CustomFooter from "~/components/molecules/customFooter";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
+import Loginmp from "~/components/molecules/logins/loginmp";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
 import { CheckoutModel, initialCheckout } from "~/models/checkout-model";
@@ -44,7 +46,14 @@ export default component$(() => {
             {!found?.commerce?.length && <Sorry />}
 
             {checkoutStore.isCheckout && (
-              <Checkout credilink={found} checkout={checkoutStore} />
+              <>
+                {checkoutStore.issuer.name !== "mp" && (
+                  <Checkout credilink={found} checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "mp" && (
+                  <Checkoutmp credilink={found} checkout={checkoutStore} />
+                )}
+              </>
             )}
 
             {!checkoutStore.isCheckout &&
@@ -69,9 +78,14 @@ export default component$(() => {
               )}
 
             {checkoutStore.isLogin && (
-              <div>
-                <Login checkout={checkoutStore} />
-              </div>
+              <>
+                {checkoutStore.issuer.name !== "mp" && (
+                  <Login checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "mp" && (
+                  <Loginmp checkout={checkoutStore} />
+                )}
+              </>
             )}
           </>
         )}

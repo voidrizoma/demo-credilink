@@ -32,7 +32,7 @@ export default component$((props: IProps) => {
 
   return (
     <>
-      <div class="flex place-content-center">
+      <div class="flex place-content-center pb-[10%]">
         <CustomText text="Selecciona una opción:" size="16px" weight="700" />
       </div>
       <div class="flex justify-center flex-wrap self-center gap-10">
