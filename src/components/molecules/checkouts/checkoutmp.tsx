@@ -123,7 +123,7 @@ export default component$((props: IProps) => {
       {state.isLoading && <ModalLoading />}
       <div class="flex flex-col rounded max-w-[500px]">
         <img src={mp1} alt="mp-top-image-logo" />
-        <div class="flex flex-row justify-between place-content-center px-8 py-3">
+        <div class="flex flex-row justify-between place-content-center px-8 py-1">
           <CustomText
             text={props.credilink.commerceName}
             color="#646464"
@@ -135,11 +135,11 @@ export default component$((props: IProps) => {
             size="18px"
           />
         </div>
-        <div class="bg-[#f0f0f0] p-6">
+        <div class="bg-[#f0f0f0] px-6 py-3">
           <div class="flex justify-center">
-            <img class="max-w-[320px]" src={mp2} alt="mp-middle-image-logo" />
+            <img class="max-w-[280px]" src={mp2} alt="mp-middle-image-logo" />
           </div>
-          <div class="py-3 bg-white rounded-[5px]">
+          <div class="py-2 bg-white rounded-[5px]">
             <img src={mp22} alt="mp22-image" />
             <div class="flex items-center">
               <div class="flex justify-center items-center mx-2 w-[54px] h-[54px] rounded-[50px] border-[#c2c0c0] border-[1px]">
@@ -149,14 +149,14 @@ export default component$((props: IProps) => {
                     : state.currentOption.slice(0, 3)}
                 </p>
               </div>
-              <div class="flex flex-col py-3 px-4">
+              <div class="flex flex-col py-1 px-4">
                 <p class="text-[18px] text-[#444444]">Meses</p>
                 <select
                   onChange$={(e) => {
                     console.log(e.target.value);
                     state.currentOption = e.target.value;
                   }}
-                  class="mb-6 px-2 max-w-[400px] min-h-[60px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]"
+                  class="mb-2 px-2 max-w-[400px] min-h-[60px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]"
                 >
                   {fees.map((e) => (
                     <option>{`${e.cuotes}x $ ${(
@@ -173,7 +173,7 @@ export default component$((props: IProps) => {
           {/* QUOTES */}
           <div class="flex flex-col items-center text-[20px] font-semibold pt-3">
             <div class="max-w-[350px]">
-              <img class="py-8" src={mp23} alt="mp23-image-logo" />
+              <img src={mp23} alt="mp23-image-logo" />
             </div>
             <button
               class="text-white rounded-[5px] border-none h-[40px] w-full bg-[#02b1e9]"

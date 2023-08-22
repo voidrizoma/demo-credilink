@@ -109,16 +109,16 @@ export default component$((props: IProps) => {
   return (
     <>
       {state.isLoading && <ModalLoading />}
-      <div class="flex flex-col gap-2 max-w-[500px] m-5 px-8 py-5 rounded-[8px] border-solid border-[2px] border-[#1a64ad]">
+      <div class="flex flex-col gap-1 max-w-[500px] m-3 px-8 py-2 rounded-[8px] border-solid border-[2px] border-[#1a64ad]">
         <img src={coppel1} alt="coppel1-img-head" />
-        <p class="text-[30px] font-bold">Hola</p>
-        <p class="text-[20px]">Estás a punto de terminar tu compra de</p>
-        <p class="text-[20px] font-bold">Crédito Coppel Pay</p>
+        <p class="text-[25px] font-bold">Hola</p>
+        <p class="text-[16px]">Estás a punto de terminar tu compra de</p>
+        <p class="text-[16px] font-bold">Crédito Coppel Pay</p>
         <div class="flex flex-col">
           {/* inputs */}
           {/* AMOUNT */}
           <p class="text-[14px] text-[#818080]">Precio de contado:</p>
-          <p class="text-[20px] font-bold">{`$${parseInt(
+          <p class="text-[16px] font-bold">{`$${parseInt(
             props.checkout.userData.amount
           ).toLocaleString("es-MX", {
             minimumFractionDigits: 0,
@@ -135,7 +135,7 @@ export default component$((props: IProps) => {
             Precio con crédito de Coppel Pay:
           </p>
           <div class="flex flex-row items-center">
-            <p class="text-[20px] font-bold pr-2">{`$${(
+            <p class="text-[16px] font-bold pr-2">{`$${(
               parseInt(props.checkout.userData.amount) * 1.43
             ).toLocaleString("es-MX", {
               minimumFractionDigits: 0,
@@ -148,7 +148,7 @@ export default component$((props: IProps) => {
           {/* CUOTES */}
           <p class="text-[14px] text-[#818080]">Tu abono mensual será de:</p>
           <div class="flex flex-row items-center">
-            <p class="text-[20px] font-bold pr-2">{`$${(
+            <p class="text-[16px] font-bold pr-2">{`$${(
               (parseInt(props.checkout.userData.amount) * 1.43) /
               12
             ).toLocaleString("es-MX", {
@@ -163,15 +163,15 @@ export default component$((props: IProps) => {
           <p class="text-[14px] text-[#818080]">
             Enviaremos tu recibo a este correo:
           </p>
-          <p class="text-[20px] font-bold pr-2">{envVars.fixedEmail}</p>
+          <p class="text-[16px] font-bold pr-2">{envVars.fixedEmail}</p>
           <div class="border-b-2 border-grey"></div>
           <div class="pb-8"></div>
           {/* ending texts */}
-          <p class="text-[20px] font-bold">Finaliza tu compra</p>
-          <p class="text-[18px] pt-4">
+          <p class="text-[18px] font-bold">Finaliza tu compra</p>
+          <p class="text-[16px] pt-1">
             Da clic en el botón para finalizar tu compra.
           </p>
-          <p class="text-[18px]">
+          <p class="text-[16px]">
             Enviaremos tu recibo por correo. Recuerda revisar la bandeja de
             correo no deseado y promociones
           </p>
