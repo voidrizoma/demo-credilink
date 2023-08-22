@@ -5,10 +5,12 @@ import {
   useEndpoint,
 } from "@builder.io/qwik-city";
 import Checkout from "~/components/molecules/checkout";
+import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 // import CustomFooter from "~/components/molecules/customFooter";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
+import Logincoppel from "~/components/molecules/logins/logincoppel";
 import Loginmp from "~/components/molecules/logins/loginmp";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
@@ -47,11 +49,14 @@ export default component$(() => {
 
             {checkoutStore.isCheckout && (
               <>
-                {checkoutStore.issuer.name !== "mp" && (
+                {checkoutStore.issuer.name === "aplazo" && (
                   <Checkout credilink={found} checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "mp" && (
                   <Checkoutmp credilink={found} checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "coppel" && (
+                  <Checkoutcoppel credilink={found} checkout={checkoutStore} />
                 )}
               </>
             )}
@@ -79,11 +84,14 @@ export default component$(() => {
 
             {checkoutStore.isLogin && (
               <>
-                {checkoutStore.issuer.name !== "mp" && (
+                {checkoutStore.issuer.name === "aplazo" && (
                   <Login checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "mp" && (
                   <Loginmp checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "coppel" && (
+                  <Logincoppel checkout={checkoutStore} />
                 )}
               </>
             )}
