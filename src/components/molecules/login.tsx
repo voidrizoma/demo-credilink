@@ -11,7 +11,7 @@ export default component$((props: IProps) => {
   return (
     <>
       <div class="flex w-[100%] place-content-center">
-        <div class="flex flex-col place-content-center gap-6 rounded-md m-8 p-4 bg-[#f5f6fb]">
+        <div class="flex flex-col place-content-center gap-6 rounded-md m-8 p-4">
           <div class="flex self-center w-[150px] h-[150px]">
             <img
               class="pb-3"
@@ -53,9 +53,9 @@ export default component$((props: IProps) => {
 
             <div class="flex place-content-center text-[16px] font-semibold pt-3">
               <button
-                class="text-white rounded-[5px] border-none h-[40px] w-full"
+                class="text-white rounded-[25px] border-none h-[40px] w-full"
                 style={{
-                  background: "#4ba3da",
+                  background: "#000",
                 }}
                 preventdefault:click
                 onClick$={() => {
@@ -69,7 +69,7 @@ export default component$((props: IProps) => {
                   }, 2000);
                 }}
               >
-                INICIAR SESIÓN
+                CONTINUAR
               </button>
             </div>
           </div>

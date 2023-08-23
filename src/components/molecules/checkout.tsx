@@ -140,7 +140,7 @@ export default component$((props: IProps) => {
             Selecciona el plazo de tu crédito por
           </div>
           <div
-            class={`m-0 p-0 text-[${props.checkout.issuer.color}] font-bold text-[26px] text-blue-500`}
+            class={`m-0 p-0 text-[${props.checkout.issuer.color}] font-bold text-[26px]`}
           >{`$${parseFloat(props.checkout.userData.amount)}.00`}</div>
 
           <div class="flex flex-col border-4 border-[#c2c2c2] rounded-md">
@@ -155,20 +155,19 @@ export default component$((props: IProps) => {
                   }}
                 />
               </div>
-              <div class="px-2 text-[18px] font-bold text-blue-500">{`1 Quincena de $${(
+              <div class="px-2 text-[18px] font-bold">{`1 Quincena de $${(
                 parseFloat(props.checkout.userData.amount) +
-                parseFloat(props.checkout.userData.amount) * (0.27 / 100)
+                parseFloat(props.checkout.userData.amount) * (0.2)
               ).toFixed(2)}`}</div>
             </div>
             <div class="flex flex-row text-[14px]">
               <div class="flex flex-auto p-2 border-t-4 border-r-4 border-b-0 border-l-0 border-[#c2c2c2] ">
-                Tasa de interés: 0.27%
+                Tasa de interés: 20%
               </div>
               <div class="flex flex-auto p-2 border-t-4 border-r-0 border-b-0 border-l-0 border-[#c2c2c2]">
                 {`Tasa de interés: $${
-                  parseFloat(props.checkout.userData.amount) *
-                  0.8 *
-                  (0.27 / 100)
+                  (parseFloat(props.checkout.userData.amount) *
+                  0.2).toFixed(2)
                 }`}
               </div>
             </div>
@@ -186,9 +185,8 @@ export default component$((props: IProps) => {
                   }}
                 />
               </div>
-              <div class="px-2 text-[18px] font-bold text-blue-500">{`2 Quincenas de $${(
-                parseFloat(props.checkout.userData.amount) / 2 +
-                (parseFloat(props.checkout.userData.amount) / 2) * (0.27 / 100)
+              <div class="px-2 text-[18px] font-bold">{`2 Quincenas de $${(
+                parseFloat(props.checkout.userData.amount) / 2 * 1.3 
               ).toFixed(2)}`}</div>
             </div>
           </div>
@@ -205,9 +203,8 @@ export default component$((props: IProps) => {
                   }}
                 />
               </div>
-              <div class="px-2 text-[18px] font-bold text-blue-500">{`3 Quincenas de $${(
-                parseFloat(props.checkout.userData.amount) / 3 +
-                (parseFloat(props.checkout.userData.amount) / 3) * (0.27 / 100)
+              <div class="px-2 text-[18px] font-bold">{`3 Quincenas de $${(
+                parseFloat(props.checkout.userData.amount) / 3 * 1.4
               ).toFixed(2)}`}</div>
             </div>
           </div>
@@ -217,7 +214,7 @@ export default component$((props: IProps) => {
               class="text-white rounded-[20px] border-none h-[40px] w-full"
               style={{
                 background: state.currentRadio?.length
-                  ? props.credilink.colorPrimary
+                  ? '#000'
                   : "#c2c2c2",
               }}
               preventdefault:click
