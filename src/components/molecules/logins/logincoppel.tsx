@@ -13,9 +13,9 @@ export default component$((props: IProps) => {
   return (
     <>
       <div class="flex flex-col align-center my-4">
-        <div class="flex flex-col align-center gap-6 m-6 px-4 pb-6 rounded-[8px] border-solid border-[2px] border-[#1a64ad]">
+        <div class="flex flex-col align-center max-w-[400px] gap-6 m-2 px-4 pb-2 rounded-[8px] border-solid border-[2px] border-[#1a64ad]">
           <img
-            class="max-w-[500px] self-center"
+            class="max-w-[350px] self-center"
             src={coppel1}
             alt="coppel-img-1"
           />
@@ -55,7 +55,7 @@ export default component$((props: IProps) => {
           >
             Iniciar sesión
           </button>
-          <p class="self-center font-semibold text-[#02b1e9] underline">
+          <p class="self-center font-semibold text-[#1a64ad] underline">
             Conoce qué necesitas para usar Coppel Pay.
           </p>
         </div>

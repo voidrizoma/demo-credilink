@@ -13,11 +13,11 @@ export interface CheckoutModel {
 
 export const initialCheckout = {
   isLoading: false,
-  isLogin: false,
+  isLogin: true,
   isCheckout: false,
   issuer: {
     id: "kueski-id",
-    name: "kueski",
+    name: "coppel",
     proposal: "Paga en quincenas desde 0% de interés",
     color: "#1d294c",
   },
