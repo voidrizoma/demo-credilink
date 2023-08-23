@@ -186,7 +186,7 @@ export default component$((props: IProps) => {
                 />
               </div>
               <div class="px-2 text-[18px] font-bold">{`2 Quincenas de $${(
-                parseFloat(props.checkout.userData.amount) / 2 * 1.3 
+                parseFloat(props.checkout.userData.amount) / 2 * 1.2 
               ).toFixed(2)}`}</div>
             </div>
           </div>
@@ -204,7 +204,7 @@ export default component$((props: IProps) => {
                 />
               </div>
               <div class="px-2 text-[18px] font-bold">{`3 Quincenas de $${(
-                parseFloat(props.checkout.userData.amount) / 3 * 1.4
+                parseFloat(props.checkout.userData.amount) / 3 * 1.2
               ).toFixed(2)}`}</div>
             </div>
           </div>
