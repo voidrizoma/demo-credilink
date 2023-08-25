@@ -4,7 +4,7 @@ import {
   RequestHandler,
   useEndpoint,
 } from "@builder.io/qwik-city";
-import Checkout from "~/components/molecules/checkout";
+import Checkoutaplazo from "~/components/molecules/checkouts/checkoutaplazo";
 import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 // import CustomFooter from "~/components/molecules/customFooter";
@@ -50,7 +50,7 @@ export default component$(() => {
             {checkoutStore.isCheckout && (
               <>
                 {checkoutStore.issuer.name === "aplazo" && (
-                  <Checkout credilink={found} checkout={checkoutStore} />
+                  <Checkoutaplazo credilink={found} checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "mp" && (
                   <Checkoutmp credilink={found} checkout={checkoutStore} />
