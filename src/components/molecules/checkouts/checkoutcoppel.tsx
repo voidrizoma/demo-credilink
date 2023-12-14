@@ -4,6 +4,7 @@ import { CheckoutModel } from "~/models/checkout-model";
 import { envVars } from "~/models/global-vars";
 import { ModalLoading } from "../modalLoading";
 import coppel1 from "../../../assets/checkout/coppel1.png";
+import { getExpDate } from "~/helpers/dates";
 
 export interface IProps {
   credilink: Credilink;
@@ -19,8 +20,8 @@ export default component$((props: IProps) => {
 
   const checkoutSubmit = $(async (loanId: string) => {
     state.isLoading = true;
-    const expiresIn = new Date();
-    expiresIn.setHours(23, 59, 59, 0).toLocaleString();
+    // const expiresIn = new Date();
+    // expiresIn.setHours(23, 59, 59, 0).toLocaleString();
 
     try {
       const baseUrl = envVars.apiUrlFlux;
@@ -44,7 +45,8 @@ export default component$((props: IProps) => {
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: parseInt(props.checkout.userData.amount) * 100,
-            expiration: "2023-12-12T05:59:59.999Z",
+            expiration: `${getExpDate()}T05:59:59.999Z`,
+            // expiration: "2023-12-12T05:59:59.999Z",
             isPayable: false,
             customer: {
               name: "Usuario de prueba",

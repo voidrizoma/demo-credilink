@@ -12,3 +12,22 @@ export const getFuturePaymentDate = (days: number) => {
 
   return formattedFuture;
 };
+
+export const getExpDate = () => {
+  const today = new Date(); // Get current date
+  const addedDays = today.getDate() + 30; // Add 30 days to the current date
+
+  today.setDate(addedDays); // Set the new date with added dayFs
+
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1; // Months are zero-indexed, so add 1
+  const day = today.getDate();
+
+  // Pad with leading zeros if necessary
+  const formattedMonth = month < 10 ? `0${month}` : month;
+  const formattedDay = day < 10 ? `0${day}` : day;
+
+  const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
+
+  return formattedDate;
+};

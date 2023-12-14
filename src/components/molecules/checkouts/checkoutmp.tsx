@@ -9,6 +9,7 @@ import mp22 from "../../../assets/checkout/mp22.png";
 import mp23 from "../../../assets/checkout/mp23.png";
 import mp3 from "../../../assets/checkout/mp3.png";
 import CustomText from "~/components/atoms/customText";
+import { getExpDate } from "~/helpers/dates";
 
 export interface IProps {
   credilink: Credilink;
@@ -31,8 +32,8 @@ export default component$((props: IProps) => {
 
   const checkoutSubmit = $(async (loanId: string) => {
     state.isLoading = true;
-    const expiresIn = new Date();
-    expiresIn.setHours(23, 59, 59, 0).toLocaleString();
+    // const expiresIn = new Date();
+    // expiresIn.setHours(23, 59, 59, 0).toLocaleString();
 
     try {
       const baseUrl = envVars.apiUrlFlux;
@@ -53,17 +54,20 @@ export default component$((props: IProps) => {
         if (res.status >= 200 && res.status < 300) {
           const { data } = await res.json();
           const resToken = data?.accessToken;
+          // console.log("resToken ::: ", resToken);
+
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: parseInt(props.checkout.userData.amount) * 100,
-            expiration: "2023-12-12T05:59:59.999Z",
+            expiration: `${getExpDate()}T05:59:59.999Z`,
+            // expiration: "2023-12-12T05:59:59.999Z",
             isPayable: false,
             customer: {
               name: "Usuario de prueba",
               email: props.checkout.userData.email,
             },
           };
-          // console.log(dataCoupon);
+          console.log(dataCoupon);
           await fetch(`${baseUrl}/coupons`, {
             method: "POST",
             headers: new Headers({
@@ -73,6 +77,9 @@ export default component$((props: IProps) => {
             body: JSON.stringify(dataCoupon),
           }).then(async (res) => {
             const { data } = await res.json();
+            if (data) {
+              console.log(data);
+            }
             if (data?.id?.length) {
               try {
                 const zapierData = {
@@ -143,7 +150,7 @@ export default component$((props: IProps) => {
             <img src={mp22} alt="mp22-image" />
             <div class="flex items-center">
               <div class="flex justify-center items-center mx-2 w-[54px] h-[54px] rounded-[50px] border-[#c2c0c0] border-[1px]">
-                <p class='text-[18px] text-[#02b1e9] font-bold p-0 m-0'>
+                <p class="text-[18px] text-[#02b1e9] font-bold p-0 m-0">
                   {!state.currentOption?.length
                     ? "1x"
                     : state.currentOption.slice(0, 3)}

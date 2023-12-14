@@ -54,14 +54,7 @@ export default component$((props: IProps) => {
                   </p>
                 )}
                 <p class="flex place-content-center">
-                  {`Expira el ${new Date(found.expiration).toLocaleString(
-                    "es-MX",
-                    {
-                      timeZone: "America/Mexico_City",
-                      dateStyle: "long",
-                      timeStyle: "short",
-                    }
-                  )}hrs`}
+                  {`Expira el ${found.expiration}hrs`}
                 </p>
               </div>
               <CustomFooter
