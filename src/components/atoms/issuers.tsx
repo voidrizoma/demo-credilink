@@ -4,10 +4,11 @@ import { component$, useStore } from "@builder.io/qwik";
 import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { Issuer } from "~/models/issuer-model";
 import { StoreData } from "~/models/store-data-model";
-import CustomText from "./customText";
+import { Text } from "./text";
 import { Validation, isValidAmount, isValidPhone } from "~/helpers/validation";
 import { Credilink } from "~/models/credilink-model";
 import { CheckoutModel } from "~/models/checkout-model";
+import { modelStylesData } from "~/models/modelStyles";
 import { envVars } from "~/models/global-vars";
 
 export interface IProps {
@@ -20,48 +21,58 @@ export interface IProps {
 }
 
 export default component$((props: IProps) => {
-  // const location = useLocation();
-  // const urlStore = useStore({ url: "" });
   const selected = useStore({ index: -1 });
 
-  // if (location?.href?.length) {
-  // Do the thing
-  // console.log(`location is = ${location.href}`)
-  //   urlStore.url = location.href;
-  // }
-
   return (
-    <>
-      <div class="flex place-content-center pb-[10%]">
-        <CustomText text="Selecciona una opción:" size="16px" weight="700" />
+    <div class="border-b-1 w-screen pb-1 sc600:w-[600px]">
+      <Text
+        text="Selecciona una opción:"
+        color="text-white"
+        weight="font-bold"
+        size={modelStylesData.textSize.subtitle}
+        padding="py-2 sc300:[py-4]"
+      />
+      <div class="flex place-content-center">
+        <input
+          id="auxInput"
+          class={`z-[-1] h-1 w-1 self-center justify-self-center bg-transparent`}
+          style={{ color: props.credilink.colorPrimary }}
+          type="text"
+          placeholder="."
+          onFocus$={() => {
+            const auxInput = document.getElementById("auxInput");
+            auxInput?.blur();
+          }}
+        />
       </div>
-      <div class="flex justify-center flex-wrap self-center gap-10">
+      <div
+        id="flux-issuers"
+        class="flex flex-wrap justify-center gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]"
+      >
         {props.issuers.map((el: Issuer, elIndex) => (
           <button
-            class={`flex border-2 place-content-center border-none ${
-              elIndex !== selected?.index
-                ? "hover:opacity-50 hover:scale-[1.05]"
-                : "opacity-50 scale-[1.05]"
+            key={`issuer-btn-${el}`}
+            id={`issuer-btn-${elIndex}`}
+            class={`flex place-content-center border-2 border-none ${
+              elIndex !== selected.index
+                ? "hover:scale-[1.05] hover:opacity-50"
+                : "scale-[1.05] opacity-50"
             }`}
-            disabled={elIndex === selected?.index ? true : false}
+            disabled={elIndex === selected.index ? true : false}
             onClick$={() => {
               if (
                 props.store.phone?.length > 0 &&
                 props.store.amount?.length > 0
               ) {
-                // props.validationStore.validEmail = isValidEmail(
-                //   props.store.email
-                // );
                 props.validationStore.validPhone = isValidPhone(
                   props.store.phone
-                );                
+                );
                 props.validationStore.validAmount = isValidAmount(
                   props.credilink.min,
                   props.credilink.max,
                   props.store.amount
                 );
                 if (
-                  // props.validationStore.validEmail &&
                   props.validationStore.validAmount &&
                   props.validationStore.validPhone
                 ) {
@@ -81,15 +92,21 @@ export default component$((props: IProps) => {
               }
             }}
           >
-            <div class="flex flex-col place-content-center shadow-[5px_5px_#0e0d0d] p-2 w-[150px] h-[150px] bg-white rounded-[15px]">
-              <img class="flex p-1" src={issuerLogoFinder(el)} alt="" />
-              <p class="flex text-center text-[14px] text-[#777171] p-1">
+            <div
+              class={`flex flex-col place-content-center bg-white p-2 ${modelStylesData.issuerBtn.borderRadius} ${modelStylesData.issuerBtn.boxShadow} ${modelStylesData.issuerBtn.boxSize}`}
+            >
+              <img
+                class="flex aspect-auto p-1"
+                src={issuerLogoFinder(el)}
+                alt="issuer-logo-image"
+              />
+              <p class="flex p-1 text-center text-[8px] text-[#777171] sc200:text-[10px] sc300:text-[12px] sc400:text-[14px]">
                 {el.proposal}
               </p>
             </div>
           </button>
         ))}
       </div>
-    </>
+    </div>
   );
 });

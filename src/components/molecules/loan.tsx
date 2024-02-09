@@ -1,11 +1,13 @@
 import { component$, Resource, useResource$ } from "@builder.io/qwik";
 import { Loan } from "../../models/loan-model";
-import Logo from "../atoms/logo";
 import Qr from "../atoms/qr";
-import CustomFooter from "./customFooter";
 import Sorry from "./sorry";
 import { envVars } from "~/models/global-vars";
 import { ModalLoading } from "./modalLoading";
+import Header from "../template/header";
+import Footer from "../template/footer";
+import { Text } from "../atoms/text";
+import { modelStylesData } from "~/models/modelStyles";
 
 export interface IProps {
   loan: string;
@@ -20,48 +22,71 @@ export default component$((props: IProps) => {
     const res = await fetch(`${api}loans/${props.loan}`, {
       signal: abortController.signal,
     });
-    return res.json();
+    if (res.status == 200) {
+      const resp = await res.json();
+      console.log(resp);
+      return resp;
+    }
+    return null;
   });
 
   return (
-    <div class="flex flex-col text-black ">
+    <div class="flex h-screen w-screen flex-col place-content-center bg-white text-white sc600:w-[600px]">
       <Resource
         value={resource}
         onPending={() => <ModalLoading />}
         onRejected={() => <Sorry />}
         onResolved={(found: Loan) => {
           return (
-            <div>
-              <div class="flex flex-col py-[2%] px-[10%] mt-[4%] h-screen gap-2">
-                <Logo url={found.logoIssuer} />
-                <p class="flex place-content-center text-center font-bold pt-[5%]">
-                  {found.title}
-                </p>
-                <p class="flex place-content-center text-center">
-                  {found.text1}
-                </p>
-                <p class="flex place-content-center">{`${found.text2}`}</p>
-                {/* <p class="flex place-content-center">{`${found.text2} en ${found.commerce}`}</p> */}
-                <Qr
-                  url={`https://qr.fluxqr.net/?text=${encodeURIComponent(
-                    found.qr
-                  )}`}
-                />
-                {parseFloat(found?.amount as any) > 0 && (
-                  <p class="flex place-content-center text-center">
-                    {"Monto aprobado: $" +
-                      (parseFloat(found.amount as any) / 100).toFixed(2)}
-                  </p>
-                )}
-                <p class="flex place-content-center">
-                  {`Expira el ${found.expiration}hrs`}
-                </p>
-              </div>
-              <CustomFooter
-                bgColor={found.bg}
-                logoCommerce={found.logoCommerce}
-              />
-            </div>
+            <>
+              {found == null && <Sorry />}
+              {found !== null && (
+                <div class="flex h-[calc(100vh-200px)] flex-col text-center text-black">
+                  <Header imgSrc={found.logoCommerce} />
+                  <Text
+                    text={found.title}
+                    size={modelStylesData.textSize.title}
+                    weight={modelStylesData.textWeight.subTitle}
+                    padding="pb-3 sc500:pt-4"
+                  />
+                  {/* here would go the logo of the issuer but API does not support it yet */}
+                  {/* <Logo url={found.logoCommerce || ""} /> */}
+                  <Text
+                    text="Presenta el siguiente código QR en caja para pagar tus productos y
+            listo."
+                    size={modelStylesData.textSize.normal}
+                    weight={modelStylesData.textWeight.normal}
+                    position="self-center"
+                    padding="px-2 py-3"
+                  />
+                  <Text
+                    text="¡Disfruta tu compra!"
+                    size={modelStylesData.textSize.subtitle}
+                    weight={modelStylesData.textWeight.subTitle}
+                  />
+                  <Qr
+                    url={`https://qr.fluxqr.net/?text=${encodeURIComponent(
+                      found.qr
+                    )}`}
+                  />
+
+                  <Text
+                    text={
+                      "Monto aprobado: $" +
+                      (parseFloat(found.amount as any) / 100).toFixed(2)
+                    }
+                    size={modelStylesData.textSize.normal}
+                    weight={modelStylesData.textWeight.normal}
+                  />
+                  <Text
+                    text={`Expira el ${found.expiration}hrs`}
+                    size={modelStylesData.textSize.normal}
+                    weight={modelStylesData.textWeight.normal}
+                  />
+                  <Footer isSlug={false} />
+                </div>
+              )}
+            </>
           );
         }}
       />

@@ -5,7 +5,7 @@ export const Modal = component$(() => {
     <div class="flex place-content-center bg-zinc-200 bg-opacity-90 fixed inset-0 z-50">
       <div class="flex items-center h-screen">
         <div
-          class={`flex m-3 p-4 justify-center items-center border-none rounded-xl border-2 bg-white min-w-[200px] max-w-[300px] max-h-[300px]`}
+          class={`flex m-3 p-4 justify-center items-center border-none rounded-xl border-2 bg-none min-w-[200px] max-w-[300px] max-h-[300px]`}
         >
           <div class="flex flex-col justify-center items-center">
             <Slot />

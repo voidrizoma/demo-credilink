@@ -7,16 +7,18 @@ import {
 import Checkoutaplazo from "~/components/molecules/checkouts/checkoutaplazo";
 import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
-// import CustomFooter from "~/components/molecules/customFooter";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
 import Logincoppel from "~/components/molecules/logins/logincoppel";
 import Loginmp from "~/components/molecules/logins/loginmp";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
+import Footer from "~/components/template/footer";
+import Header from "~/components/template/header";
 import { CheckoutModel, initialCheckout } from "~/models/checkout-model";
 import type { Credilink } from "~/models/credilink-model";
 import { envVars } from "~/models/global-vars";
+import { modelStylesData } from "~/models/modelStyles";
 
 export const onGet: RequestHandler<Credilink | null> = async ({ params }) => {
   const res = await fetch(`${envVars.apiUrl}credilink/${params.slug}`);
@@ -64,22 +66,17 @@ export default component$(() => {
             {!checkoutStore.isCheckout &&
               !checkoutStore.isLogin &&
               found?.commerce?.length > 0 && (
-                <div class="flex flex-col">
-                  <div class="flex flex-col place-content-center">
+                <>
+                  <div class="flex w-screen bg-white sc600:w-[600px]">
+                    <Header imgSrc={found.logo} />
                     <div
-                      class="flex flex-col place-content-center"
-                      // style={{ backgroundImage: `url(${found.bg})` }}
+                      class={`absolute w-screen sc600:w-[600px] ${modelStylesData.form.labelSize} ${modelStylesData.labelSize.top} ${modelStylesData.bgColor.fluxIndigo}`}
                     >
-                      <div class="flex place-content-center">
-                        <CustomForm
-                          credilink={found}
-                          checkout={checkoutStore}
-                        />
-                      </div>
+                      <CustomForm credilink={found} checkout={checkoutStore} />
                     </div>
-                    {/* <CustomFooter bgColor={found.colorPrimary} /> */}
+                    <Footer isSlug={true} />
                   </div>
-                </div>
+                </>
               )}
 
             {checkoutStore.isLogin && (

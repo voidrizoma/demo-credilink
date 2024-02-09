@@ -33,11 +33,6 @@ export default component$(() => {
       </head>
       <body
         lang="en"
-        // style={{
-        //   background: "#969696",
-        //   userSelect: "none",
-        //   backgroundImage: "linear-gradient(135deg, #b1b1b1, #222)",
-        // }}
       >
         <noscript>
           <iframe
