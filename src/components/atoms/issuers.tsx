@@ -93,14 +93,19 @@ export default component$((props: IProps) => {
             }}
           >
             <div
+              key={`issuer-data-${el}`}
               class={`flex flex-col place-content-center bg-white p-2 ${modelStylesData.issuerBtn.borderRadius} ${modelStylesData.issuerBtn.boxShadow} ${modelStylesData.issuerBtn.boxSize}`}
             >
               <img
                 class="flex aspect-auto p-1"
+                key={`issuer-logo-${el}`}
                 src={issuerLogoFinder(el)}
                 alt="issuer-logo-image"
               />
-              <p class="flex p-1 text-center text-[8px] text-[#777171] sc200:text-[10px] sc300:text-[12px] sc400:text-[14px]">
+              <p
+                key={`issuer-proposal-${el}`}
+                class="flex p-1 text-center text-[8px] text-[#777171] sc200:text-[10px] sc300:text-[12px] sc400:text-[14px]"
+              >
                 {el.proposal}
               </p>
             </div>

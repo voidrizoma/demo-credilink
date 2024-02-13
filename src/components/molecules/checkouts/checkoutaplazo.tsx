@@ -73,14 +73,7 @@ export default component$((props: IProps) => {
                   )}`,
                   amount: `$${parseFloat(data.amount) / 100}`,
                   commerce: props.credilink.commerceName,
-                  expiration: `${new Date(data.expiration).toLocaleString(
-                    "es-MX",
-                    {
-                      timeZone: "America/Mexico_City",
-                      dateStyle: "long",
-                      timeStyle: "short",
-                    }
-                  )}hrs`,
+                  expiration: data.expiration,
                   qr: data.qr,
                 };
                 console.log("zapierdata", zapierData);
@@ -113,10 +106,10 @@ export default component$((props: IProps) => {
     <>
       {state.isLoading && <ModalLoading />}
       <div class="flex w-[100%] place-content-center">
-        <div class="flex flex-col gap-1 rounded m-2 p-2 min-w-[400px]">
-          <div class="flex self-center w-[150px] h-[150px]">
+        <div class="flex flex-col gap-1 rounded m-2 p-2 min-w-[360px]">
+          <div class="flex self-center w-[120px] h-[120px]">
             <img
-              class="pb-3 max-w-[200px]"
+              class="pb-3 max-w-[150px]"
               src={issuerLogoFinder(props.checkout.issuer)}
               alt=""
             />
@@ -148,7 +141,9 @@ export default component$((props: IProps) => {
             </div>
           </div>
 
-          <p class="font-bold text-[16px] text-[#000] py-4">TU PLAN DE PAGOS</p>
+          <p class="px-4 font-bold text-[16px] text-[#000] py-4">
+            TU PLAN DE PAGOS
+          </p>
 
           <div class="rounded overflow-hidden shadow p-4 font-bold text-[16px] text-[#000]">
             <div class="flex justify-between pb-3">

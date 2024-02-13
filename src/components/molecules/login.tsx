@@ -23,11 +23,11 @@ export default component$((props: IProps) => {
           <div class="flex flex-col gap-6 text-[20px] font-medium rounded p-3">
             {/* C1 */}
             <div>
-              <label class="font-semibold" for="email">
+              <label class="text-[14px]" for="email">
                 Email
               </label>
               <input
-                class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
+                class="text-[13px] rounded-[25px] h-[44px] p-3 border-solid border-[1px] border-[#78909c] w-full"
                 placeholder={
                   props.checkout.userData.email || envVars.fixedEmail
                 }
@@ -37,11 +37,11 @@ export default component$((props: IProps) => {
 
             {/* C2 */}
             <div>
-              <label class="font-semibold" for="password">
+              <label class="text-[14px]" for="password">
                 Contraseña
               </label>
               <input
-                class="rounded-[5px] h-[44px] p-3 border-solid border-[1px] border-black w-full"
+                class="text-[13px] rounded-[25px] h-[44px] p-3 border-solid border-[1px] border-[#78909c] w-full"
                 value="password"
                 type="password"
                 disabled

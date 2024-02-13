@@ -79,7 +79,7 @@ export default component$((props: IProps) => {
                     weight={modelStylesData.textWeight.normal}
                   />
                   <Text
-                    text={`Expira el ${found.expiration}hrs`}
+                    text={`Expira el ${found.expiration}`}
                     size={modelStylesData.textSize.normal}
                     weight={modelStylesData.textWeight.normal}
                   />

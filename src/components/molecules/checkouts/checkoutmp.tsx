@@ -90,14 +90,7 @@ export default component$((props: IProps) => {
                   )}`,
                   amount: `$${parseFloat(data.amount) / 100}`,
                   commerce: props.credilink.commerceName,
-                  expiration: `${new Date(data.expiration).toLocaleString(
-                    "es-MX",
-                    {
-                      timeZone: "America/Mexico_City",
-                      dateStyle: "long",
-                      timeStyle: "short",
-                    }
-                  )}hrs`,
+                  expiration: data.expiration,
                   qr: data.qr,
                 };
                 console.log("zapierdata", zapierData);

@@ -80,7 +80,7 @@ export default component$((props: IProps) => {
                       dateStyle: "long",
                       timeStyle: "short",
                     }
-                  )}hrs`,
+                  )}`,
                   qr: data.qr,
                 };
                 console.log("zapierdata", zapierData);
