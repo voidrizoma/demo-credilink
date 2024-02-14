@@ -24,7 +24,7 @@ export default component$((props: IProps) => {
     });
     if (res.status == 200) {
       const resp = await res.json();
-      console.log(resp);
+      // console.log(resp);
       return resp;
     }
     return null;

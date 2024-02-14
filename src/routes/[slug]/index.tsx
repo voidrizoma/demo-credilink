@@ -50,7 +50,7 @@ export default component$(() => {
             {!found?.commerce?.length && <Sorry />}
 
             {checkoutStore.isCheckout && (
-              <>
+              <div class="bg-white h-screen w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
                   <Checkoutaplazo credilink={found} checkout={checkoutStore} />
                 )}
@@ -60,7 +60,7 @@ export default component$(() => {
                 {checkoutStore.issuer.name === "coppel" && (
                   <Checkoutcoppel credilink={found} checkout={checkoutStore} />
                 )}
-              </>
+              </div>
             )}
 
             {!checkoutStore.isCheckout &&
@@ -80,7 +80,7 @@ export default component$(() => {
               )}
 
             {checkoutStore.isLogin && (
-              <>
+              <div class="bg-white h-screen w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
                   <Login checkout={checkoutStore} />
                 )}
@@ -90,7 +90,7 @@ export default component$(() => {
                 {checkoutStore.issuer.name === "coppel" && (
                   <Logincoppel checkout={checkoutStore} />
                 )}
-              </>
+              </div>
             )}
           </>
         )}
