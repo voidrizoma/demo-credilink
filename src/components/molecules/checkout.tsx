@@ -44,7 +44,7 @@ export default component$((props: IProps) => {
           const resToken = data?.accessToken;
           const dataCoupon = {
             commerce: props.credilink.commerce,
-            amount: parseInt(props.checkout.userData.amount) * 100,
+            amount: Math.round(Number(props.checkout.userData.amount) * 100),
             expiration: `${getExpDate()}T05:59:59.999Z`,
             // expiration: "2023-12-12T05:59:59.999Z",
             isPayable: false,
