@@ -52,16 +52,15 @@ export default component$((props: IProps) => {
                   {/* here would go the logo of the issuer but API does not support it yet */}
                   {/* <Logo url={found.logoCommerce || ""} /> */}
                   <Text
-                    text="Presenta el siguiente código QR en caja para pagar tus productos y
-            listo."
-                    size={modelStylesData.textSize.normal}
+                    text="Presenta el siguiente código QR en caja para pagar tus productos y listo."
+                    size={modelStylesData.textSize.subtitle}
                     weight={modelStylesData.textWeight.normal}
                     position="self-center"
                     padding="px-2 py-3"
                   />
                   <Text
                     text="¡Disfruta tu compra!"
-                    size={modelStylesData.textSize.subtitle}
+                    size={modelStylesData.textSize.title}
                     weight={modelStylesData.textWeight.subTitle}
                   />
                   <Qr
@@ -75,12 +74,12 @@ export default component$((props: IProps) => {
                       "Monto aprobado: $" +
                       (parseFloat(found.amount as any) / 100).toFixed(2)
                     }
-                    size={modelStylesData.textSize.normal}
+                    size={modelStylesData.textSize.subtitle}
                     weight={modelStylesData.textWeight.normal}
                   />
                   <Text
                     text={`Expira el ${found.expiration}`}
-                    size={modelStylesData.textSize.normal}
+                    size={modelStylesData.textSize.subtitle}
                     weight={modelStylesData.textWeight.normal}
                   />
                   <Footer isSlug={false} />

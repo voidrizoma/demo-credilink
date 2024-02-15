@@ -19,8 +19,8 @@ export default component$((props: IProps) => {
               Servicio proporcionado por
             </p>
             <a
-              href="https://www.fluxqr.com/"
-              target="_blank"
+              href="/demo"
+              target="_self"
               class="flex text-center underline underline-offset-1"
             >
               Flux QR.
