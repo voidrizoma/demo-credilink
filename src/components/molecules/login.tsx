@@ -24,13 +24,11 @@ export default component$((props: IProps) => {
             {/* C1 */}
             <div>
               <label class="text-[14px]" for="email">
-                Email
+                Número celular
               </label>
               <input
                 class="text-[13px] rounded-[25px] h-[44px] p-3 border-solid border-[1px] border-[#78909c] w-full"
-                placeholder={
-                  props.checkout.userData.email || envVars.fixedEmail
-                }
+                placeholder={props.checkout.userData.phone}
                 disabled
               />
             </div>
