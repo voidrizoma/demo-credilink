@@ -10,6 +10,7 @@ import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
 import Logincoppel from "~/components/molecules/logins/logincoppel";
+import Loginkueski from "~/components/molecules/logins/loginkueski";
 import Loginmp from "~/components/molecules/logins/loginmp";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
@@ -25,7 +26,9 @@ export const onGet: RequestHandler<Credilink | null> = async ({ params }) => {
   if (res.status > 299 || res.status < 200) {
     return null;
   } else {
-    return res.json();
+    const data = await res.json();
+    console.log(data)
+    return data;
   }
 };
 
@@ -89,6 +92,9 @@ export default component$(() => {
                 )}
                 {checkoutStore.issuer.name === "coppel" && (
                   <Logincoppel checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "kueski" && (
+                  <Loginkueski checkout={checkoutStore} />
                 )}
               </div>
             )}
