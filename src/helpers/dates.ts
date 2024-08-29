@@ -38,7 +38,7 @@ export const getTodaysDateInSpanish = () => {
   const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
-  const dayOfWeek = daysOfWeek[today.getDay()];
+  // const dayOfWeek = daysOfWeek[today.getDay()];
   const dayOfMonth = today.getDate();
   const month = months[today.getMonth()];
   const year = today.getFullYear();
