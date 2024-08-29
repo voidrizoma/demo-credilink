@@ -44,10 +44,10 @@ export default component$((props: IProps) => {
 
             <div class="flex flex-row gap-1">
               <p class="flex items-center text-center">
-                Por favor lee nuestros
+                Por favor lee nuestra
               </p>
               <Text
-                text="Términos y Condiciones."
+                text="Política de privacidad."
                 url={"https://www.fluxqr.com/tyc"}
                 weight={modelStylesData.textWeight.subTitle}
                 size={modelStylesData.textSize.normal}

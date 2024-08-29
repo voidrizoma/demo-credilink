@@ -2,6 +2,7 @@ export interface CheckoutModel {
   isLoading: boolean;
   isCheckout: boolean;
   isLogin: boolean;
+  isFinalStep: boolean;
   issuer: {
     id: string;
     name: string;
@@ -13,13 +14,14 @@ export interface CheckoutModel {
 
 export const initialCheckout = {
   isLoading: false,
-  isLogin: true,
+  isLogin: false,
   isCheckout: false,
+  isFinalStep: false,
   issuer: {
     id: "",
-    name: "kueski",
+    name: "",
     proposal: "",
-    color: "#1d294c",
+    color: "",
   },
   userData: {
     email: "",

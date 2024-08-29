@@ -31,3 +31,34 @@ export const getExpDate = () => {
 
   return formattedDate;
 };
+
+
+export const getTodaysDateInSpanish = () => {
+  const today = new Date();
+  const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+  const dayOfWeek = daysOfWeek[today.getDay()];
+  const dayOfMonth = today.getDate();
+  const month = months[today.getMonth()];
+  const year = today.getFullYear();
+
+  return `${dayOfMonth} de ${month} de ${year}`;
+}
+
+export const getFutureDateInSpanish = (daysToAdd: number) => {
+  const today = new Date();
+  const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+
+  // Add days to the current date
+  today.setDate(today.getDate() + daysToAdd);
+
+  const dayOfWeek = daysOfWeek[today.getDay()];
+  const dayOfMonth = today.getDate();
+  const month = months[today.getMonth()];
+  const year = today.getFullYear();
+
+  return `${dayOfMonth} de ${month} de ${year}`;
+}

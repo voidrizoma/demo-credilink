@@ -6,6 +6,7 @@ import {
 } from "@builder.io/qwik-city";
 import Checkoutaplazo from "~/components/molecules/checkouts/checkoutaplazo";
 import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
+import Checkoutkueski from "~/components/molecules/checkouts/checkoutkueski";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
@@ -62,6 +63,9 @@ export default component$(() => {
                 )}
                 {checkoutStore.issuer.name === "coppel" && (
                   <Checkoutcoppel credilink={found} checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "kueski" && (
+                  <Checkoutkueski credilink={found} checkout={checkoutStore} />
                 )}
               </div>
             )}

@@ -28,10 +28,9 @@ export const isValidEmail = (email: string) => {
 };
 
 export const isValidAmount = (min: number, max: number, amount: string) => {
-  if (!amount?.length || parseInt(amount) < 0) {
-    return false
-  }
-  return true;
+  const parsedAmount = parseInt(amount, 10);
+
+  return amount !== "" && parsedAmount >= min && parsedAmount <= max;
 };
 
 export const isValidPhone = (phone: string) => {
@@ -41,3 +40,14 @@ export const isValidPhone = (phone: string) => {
   }
   return true;
 };
+
+export const cleanPhoneNumber = (phoneNumber: string) => {
+
+  // Remove spaces
+  if (phoneNumber?.length >= 10) {
+    const parsedPhone = phoneNumber.replace(/\D/g, '');
+    const fixed = parsedPhone.replaceAll(' ', '').slice(-10)
+    return fixed;
+  }
+  return phoneNumber;
+}
