@@ -24,7 +24,7 @@ export default component$((props: IProps) => {
   const selected = useStore({ index: -1 });
 
   return (
-    <div class="border-b-1 w-screen pb-1 sc600:w-[600px]">
+    <div class="border-b-1 pb-1 sc600:w-[600px]">
       <Text
         text="Selecciona una opción:"
         color="text-white"
@@ -47,17 +47,17 @@ export default component$((props: IProps) => {
       </div>
       <div
         id="flux-issuers"
-        class="flex flex-wrap justify-center gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]"
+        // class="flex flex-wrap justify-center gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]"
+        class={props.issuers.length == 4 ? "grid grid-cols-2 gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]" : "flex flex-wrap justify-center gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]"}
       >
         {props.issuers.map((el: Issuer, elIndex) => (
           <button
             key={`issuer-btn-${el}`}
             id={`issuer-btn-${elIndex}`}
-            class={`flex place-content-center border-2 border-none ${
-              elIndex !== selected.index
+            class={`flex place-content-center border-2 border-none ${elIndex !== selected.index
                 ? "hover:scale-[1.05] hover:opacity-50"
                 : "scale-[1.05] opacity-50"
-            }`}
+              }`}
             disabled={elIndex === selected.index ? true : false}
             onClick$={() => {
               if (

@@ -13,11 +13,11 @@ export default component$((props: IProps) => {
         { text1: getTodaysDateInSpanish(), text2: '$154.00', dotsize: 'w-4 h-4' },
         { text1: getFutureDateInSpanish(15), text2: '$154.00', dotsize: 'w-2 h-2' },
         { text1: getFutureDateInSpanish(31), text2: '$154.00', dotsize: 'w-2 h-2' },
-        { text1: getFutureDateInSpanish(46), text2: '$154.00', dotsize: 'w-2 h-2' },
+        { text1: getFutureDateInSpanish(46), text2: '$141.00', dotsize: 'w-2 h-2' },
     ]
     return <>
         <div class="flex flex-col place-content-end bg-zinc-200 bg-opacity-90 fixed inset-0 z-10 h-screen">
-            <div class='flex flex-col gap-5 h-4/6 bg-white rounded-t-[25px] px-4'>
+            <div class='flex flex-col gap-3 h-4/6 bg-white rounded-t-[25px] px-4'>
                 <div class="h-[20px]"></div>
                 <div class="flex">
                     <p class="items-start font-bold text-[24px]">Consultar plan de pagos</p>
