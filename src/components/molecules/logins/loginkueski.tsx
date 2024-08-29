@@ -1,4 +1,4 @@
-import { component$, useRef } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { CheckoutModel } from "~/models/checkout-model";
 
 export interface IProps {

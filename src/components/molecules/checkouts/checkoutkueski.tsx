@@ -1,4 +1,4 @@
-import { component$, $, useStore } from "@builder.io/qwik";
+import { component$, $ } from "@builder.io/qwik";
 import { Credilink } from "~/models/credilink-model";
 import { CheckoutModel } from "~/models/checkout-model";
 import { envVars } from "~/models/global-vars";
@@ -109,7 +109,7 @@ export default component$((props: IProps) => {
       <div>
         <img class='blur-[3px]' src={kueski1} />
         {!props.checkout.isFinalStep && <Kueski1 checkout={props.checkout}/>}
-        {props.checkout.isFinalStep && <Kueski2 checkout={props.checkout}/>}
+        {props.checkout.isFinalStep && <Kueski2 checkout={props.checkout} checkoutSubmit={checkoutSubmit}/>}
       </div>
     </>
   );

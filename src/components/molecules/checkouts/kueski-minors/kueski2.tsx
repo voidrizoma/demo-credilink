@@ -1,9 +1,11 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, QRL } from "@builder.io/qwik";
 import { getFutureDateInSpanish, getTodaysDateInSpanish } from "~/helpers/dates";
 import { CheckoutModel } from "~/models/checkout-model";
 
 export interface IProps {
     checkout: CheckoutModel;
+    checkoutSubmit: QRL<(id: string) => void>;
+
 }
 
 export default component$((props: IProps) => {
@@ -42,13 +44,10 @@ export default component$((props: IProps) => {
                 <button
                     class="self-center rounded-[50px] w-[320px] h-[52px] mt-3 text-white text-[20px] bg-[#0075ff]"
                     preventdefault:click
-                    onClick$={() => {
-                        props.checkout.isLoading = true;
-                        // console.log(props.checkout.isLoading)
-                        setTimeout(() => {
-                            props.checkout.isLoading = false;
-                        }, 1500);
-                    }}
+              onClick$={() => {
+                props.checkoutSubmit(props.checkout.issuer.id);
+              }}
+              disabled={props.checkout.isLoading}
                 >
                     Pagar
                 </button>

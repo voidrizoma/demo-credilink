@@ -48,14 +48,13 @@ export const getTodaysDateInSpanish = () => {
 
 export const getFutureDateInSpanish = (daysToAdd: number) => {
   const today = new Date();
-  const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  // const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-
 
   // Add days to the current date
   today.setDate(today.getDate() + daysToAdd);
 
-  const dayOfWeek = daysOfWeek[today.getDay()];
+  // const dayOfWeek = daysOfWeek[today.getDay()];
   const dayOfMonth = today.getDate();
   const month = months[today.getMonth()];
   const year = today.getFullYear();
