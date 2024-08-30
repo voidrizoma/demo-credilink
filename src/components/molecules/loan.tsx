@@ -8,7 +8,7 @@ import Header from "../template/header";
 import Footer from "../template/footer";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
-import Logo from "../atoms/logo";
+// import Logo from "../atoms/logo";
 
 export interface IProps {
   loan: string;
