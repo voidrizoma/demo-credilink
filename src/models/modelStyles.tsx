@@ -97,8 +97,8 @@ export const modelStylesData: ModelStyles = {
   },
   issuerBtn: {
     boxSize:
-      "w-[90px] sc200:w-[100px] sc300:w-[110px] sc350:w-[120px] sc400:w-[130px] sc500:w-[140px] h-[90px] sc200:h-[100px] sc300:h-[110px] sc350:h-[120px] sc400:h-[130px] sc500:h-[140px]",
-    borderRadius: "rounded-[20px]",
+      "w-[90px] sc200:w-[100px] sc300:w-[105px] sc400:w-[130px] sc500:w-[140px] h-[90px] sc200:h-[100px] sc300:h-[105px] sc400:h-[130px] sc500:h-[140px]",
+      borderRadius: "sc400:rounded-[20px] rounded-[15px]",
     boxShadow: "shadow-[5px_5px_#0e0d0d]",
   },
 };

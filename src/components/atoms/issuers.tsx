@@ -55,8 +55,8 @@ export default component$((props: IProps) => {
             key={`issuer-btn-${el}`}
             id={`issuer-btn-${elIndex}`}
             class={`flex place-content-center border-2 border-none ${elIndex !== selected.index
-                ? "hover:scale-[1.05] hover:opacity-50"
-                : "scale-[1.05] opacity-50"
+              ? "hover:scale-[1.05] hover:opacity-50"
+              : "scale-[1.05] opacity-50"
               }`}
             disabled={elIndex === selected.index ? true : false}
             onClick$={() => {
@@ -96,18 +96,23 @@ export default component$((props: IProps) => {
               key={`issuer-data-${el}`}
               class={`flex flex-col place-content-center bg-white p-2 ${modelStylesData.issuerBtn.borderRadius} ${modelStylesData.issuerBtn.boxShadow} ${modelStylesData.issuerBtn.boxSize}`}
             >
-              <img
-                class="flex aspect-auto p-1"
-                key={`issuer-logo-${el}`}
-                src={issuerLogoFinder(el)}
-                alt="issuer-logo-image"
-              />
-              <p
-                key={`issuer-proposal-${el}`}
-                class="flex p-1 text-center text-[8px] text-[#777171] sc200:text-[10px] sc300:text-[12px] sc400:text-[14px]"
+              <div
+                class="flex items-center h-1/2"
               >
-                {el.proposal}
-              </p>
+                <img
+                  key={`issuer-logo-${el}`}
+                  src={issuerLogoFinder(el)}
+                  alt="issuer-logo-image"
+                />
+              </div>
+              <div class='h-full'>
+                <p
+                  key={`issuer-proposal-${el}`}
+                  class="text-center text-[8px] text-[#777171] sc300:text-[11px] sc400:text-[14px]"
+                >
+                  {el.proposal}
+                </p>
+              </div>
             </div>
           </button>
         ))}

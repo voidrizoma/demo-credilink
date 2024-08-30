@@ -34,11 +34,7 @@ export const isValidAmount = (min: number, max: number, amount: string) => {
 };
 
 export const isValidPhone = (phone: string) => {
-  if (phone?.length !== 10 || !/^[0-9]+$/.test(phone)) {
-    // console.log('invalid')
-    return false
-  }
-  return true;
+  return phone.length === 10 && /^\d+$/.test(phone);
 };
 
 export const cleanPhoneNumber = (phoneNumber: string) => {
@@ -46,7 +42,7 @@ export const cleanPhoneNumber = (phoneNumber: string) => {
   // Remove spaces
   if (phoneNumber?.length >= 10) {
     const parsedPhone = phoneNumber.replace(/\D/g, '');
-    const fixed = parsedPhone.replaceAll(' ', '').slice(-10)
+    const fixed = parsedPhone.replaceAll(' ', '').slice(-10);
     return fixed;
   }
   return phoneNumber;
