@@ -8,6 +8,7 @@ import Header from "../template/header";
 import Footer from "../template/footer";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
+import Logo from "../atoms/logo";
 
 export interface IProps {
   loan: string;
@@ -50,9 +51,9 @@ export default component$((props: IProps) => {
                     padding="pb-3 sc500:pt-4"
                   />
                   {/* here would go the logo of the issuer but API does not support it yet */}
-                  {/* <Logo url={found.logoCommerce || ""} /> */}
+                  {/* <Logo url={found.logoCommerceBlack || ""} /> */}
                   <Text
-                    text="Presenta el siguiente código QR en caja para pagar tus productos y listo."
+                    text="Presenta el siguiente código QR en caja para pagar tus productos."
                     size={modelStylesData.textSize.subtitle}
                     weight={modelStylesData.textWeight.normal}
                     position="self-center"
@@ -71,12 +72,11 @@ export default component$((props: IProps) => {
 
                   <Text
                     text={
-                      "Monto aprobado: $" +
-                      (parseFloat(found.amount as any) / 100).toFixed(2)
-                    }
+                      "Monto aprobado:"}
                     size={modelStylesData.textSize.subtitle}
                     weight={modelStylesData.textWeight.normal}
                   />
+                  <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px] py-3'>{(parseFloat(found.amount as any) / 100).toFixed(2)}</p>
                   <Text
                     text={`Expira el ${found.expiration}`}
                     size={modelStylesData.textSize.subtitle}
