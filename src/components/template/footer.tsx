@@ -9,7 +9,8 @@ interface IProps {
 export default component$((props: IProps) => {
   return (
     <div
-      class={`absolute bottom-0 text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}
+      // class={`absolute bottom-0 text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}
+      class={`flex h-full text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}
       style={{ borderTop: "1px solid" }}
     >
       <div class="flex h-[inherit] items-center justify-center">

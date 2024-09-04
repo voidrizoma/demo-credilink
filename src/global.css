@@ -44,6 +44,7 @@ body {
   user-select: none;
   color-scheme: only light;
   color: #000;
+  height: 100vh;
 }
 
 #qwik-inspector-overlay {

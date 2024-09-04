@@ -53,31 +53,15 @@ export default component$(() => {
 
             {!found?.commerce?.length && <Sorry />}
 
-            {checkoutStore.isCheckout && (
-              <div class="flex justify-center items-start bg-white h-screen w-screen">
-                {checkoutStore.issuer.name === "aplazo" && (
-                  <Checkoutaplazo credilink={found} checkout={checkoutStore} />
-                )}
-                {checkoutStore.issuer.name === "mp" && (
-                  <Checkoutmp credilink={found} checkout={checkoutStore} />
-                )}
-                {checkoutStore.issuer.name === "coppel" && (
-                  <Checkoutcoppel credilink={found} checkout={checkoutStore} />
-                )}
-                {checkoutStore.issuer.name === "kueski" && (
-                  <Checkoutkueski credilink={found} checkout={checkoutStore} />
-                )}
-              </div>
-            )}
-
             {!checkoutStore.isCheckout &&
               !checkoutStore.isLogin &&
               found?.commerce?.length > 0 && (
                 <>
-                  <div class="flex w-screen bg-white sc600:w-[600px]">
+                  {/* FORM SECTION */}
+                  <div class="flex flex-col w-screen bg-white sc600:w-[600px]">
                     <Header imgSrc={found.logo} />
                     <div
-                      class={`absolute w-screen sc600:w-[600px] ${modelStylesData.form.labelSize} ${modelStylesData.labelSize.top} ${modelStylesData.bgColor.fluxIndigo}`}
+                      class={`flex w-screen h-full sc600:w-[600px] ${modelStylesData.bgColor.fluxIndigo}`}
                     >
                       <CustomForm credilink={found} checkout={checkoutStore} />
                     </div>
@@ -85,7 +69,7 @@ export default component$(() => {
                   </div>
                 </>
               )}
-
+            {/* LOGIN SECTION */}
             {checkoutStore.isLogin && (
               <div class="flex justify-center items-start bg-white h-screen w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
@@ -99,6 +83,23 @@ export default component$(() => {
                 )}
                 {checkoutStore.issuer.name === "kueski" && (
                   <Loginkueski checkout={checkoutStore} />
+                )}
+              </div>
+            )}
+            {/* CHECKOUT SECTION */}
+            {checkoutStore.isCheckout && (
+              <div class="flex justify-center items-start bg-white h-screen w-screen">
+                {checkoutStore.issuer.name === "aplazo" && (
+                  <Checkoutaplazo credilink={found} checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "mp" && (
+                  <Checkoutmp credilink={found} checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "coppel" && (
+                  <Checkoutcoppel credilink={found} checkout={checkoutStore} />
+                )}
+                {checkoutStore.issuer.name === "kueski" && (
+                  <Checkoutkueski credilink={found} checkout={checkoutStore} />
                 )}
               </div>
             )}
