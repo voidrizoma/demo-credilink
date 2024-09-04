@@ -16,7 +16,7 @@ export default component$((props: IProps) => {
       <div class="flex h-[inherit] items-center justify-center">
         {!props.isSlug && (
           <div class="flex flex-row gap-1">
-            <p class="flex items-center text-center" id="flux-footer-text">
+            <p class="flex items-center text-center pl-4" id="flux-footer-text">
               Servicio proporcionado por
             </p>
             <a

@@ -42,46 +42,49 @@ export default component$((props: IProps) => {
             <>
               {found == null && <Sorry />}
               {found !== null && (
-                <div class="flex h-[calc(100vh-200px)] flex-col text-center text-black">
+                <div class="flex flex-col h-full text-center text-black">
                   <Header imgSrc={found.logoCommerce} />
-                  <Text
-                    text={found.title}
-                    size={modelStylesData.textSize.title}
-                    weight={modelStylesData.textWeight.subTitle}
-                    padding="pb-3 sc500:pt-4"
-                  />
-                  {/* here would go the logo of the issuer but API does not support it yet */}
-                  {/* <Logo url={found.logoCommerceBlack || ""} /> */}
-                  <Text
-                    text="Presenta el siguiente código QR en caja para pagar tus productos."
-                    size={modelStylesData.textSize.subtitle}
-                    weight={modelStylesData.textWeight.normal}
-                    position="self-center"
-                    padding="px-2 py-3"
-                  />
-                  <Text
-                    text="¡Disfruta tu compra!"
-                    size={modelStylesData.textSize.title}
-                    weight={modelStylesData.textWeight.subTitle}
-                  />
-                  <Qr
-                    url={`https://qr.fluxqr.net/?text=${encodeURIComponent(
-                      found.qr
-                    )}`}
-                  />
+                  <div class='flex flex-col h-[100%] items-center'>
+                    <div class='h-[30px]'></div>
+                    <Text
+                      text={found.title}
+                      size={modelStylesData.textSize.title}
+                      weight={modelStylesData.textWeight.subTitle}
+                      padding="pb-3 sc500:pt-4"
+                    />
+                    {/* here would go the logo of the issuer but API does not support it yet */}
+                    {/* <Logo url={found.logoCommerceBlack || ""} /> */}
+                    <Text
+                      text="Presenta el siguiente código QR en caja para pagar tus productos."
+                      size={modelStylesData.textSize.subtitle}
+                      weight={modelStylesData.textWeight.normal}
+                      position="self-center"
+                      padding="px-2 py-3"
+                    />
+                    <Text
+                      text="¡Disfruta tu compra!"
+                      size={modelStylesData.textSize.title}
+                      weight={modelStylesData.textWeight.subTitle}
+                    />
+                    <Qr
+                      url={`https://qr.fluxqr.net/?text=${encodeURIComponent(
+                        found.qr
+                      )}`}
+                    />
 
-                  <Text
-                    text={
-                      "Monto aprobado:"}
-                    size={modelStylesData.textSize.subtitle}
-                    weight={modelStylesData.textWeight.normal}
-                  />
-                  <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px] py-3'>{(parseFloat(found.amount as any) / 100).toFixed(2)}</p>
-                  <Text
-                    text={`Expira el ${found.expiration}`}
-                    size={modelStylesData.textSize.subtitle}
-                    weight={modelStylesData.textWeight.normal}
-                  />
+                    <Text
+                      text={
+                        "Monto aprobado:"}
+                      size={modelStylesData.textSize.subtitle}
+                      weight={modelStylesData.textWeight.normal}
+                    />
+                    <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px] py-3'>{(parseFloat(found.amount as any) / 100).toFixed(2)}</p>
+                    <Text
+                      text={`Expira el ${found.expiration}`}
+                      size={modelStylesData.textSize.subtitle}
+                      weight={modelStylesData.textWeight.normal}
+                    />
+                  </div>
                   <Footer isSlug={false} />
                 </div>
               )}
