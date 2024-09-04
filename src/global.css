@@ -34,6 +34,7 @@ html {
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  height: 100%;
 }
 
 body {
@@ -44,7 +45,7 @@ body {
   user-select: none;
   color-scheme: only light;
   color: #000;
-  height: 100vh;
+  height: 100%;
 }
 
 #qwik-inspector-overlay {
