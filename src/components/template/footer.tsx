@@ -13,10 +13,10 @@ export default component$((props: IProps) => {
       class={`flex h-full text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}
       style={{ borderTop: "1px solid" }}
     >
-      <div class="flex h-[inherit] items-center justify-center">
+      <div class="flex w-full items-center justify-center">
         {!props.isSlug && (
           <div class="flex flex-row gap-1">
-            <p class="flex items-center text-center pl-4" id="flux-footer-text">
+            <p class="flex items-center pl-4" id="flux-footer-text">
               Servicio proporcionado por
             </p>
             <a

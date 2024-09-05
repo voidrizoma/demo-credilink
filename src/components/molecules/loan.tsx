@@ -32,7 +32,7 @@ export default component$((props: IProps) => {
   });
 
   return (
-    <div class="flex h-screen w-screen flex-col place-content-center bg-white text-white sc600:w-[600px]">
+    <div class="flex h-full w-full flex-col place-content-center bg-white text-white sc600:w-[600px]">
       <Resource
         value={resource}
         onPending={() => <ModalLoading />}
@@ -42,9 +42,9 @@ export default component$((props: IProps) => {
             <>
               {found == null && <Sorry />}
               {found !== null && (
-                <div class="flex flex-col h-full text-center text-black">
+                <div class="flex flex-col h-full w-full text-center text-black">
                   <Header imgSrc={found.logoCommerce} />
-                  <div class='flex flex-col h-[100%] items-center'>
+                  <div class='flex flex-col h-full items-center'>
                     <div class='h-[30px]'></div>
                     <Text
                       text={found.title}
