@@ -107,7 +107,7 @@ export default component$((props: IProps) => {
     <>
       {props.checkout.isLoading && <ModalLoading />}
       <div>
-        <img class='blur-[3px]' src={kueski1} />
+        <img class='blur-[3px] max-h-screen' src={kueski1} />
         {!props.checkout.isFinalStep && <Kueski1 checkout={props.checkout}/>}
         {props.checkout.isFinalStep && <Kueski2 checkout={props.checkout} checkoutSubmit={checkoutSubmit}/>}
       </div>

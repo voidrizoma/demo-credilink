@@ -71,7 +71,7 @@ export default component$(() => {
               )}
             {/* LOGIN SECTION */}
             {checkoutStore.isLogin && (
-              <div class="flex justify-center items-start bg-white h-screen w-screen">
+              <div class="flex justify-center items-start bg-white h-full w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
                   <Login checkout={checkoutStore} />
                 )}
@@ -88,7 +88,7 @@ export default component$(() => {
             )}
             {/* CHECKOUT SECTION */}
             {checkoutStore.isCheckout && (
-              <div class="flex justify-center items-start bg-white h-screen w-screen">
+              <div class="flex justify-center items-start bg-white h-full w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
                   <Checkoutaplazo credilink={found} checkout={checkoutStore} />
                 )}

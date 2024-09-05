@@ -13,13 +13,13 @@ export default component$((props: IProps) => {
         { text1: '$154.00 x 4 quincenas', text2: '$600.14 total con intereses', selected: false },
     ]
     return <>
-        <div class="flex flex-col place-content-end bg-zinc-200 bg-opacity-90 fixed inset-0 z-10 h-screen">
+        <div class="flex flex-col place-content-end bg-zinc-200 bg-opacity-90 fixed inset-0 z-10 max-h-screen">
             <div class='flex flex-col gap-3 h-4/6 bg-white rounded-t-[25px] px-4'>
                 <div class="h-[20px]"></div>
                 <div class="flex">
-                    <p class="items-start font-bold text-[24px]">Seleccionar quincenas</p>
+                    <p class="items-start font-bold sc350:text-[18px] text-[24px]">Seleccionar quincenas</p>
                 </div>
-                <p class='text-md text-zinc-500'>El pago de la última quincena puede variar.</p>
+                <p class='sc350:text-sm text-md text-zinc-500'>El pago de la última quincena puede variar.</p>
                 {items.map((e, i) =>
                     <div key={`${i} kueski-quincena`} class={`flex items-center gap-3 border-[2px] p-4 rounded-[15px] ${e.selected ? 'border-[#0075ff]' : 'border-[#d1d6dd]'}`}>
 
@@ -29,13 +29,13 @@ export default component$((props: IProps) => {
                             </svg>
                         </div>
                         <div class='flex flex-col'>
-                            <p class="text-md text-zinc-500">{e.text1}</p>
-                            <p class="text-md text-zinc-500">{e.text2}</p>
+                            <p class="sc350:text-sm text-md text-zinc-500">{e.text1}</p>
+                            <p class="sc350:text-sm text-md text-zinc-500">{e.text2}</p>
                         </div>
                     </div>
                 )}
                 <button
-                    class="self-center rounded-[50px] w-[320px] h-[52px] mt-3 text-white text-[20px] bg-[#0075ff]"
+                    class="self-center rounded-[50px] sc350:rounded-[40px] sc350:w-[256px] sc350:h-[42px] w-[320px] h-[52px] mt-3 text-white text-[20px] bg-[#0075ff]"
                     preventdefault:click
                     onClick$={() => {
                         props.checkout.isLoading = true;

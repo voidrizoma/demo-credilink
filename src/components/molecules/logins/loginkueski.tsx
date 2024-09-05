@@ -19,15 +19,15 @@ export default component$((props: IProps) => {
                     <div class="flex">
                         <p class="items-start font-bold text-[24px]">Verifica tu identidad</p>
                     </div>
-                    <p class='text-md'>Ingresa el NIP que te enviamos por SMS y WhatsApp al número <span class='font-bold'>****** 16.</span> </p>
-                    <p>Código <span class='font-bold'>482557</span> </p>
-                    <p class='font-semibold'>NIP</p>
+                    <p class='sc350:text-sm text-md'>Ingresa el NIP que te enviamos por SMS y WhatsApp al número <span class='font-bold'>****** 16.</span> </p>
+                    <p>Código <span class='font-bold sc350:text-sm text-md'>482557</span> </p>
+                    <p class='font-semibold sc350:text-sm text-md'>NIP</p>
                     <div class={`flex justify-center gap-2`}>
                         {[1, 2, 3, 4, 5, 6].map((value, index) => (
                             <input
                                 key={index}
                                 type="text"
-                                class="text-[22px] font-bold w-14 h-16 border-[2px] border-gray-300  rounded-[12px] text-center bg-white"
+                                class="text-[22px] font-bold sc350:w-12 sc350:h-14 w-14 h-16 border-[2px] border-gray-300  rounded-[12px] text-center bg-white"
                                 maxLength={1}
                                 value={value}
                                 disabled
@@ -35,8 +35,8 @@ export default component$((props: IProps) => {
                         ))}
                     </div>
                     <div class='flex flex-row gap-2'>
-                        <p class='font-semibold'>¿No recibiste el NIP?</p>
-                        <p class='text-[16px] text-[] self-end'>Reenviar NIP: 01:19</p>
+                        <p class='sc350:text-[12px] text-[16px] font-semibold'>¿No recibiste el NIP?</p>
+                        <p class='sc350:text-[12px] text-[16px] self-end'>Reenviar NIP: 01:19</p>
 
                     </div>
                     <div class="h-[10px]"></div>
@@ -53,15 +53,15 @@ export default component$((props: IProps) => {
                                 }
                             />
                         </div>
-                        <p class='text-[14px]'>
+                        <p class='sc350:text-xs text-sm'>
                             Por este conducto autorizo expresamente a Kueski, S.A.P.I de C.V, SOFOM E.N.R., Para qué A través de sus funcionarios facultados realice Las investigaciones correspondientes sobre mi comportamiento e historial crediticio Ante las sociedades de información crediticia.
                         </p>
                     </div>
                     <div class="h-[10px]"></div>
-                    <a href="" class="text-[#0075ff] font-bold self-center">Ver más</a>
+                    <a href="" class="text-[#0075ff] font-bold sc350:text-md self-center">Ver más</a>
                     <div class="h-[30px]"></div>
                     <button
-                        class="self-center rounded-[50px] w-[320px] h-[52px] mt-3 text-white text-[20px] bg-[#0075ff]"
+                        class="self-center sc350:rounded-[40px] rounded-[50px] sc350:w-[256px] sc350:h-[42px] w-[320px] h-[52px] mt-3 text-white text-[20px] bg-[#0075ff]"
                         preventdefault:click
                         onClick$={() => {
                             props.checkout.isLoading = true;
