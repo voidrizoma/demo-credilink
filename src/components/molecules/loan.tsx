@@ -20,7 +20,7 @@ export default component$((props: IProps) => {
   const resource = useResource$<any>(async ({ cleanup }) => {
     const abortController = new AbortController();
     cleanup(() => abortController.abort("cleanup"));
-    const res = await fetch(`${api}loans/${props.loan}`, {
+    const res = await fetch(`${api}loans/${props.loan}/flux`, {
       signal: abortController.signal,
     });
     if (res.status == 200) {
