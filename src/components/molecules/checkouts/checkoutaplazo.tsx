@@ -25,23 +25,6 @@ export default component$((props: IProps) => {
 
     try {
       const baseUrl = envVars.apiUrlFlux;
-      const token = envVars.tokenFlux;
-
-      const authData = {
-        grantType: "accessToken",
-        refreshToken: token,
-      };
-
-      const appJsonHeader = { "Content-type": "application/json" };
-
-      await fetch(`${baseUrl}/auth/tokens/refreshToken`, {
-        method: "POST",
-        headers: new Headers(appJsonHeader),
-        body: JSON.stringify(authData),
-      }).then(async (res) => {
-        if (res.status >= 200 && res.status < 300) {
-          const { data } = await res.json();
-          const resToken = data?.accessToken;
           const dataCoupon = {
             commerce: props.credilink.commerce,
             amount: Math.round(Number(props.checkout.userData.amount) * 100),
@@ -53,17 +36,18 @@ export default component$((props: IProps) => {
               email: props.checkout.userData.email,
             },
           };
-          // console.log(dataCoupon);
-          await fetch(`${baseUrl}/coupons`, {
+          await fetch(`${baseUrl}coupons`, {
             method: "POST",
-            headers: new Headers({
-              ...appJsonHeader,
-              Authorization: `Bearer ${resToken}`,
-            }),
+            headers: {
+              'Content-Type': 'application/json', // Important for JSON requests
+            },
             body: JSON.stringify(dataCoupon),
           }).then(async (res) => {
-            const { data } = await res.json();
+            const data = await res.json();
+            console.log("DATA :::::::::: ", data)
             if (data?.id?.length) {
+              console.log(data.id)
+              window.location.href = `/?loan=${data.id}`;
               try {
                 const zapierData = {
                   tel: `+52${props.checkout.userData.phone}`,
@@ -90,13 +74,12 @@ export default component$((props: IProps) => {
               } catch (e) {
                 console.log("error", e);
               }
-              // window.location.href = `/?loan=${data.id}`;
+              window.location.href = `/?loan=${data.id}`;
             } else {
-              window.location.href = `/?loan=${loanId}`;
+              console.log("error");
+              return;
             }
           });
-        }
-      });
     } catch (err) {
       console.log(err);
     }

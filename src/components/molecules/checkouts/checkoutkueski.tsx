@@ -22,80 +22,59 @@ export default component$((props: IProps) => {
 
     try {
       const baseUrl = envVars.apiUrlFlux;
-      const token = envVars.tokenFlux;
-
-      const authData = {
-        grantType: "accessToken",
-        refreshToken: token,
+      const dataCoupon = {
+        commerce: props.credilink.commerce,
+        amount: Math.round(Number(props.checkout.userData.amount) * 100),
+        expiration: `${getExpDate()}T05:59:59.999Z`,
+        // expiration: "2023-12-12T05:59:59.999Z",
+        isPayable: false,
+        customer: {
+          name: "Usuario de prueba",
+          email: props.checkout.userData.email,
+        },
       };
-
-      const appJsonHeader = { "Content-type": "application/json" };
-
-      await fetch(`${baseUrl}/auth/tokens/refreshToken`, {
+      await fetch(`${baseUrl}coupons`, {
         method: "POST",
-        headers: new Headers(appJsonHeader),
-        body: JSON.stringify(authData),
+        headers: {
+          'Content-Type': 'application/json', // Important for JSON requests
+        },
+        body: JSON.stringify(dataCoupon),
       }).then(async (res) => {
-        if (res.status >= 200 && res.status < 300) {
-          const { data } = await res.json();
-          const resToken = data?.accessToken;
-          // console.log("resToken ::: ", resToken);
-
-          const dataCoupon = {
-            commerce: props.credilink.commerce,
-            amount: Math.round(Number(props.checkout.userData.amount) * 100),
-            expiration: `${getExpDate()}T05:59:59.999Z`,
-            // expiration: "2023-12-12T05:59:59.999Z",
-            isPayable: false,
-            customer: {
-              name: "Usuario de prueba",
-              email: props.checkout.userData.email,
-            },
-          };
-          // console.log(dataCoupon);
-          await fetch(`${baseUrl}/coupons`, {
-            method: "POST",
-            headers: new Headers({
-              ...appJsonHeader,
-              Authorization: `Bearer ${resToken}`,
-            }),
-            body: JSON.stringify(dataCoupon),
-          }).then(async (res) => {
-            const { data } = await res.json();
-            if (data) {
+        const data = await res.json();
+        console.log("DATA :::::::::: ", data)
+        if (data?.id?.length) {
+          console.log(data.id)
+          window.location.href = `/?loan=${data.id}`;
+          try {
+            const zapierData = {
+              tel: `+52${props.checkout.userData.phone}`,
+              id: data.id,
+              imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
+                data.qr
+              )}`,
+              amount: `$${parseFloat(data.amount) / 100}`,
+              commerce: props.credilink.commerceName,
+              expiration: data.expiration,
+              qr: data.qr,
+            };
+            console.log("zapierdata", zapierData);
+            const zapierRes = await fetch(envVars.urlZapier, {
+              method: "POST",
+              body: JSON.stringify(zapierData),
+            });
+            const result = await zapierRes.json();
+            console.log("success", result);
+            if (zapierRes?.status === 200) {
               console.log(data);
+              window.location.href = `/?loan=${data.id}`;
             }
-            if (data?.id?.length) {
-              try {
-                const zapierData = {
-                  tel: `+52${props.checkout.userData.phone}`,
-                  id: data.id,
-                  imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
-                    data.qr
-                  )}`,
-                  amount: `$${parseFloat(data.amount) / 100}`,
-                  commerce: props.credilink.commerceName,
-                  expiration: data.expiration,
-                  qr: data.qr,
-                };
-                console.log("zapierdata", zapierData);
-                const zapierRes = await fetch(envVars.urlZapier, {
-                  method: "POST",
-                  body: JSON.stringify(zapierData),
-                });
-                const result = await zapierRes.json();
-                console.log("success", result);
-                if (zapierRes?.status === 200) {
-                  console.log(data);
-                  window.location.href = `/?loan=${data.id}`;
-                }
-              } catch (e) {
-                console.log("error", e);
-              }
-            } else {
-              window.location.href = `/?loan=${loanId}`;
-            }
-          });
+          } catch (e) {
+            console.log("error", e);
+          }
+          window.location.href = `/?loan=${data.id}`;
+        } else {
+          console.log("error");
+          return;
         }
       });
     } catch (err) {
@@ -108,8 +87,8 @@ export default component$((props: IProps) => {
       {props.checkout.isLoading && <ModalLoading />}
       <div>
         <img class='blur-[3px] max-h-screen' src={kueski1} />
-        {!props.checkout.isFinalStep && <Kueski1 checkout={props.checkout}/>}
-        {props.checkout.isFinalStep && <Kueski2 checkout={props.checkout} checkoutSubmit={checkoutSubmit}/>}
+        {!props.checkout.isFinalStep && <Kueski1 checkout={props.checkout} />}
+        {props.checkout.isFinalStep && <Kueski2 checkout={props.checkout} checkoutSubmit={checkoutSubmit} />}
       </div>
     </>
   );

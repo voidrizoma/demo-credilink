@@ -34,76 +34,65 @@ export default component$((props: IProps) => {
 
       const appJsonHeader = { "Content-type": "application/json" };
 
-      await fetch(`${baseUrl}/auth/tokens/refreshToken`, {
+      const dataCoupon = {
+        commerce: props.credilink.commerce,
+        amount: Math.round(Number(props.checkout.userData.amount) * 100),
+        expiration: `${getExpDate()}T05:59:59.999Z`,
+        // expiration: "2023-12-12T05:59:59.999Z",
+        isPayable: false,
+        customer: {
+          name: "Usuario de prueba",
+          email: props.checkout.userData.email,
+        },
+      };
+      await fetch(`${baseUrl}/coupons`, {
         method: "POST",
-        headers: new Headers(appJsonHeader),
-        body: JSON.stringify(authData),
+        headers: new Headers({
+          ...appJsonHeader,
+        }),
+        body: JSON.stringify(dataCoupon),
       }).then(async (res) => {
-        if (res.status >= 200 && res.status < 300) {
-          const { data } = await res.json();
-          const resToken = data?.accessToken;
-          const dataCoupon = {
-            commerce: props.credilink.commerce,
-            amount: Math.round(Number(props.checkout.userData.amount) * 100),
-            expiration: `${getExpDate()}T05:59:59.999Z`,
-            // expiration: "2023-12-12T05:59:59.999Z",
-            isPayable: false,
-            customer: {
-              name: "Usuario de prueba",
-              email: props.checkout.userData.email,
-            },
-          };
-          // console.log(dataCoupon);
-          await fetch(`${baseUrl}/coupons`, {
-            method: "POST",
-            headers: new Headers({
-              ...appJsonHeader,
-              Authorization: `Bearer ${resToken}`,
-            }),
-            body: JSON.stringify(dataCoupon),
-          }).then(async (res) => {
-            const { data } = await res.json();
-            if (data?.id?.length) {
-              try {
-                const zapierData = {
-                  tel: `+52${props.checkout.userData.phone}`,
-                  id: data.id,
-                  imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
-                    data.qr
-                  )}`,
-                  amount: `$${parseFloat(data.amount) / 100}`,
-                  commerce: props.credilink.commerceName,
-                  expiration: `${new Date(data.expiration).toLocaleString(
-                    "es-MX",
-                    {
-                      timeZone: "America/Mexico_City",
-                      dateStyle: "long",
-                      timeStyle: "short",
-                    }
-                  )}`,
-                  qr: data.qr,
-                };
-                console.log("zapierdata", zapierData);
-                const zapierRes = await fetch(envVars.urlZapier, {
-                  method: "POST",
-                  body: JSON.stringify(zapierData),
-                });
-                const result = await zapierRes.json();
-                console.log("success", result);
-                if (zapierRes?.status === 200) {
-                  console.log(data);
-                  window.location.href = `/?loan=${data.id}`;
+        const { data } = await res.json();
+        if (data?.id?.length) {
+          try {
+            const zapierData = {
+              tel: `+52${props.checkout.userData.phone}`,
+              id: data.id,
+              imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
+                data.qr
+              )}`,
+              amount: `$${parseFloat(data.amount) / 100}`,
+              commerce: props.credilink.commerceName,
+              expiration: `${new Date(data.expiration).toLocaleString(
+                "es-MX",
+                {
+                  timeZone: "America/Mexico_City",
+                  dateStyle: "long",
+                  timeStyle: "short",
                 }
-              } catch (e) {
-                console.log("error", e);
-              }
-              // window.location.href = `/?loan=${data.id}`;
-            } else {
-              window.location.href = `/?loan=${loanId}`;
+              )}`,
+              qr: data.qr,
+            };
+            console.log("zapierdata", zapierData);
+            const zapierRes = await fetch(envVars.urlZapier, {
+              method: "POST",
+              body: JSON.stringify(zapierData),
+            });
+            const result = await zapierRes.json();
+            console.log("success", result);
+            if (zapierRes?.status === 200) {
+              console.log(data);
+              window.location.href = `/?loan=${data.id}`;
             }
-          });
+          } catch (e) {
+            console.log("error", e);
+          }
+          // window.location.href = `/?loan=${data.id}`;
+        } else {
+          window.location.href = `/?loan=${loanId}`;
         }
       });
+
     } catch (err) {
       console.log(err);
     }
@@ -166,10 +155,9 @@ export default component$((props: IProps) => {
                 Tasa de interés: 20%
               </div>
               <div class="flex flex-auto p-2 border-t-4 border-r-0 border-b-0 border-l-0 border-[#c2c2c2]">
-                {`Tasa de interés: $${
-                  (parseFloat(props.checkout.userData.amount) *
+                {`Tasa de interés: $${(parseFloat(props.checkout.userData.amount) *
                   0.2).toFixed(2)
-                }`}
+                  }`}
               </div>
             </div>
           </div>
@@ -187,7 +175,7 @@ export default component$((props: IProps) => {
                 />
               </div>
               <div class="px-2 text-[18px] font-bold">{`2 Quincenas de $${(
-                parseFloat(props.checkout.userData.amount) / 2 * 1.2 
+                parseFloat(props.checkout.userData.amount) / 2 * 1.2
               ).toFixed(2)}`}</div>
             </div>
           </div>
