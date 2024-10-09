@@ -73,7 +73,7 @@ export default component$((props: IProps) => {
           }
           window.location.href = `/?loan=${data.id}`;
         } else {
-          console.log("error");
+          window.location.href = `/?loan=${loanId}`;
           return;
         }
       });

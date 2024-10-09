@@ -25,61 +25,61 @@ export default component$((props: IProps) => {
 
     try {
       const baseUrl = envVars.apiUrlFlux;
-          const dataCoupon = {
-            commerce: props.credilink.commerce,
-            amount: Math.round(Number(props.checkout.userData.amount) * 100),
-            expiration: `${getExpDate()}T05:59:59.999Z`,
-            // expiration: "2023-12-12T05:59:59.999Z",
-            isPayable: false,
-            customer: {
-              name: "Usuario de prueba",
-              email: props.checkout.userData.email,
-            },
-          };
-          await fetch(`${baseUrl}coupons`, {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json', // Important for JSON requests
-            },
-            body: JSON.stringify(dataCoupon),
-          }).then(async (res) => {
-            const data = await res.json();
-            console.log("DATA :::::::::: ", data)
-            if (data?.id?.length) {
-              console.log(data.id)
+      const dataCoupon = {
+        commerce: props.credilink.commerce,
+        amount: Math.round(Number(props.checkout.userData.amount) * 100),
+        expiration: `${getExpDate()}T05:59:59.999Z`,
+        // expiration: "2023-12-12T05:59:59.999Z",
+        isPayable: false,
+        customer: {
+          name: "Usuario de prueba",
+          email: props.checkout.userData.email,
+        },
+      };
+      await fetch(`${baseUrl}coupons`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json', // Important for JSON requests
+        },
+        body: JSON.stringify(dataCoupon),
+      }).then(async (res) => {
+        const data = await res.json();
+        console.log("DATA :::::::::: ", data)
+        if (data?.id?.length) {
+          console.log(data.id)
+          window.location.href = `/?loan=${data.id}`;
+          try {
+            const zapierData = {
+              tel: `+52${props.checkout.userData.phone}`,
+              id: data.id,
+              imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
+                data.qr
+              )}`,
+              amount: `$${parseFloat(data.amount) / 100}`,
+              commerce: props.credilink.commerceName,
+              expiration: data.expiration,
+              qr: data.qr,
+            };
+            console.log("zapierdata", zapierData);
+            const zapierRes = await fetch(envVars.urlZapier, {
+              method: "POST",
+              body: JSON.stringify(zapierData),
+            });
+            const result = await zapierRes.json();
+            console.log("success", result);
+            if (zapierRes?.status === 200) {
+              console.log(data);
               window.location.href = `/?loan=${data.id}`;
-              try {
-                const zapierData = {
-                  tel: `+52${props.checkout.userData.phone}`,
-                  id: data.id,
-                  imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
-                    data.qr
-                  )}`,
-                  amount: `$${parseFloat(data.amount) / 100}`,
-                  commerce: props.credilink.commerceName,
-                  expiration: data.expiration,
-                  qr: data.qr,
-                };
-                console.log("zapierdata", zapierData);
-                const zapierRes = await fetch(envVars.urlZapier, {
-                  method: "POST",
-                  body: JSON.stringify(zapierData),
-                });
-                const result = await zapierRes.json();
-                console.log("success", result);
-                if (zapierRes?.status === 200) {
-                  console.log(data);
-                  window.location.href = `/?loan=${data.id}`;
-                }
-              } catch (e) {
-                console.log("error", e);
-              }
-              window.location.href = `/?loan=${data.id}`;
-            } else {
-              console.log("error");
-              return;
             }
-          });
+          } catch (e) {
+            console.log("error", e);
+          }
+          window.location.href = `/?loan=${data.id}`;
+        } else {
+          window.location.href = `/?loan=${loanId}`;
+          return;
+        }
+      });
     } catch (err) {
       console.log(err);
     }
