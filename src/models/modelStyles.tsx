@@ -25,6 +25,8 @@ interface ModelStyles {
   bgColor: {
     fluxIndigo: string;
     fluxIndigo2: string;
+    gradient: string;
+
   };
   labelSize: {
     height: string;
@@ -40,6 +42,7 @@ interface ModelStyles {
   };
   issuerBtn: {
     boxSize: string;
+    imgHeight: string;
     borderRadius: string;
     boxShadow: string;
   };
@@ -64,20 +67,21 @@ export const modelStylesData: ModelStyles = {
   input: {
     height: "h-[30px] sc200:h-[36px] sc300:h-[38px] sc400:h-[40px]",
     width: "",
-    border: "rounded-[15px] border-[#A8A8A8]",
-    textColor: "text-[#A8A8A8]",
-    bgColor: "bg-[#F2F2F2]",
+    border: "rounded-[15px] border-[#e8eef5] focus:outline-white",
+    textColor: "text-[#ffffff] placeholder-[#f4f3f2]",
+    bgColor: "bg-[#739ac2]",
   },
   imgSize: {
     commerce:
       "w-auto py-[5px] sc300:py-[14px] sc400:py-[16px] h-[50px] sc200:h-[60px] sc300:h-[65px] sc350:h-[70px] sc400:h-[80px] sc500:h-[100px]",
     issuer:
       "w-[60px] sc200:w-[80px] sc300:w-[100px] sc350:w-[120px] sc400:w-[140px] sc500:w-[200px]",
-    qr: "w-[80px] sc200:w-[100px] sc300:w-[120px] sc350:w-[150px] sc400:w-[200px] sc500:w-[240px]",
+    qr: "w-[70px] sc200:w-[90px] sc300:w-[110px] sc350:w-[160px] sc375:w-[170px] sc400:w-[180px] sc500:w-[240px]",
   },
   bgColor: {
     fluxIndigo: "bg-[#182c4c]",
     fluxIndigo2: "bg-[#1B284A]",
+    gradient: "bg-gradient-to-b from-[#2c74b9] to-[#071028]",
   },
   labelSize: {
     height:
@@ -97,8 +101,10 @@ export const modelStylesData: ModelStyles = {
   },
   issuerBtn: {
     boxSize:
-      "w-[90px] sc200:w-[100px] sc300:w-[105px] sc400:w-[130px] sc500:w-[140px] h-[90px] sc200:h-[100px] sc300:h-[105px] sc400:h-[130px] sc500:h-[140px]",
-      borderRadius: "sc400:rounded-[20px] rounded-[15px]",
+      "w-[90px] sc200:w-[100px] sc300:w-[105px] sc375:w-[110px] sc400:w-[130px] sc500:w-[140px] h-[90px] sc200:h-[100px] sc300:h-[105px] sc375:h-[110px] sc400:h-[130px] sc500:h-[140px]",
+    imgHeight:
+      "h-[90px] sc200:h-[100px] sc300:h-[105px] sc375:h-[110px] sc400:h-[130px] sc500:h-[140px]",
+    borderRadius: "sc375:rounded-[15px] rounded-[20px]",
     boxShadow: "shadow-[5px_5px_#0e0d0d]",
   },
 };

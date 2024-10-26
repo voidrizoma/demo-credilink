@@ -17,6 +17,7 @@ import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
 import Footer from "~/components/template/footer";
 import Header from "~/components/template/header";
+import HeaderNoImage from "~/components/template/headerNoImage";
 import { CheckoutModel, initialCheckout } from "~/models/checkout-model";
 import type { Credilink } from "~/models/credilink-model";
 import { envVars } from "~/models/global-vars";
@@ -58,14 +59,19 @@ export default component$(() => {
               found?.commerce?.length > 0 && (
                 <>
                   {/* FORM SECTION */}
-                  <div class="flex flex-col w-screen bg-white sc600:w-[600px]">
-                    <Header imgSrc={found.logo} />
+                  <div class="flex flex-col w-screen h-full bg-white sc600:w-[600px]">
+                    {found.logo ? (
+                      <Header imgSrc={found.logo} />
+                    ) : (
+                      <HeaderNoImage name={found.commerce} />
+                    )}
                     <div
-                      class={`flex w-screen h-full sc600:w-[600px] ${modelStylesData.bgColor.fluxIndigo}`}
+                      id={`form-footer-container`}
+                      class={`flex flex-col w-screen h-full ${modelStylesData.bgColor.gradient} sc600:w-[600px]`}
                     >
                       <CustomForm credilink={found} checkout={checkoutStore} />
+                      <Footer isSlug={true} />
                     </div>
-                    <Footer isSlug={true} />
                   </div>
                 </>
               )}

@@ -20,8 +20,8 @@ export default component$((props: IProps) => {
       <input
         id="fluxqr-amount-input"
         name="fluxqr-amount-input"
-        class={`w-full border-[1px] border-solid p-3 ${modelStylesData.input.height} ${modelStylesData.textSize.input} ${modelStylesData.input.border} ${modelStylesData.input.textColor} ${modelStylesData.input.bgColor}`}
-        type="number"
+        class={`direction-ltr w-full border-[1px] border-solid p-3 ${modelStylesData.input.height} ${modelStylesData.textSize.input} ${modelStylesData.input.border} ${modelStylesData.input.textColor} ${modelStylesData.input.bgColor}`}
+        type="text"
         inputMode="decimal"
         pattern="^[0-9]+(\.[0-9]{1,2})?$"
         step=".01"
@@ -52,7 +52,7 @@ export default component$((props: IProps) => {
       />
       <p
         class={`self-start ${
-          !props.validationStore.validAmount ? "text-red-600" : "text-black"
+          !props.validationStore.validAmount ? "text-[#ff8800]" : "text-white"
         } ${props.errorTextStyle}`}
       >
         {!props.validationStore.validAmount

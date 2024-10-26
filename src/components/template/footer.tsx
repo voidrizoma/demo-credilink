@@ -9,8 +9,7 @@ interface IProps {
 export default component$((props: IProps) => {
   return (
     <div
-      // class={`absolute bottom-0 text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}
-      class={`flex h-full text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}
+      class={`flex h-full text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height}`}
       style={{ borderTop: "1px solid" }}
     >
       <div class="flex w-full items-center justify-center">
@@ -48,7 +47,16 @@ export default component$((props: IProps) => {
                 Por favor lee nuestra
               </p>
               <Text
-                text="Política de privacidad."
+                text="Política de Privacidad"
+                url={"https://www.fluxqr.com/politica-de-privacidad"}
+                weight={modelStylesData.textWeight.subTitle}
+                size={modelStylesData.textSize.normal}
+              />
+              <p class="flex items-center text-center">
+                y
+              </p>
+              <Text
+                text="Términos y Condiciones"
                 url={"https://www.fluxqr.com/tyc"}
                 weight={modelStylesData.textWeight.subTitle}
                 size={modelStylesData.textSize.normal}

@@ -7,10 +7,11 @@ interface IProps {
 }
 
 export default component$((props: IProps) => {
-  return <div class={`${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}>
-  {/* return <div class={`absolute top-0 ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}> */}
-  <div class='flex justify-center items-center h-[inherit]'>
-      <ImageCommerce  url={props.imgSrc}/>
+  return <div
+    id='header-container'
+    class={`${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height} ${modelStylesData.bgColor.fluxIndigo2}`}>
+    <div id='header-subcontainer' class='flex justify-center items-center h-[inherit]'>
+      <ImageCommerce url={props.imgSrc} />
+    </div>
   </div>
-</div>
 });

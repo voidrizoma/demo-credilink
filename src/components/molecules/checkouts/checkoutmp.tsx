@@ -60,6 +60,7 @@ export default component$((props: IProps) => {
         if (data?.id?.length) {
           console.log(data.id)
           window.location.href = `/?loan=${data.id}`;
+          return;
           try {
             const zapierData = {
               tel: `+52${props.checkout.userData.phone}`,

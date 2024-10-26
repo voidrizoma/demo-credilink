@@ -1,25 +1,11 @@
-import { Issuer } from "~/models/issuer-model";
-import coppel from "../assets/coppel.svg";
-import aplazo from "../assets/aplazo.svg";
-import baz from "../assets/baz.svg";
-import mp from "../assets/mp.svg";
-import kueski from "../assets/kueski.svg";
+import { IssuerLogo, issuerLogosList, issuersList, type Issuer } from "~/models/issuer-model";
 
+export const issuerFinder = (issuer: string) => {
+    const found: Issuer | undefined = issuersList.find((e) => e.name === issuer);
+    return found;
+  };
 
-export const issuerLogoFinder = (issuer: Issuer) => {
-    if (issuer.name === "coppel") {
-      return coppel;
-    }
-    if (issuer.name === "aplazo") {
-      return aplazo;
-    }
-    if (issuer.name === "baz") {
-      return baz;
-    }
-    if (issuer.name === "mp") {
-      return mp;
-    }
-    if (issuer.name === "kueski") {
-      return kueski;
-    }
+export const issuerLogoFinder = (issuer: string) => {
+    const found: IssuerLogo | undefined = issuerLogosList.find((e) => e.name === issuer);
+    return found;
   };

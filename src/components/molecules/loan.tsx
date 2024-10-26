@@ -8,6 +8,7 @@ import Header from "../template/header";
 import Footer from "../template/footer";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
+import logoFwhite from "../../assets/loan/logo_flux_white.png"
 // import Logo from "../atoms/logo";
 
 export interface IProps {
@@ -32,7 +33,7 @@ export default component$((props: IProps) => {
   });
 
   return (
-    <div class="flex h-full w-full flex-col place-content-center bg-white text-white sc600:w-[600px]">
+    <div class={`flex h-full w-full flex-col place-content-center text-white sc600:w-[600px] ${modelStylesData.bgColor.gradient}`}>
       <Resource
         value={resource}
         onPending={() => <ModalLoading />}
@@ -42,9 +43,9 @@ export default component$((props: IProps) => {
             <>
               {found == null && <Sorry />}
               {found !== null && (
-                <div class="flex flex-col h-full w-full text-center text-black">
-                  <Header imgSrc={found.logoCommerce} />
-                  <div class='flex flex-col h-full items-center'>
+                <div class="flex flex-col h-full w-full text-center text-white">
+                  <Header imgSrc={logoFwhite} />
+                  <div class='flex flex-col gap-4 h-full items-center'>
                     <div class='h-[30px]'></div>
                     <Text
                       text={found.title}
@@ -71,14 +72,13 @@ export default component$((props: IProps) => {
                         found.qr
                       )}`}
                     />
-
                     <Text
                       text={
                         "Monto aprobado:"}
                       size={modelStylesData.textSize.subtitle}
                       weight={modelStylesData.textWeight.normal}
                     />
-                    <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px] py-3'>{(parseFloat(found.amount as any) / 100).toFixed(2)}</p>
+                    <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px]'>{(parseFloat(found.amount as any) / 100).toFixed(2)}</p>
                     <Text
                       text={`Expira el ${found.expiration}`}
                       size={modelStylesData.textSize.subtitle}

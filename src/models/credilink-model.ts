@@ -18,7 +18,7 @@ export interface Credilink {
     bg: string;
     min: number;
     max: number;
-    issuers: Issuer[]
+    issuers: Issuer[];
   }
 
   export const initialCredilink = {

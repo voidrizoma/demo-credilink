@@ -19,9 +19,8 @@ export default component$((props: IProps) => {
         name="phone"
         type="tel"
         autoComplete="true"
-        // maxLength={10}
         minLength={10}
-        class={`w-full border-[1px] border-solid p-3 ${modelStylesData.input.height} ${modelStylesData.textSize.input} ${modelStylesData.input.border} ${modelStylesData.input.textColor} ${modelStylesData.input.bgColor}`}
+        class={`direction-ltr w-full border-[1px] border-solid p-3 ${modelStylesData.input.height} ${modelStylesData.textSize.input} ${modelStylesData.input.border} ${modelStylesData.input.textColor} ${modelStylesData.input.bgColor}`}
         placeholder={props.placeholder}
         value={props.store.phone}
         // onInput$={(ev) =>
@@ -35,17 +34,17 @@ export default component$((props: IProps) => {
             props.validationStore.validPhone = isValidPhone(props.store.phone);
           }
         }}
-        // onBlur$={() => {
-        //   if (props.store.phone.length > 0) {
-        //     props.validationStore.validPhone = isValidPhone(props.store.phone);
-        //   }
-        // }}
+      // onBlur$={() => {
+      //   if (props.store.phone.length > 0) {
+      //     props.validationStore.validPhone = isValidPhone(props.store.phone);
+      //   }
+      // }}
       />
       <p
-        class={`self-start ${!props.validationStore.validAmount ? "text-red-600" : "text-black"
+        class={`self-start ${!props.validationStore.validPhone ? "text-[#ff8800]" : "text-white"
           } ${props.errorTextStyle}`}
       >
-        {!props.validationStore.validAmount
+        {!props.validationStore.validPhone
           ? `Ingresa un teléfono de al menos 10 digitos`
           : "La aprobación de tu crédito te llegará por WhatsApp"}
       </p>

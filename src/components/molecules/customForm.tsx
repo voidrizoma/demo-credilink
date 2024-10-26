@@ -56,10 +56,10 @@ export default component$((props: IProps) => {
     <>
       {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
 
-      <div class="flex flex-col gap-[1px] text-[8px] h-[100%]">
+      <div class="flex flex-col gap-[1px] text-[8px] h-[100%] text-white">
         <div
           id="flux-white-container"
-          class="flex items-center justify-center bg-white pb-3"
+          class="flex items-center justify-center pb-3"
         >
           <div
             class={`mx-4 flex flex-col ${modelStylesData.form.gap} ${modelStylesData.form.padding}`}
@@ -96,13 +96,6 @@ export default component$((props: IProps) => {
           </div>
         </div>
         {props.credilink.issuers.length && (
-          <div
-            class="flex place-content-center"
-            style={{
-              backgroundImage: "linear-gradient(to bottom, #2C75BA, #1B284A)",
-              height: "100%",
-            }}
-          >
             <Issuers
               issuers={props.credilink.issuers}
               store={store}
@@ -111,7 +104,6 @@ export default component$((props: IProps) => {
               credilink={props.credilink}
               checkout={props.checkout}
             />
-          </div>
         )}
       </div>
 

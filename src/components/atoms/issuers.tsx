@@ -1,7 +1,7 @@
 /* eslint-disable qwik/valid-lexical-scope */
 import { component$, useStore } from "@builder.io/qwik";
 // import { useLocation } from "@builder.io/qwik-city";
-import { issuerLogoFinder } from "~/helpers/issuer-methods";
+import { issuerFinder } from "~/helpers/issuer-methods";
 import { Issuer } from "~/models/issuer-model";
 import { StoreData } from "~/models/store-data-model";
 import { Text } from "./text";
@@ -47,7 +47,6 @@ export default component$((props: IProps) => {
       </div>
       <div
         id="flux-issuers"
-        // class="flex flex-wrap justify-center gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]"
         class={props.issuers.length == 4 ? "grid grid-cols-2 gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]" : "flex flex-wrap justify-center gap-[8px] self-center sc300:gap-[10px] sc400:gap-[14px]"}
       >
         {props.issuers.map((el: Issuer, elIndex) => (
@@ -92,28 +91,12 @@ export default component$((props: IProps) => {
               }
             }}
           >
-            <div
-              key={`issuer-data-${el}`}
-              class={`flex flex-col place-content-center bg-white p-2 ${modelStylesData.issuerBtn.borderRadius} ${modelStylesData.issuerBtn.boxShadow} ${modelStylesData.issuerBtn.boxSize}`}
-            >
-              <div
-                class="flex items-center h-1/2"
-              >
-                <img
-                  key={`issuer-logo-${el}`}
-                  src={issuerLogoFinder(el)}
-                  alt="issuer-logo-image"
-                />
-              </div>
-              <div class='h-full'>
-                <p
-                  key={`issuer-proposal-${el}`}
-                  class="text-center text-[8px] text-[#777171] sc300:text-[11px] sc400:text-[14px]"
-                >
-                  {el.proposal}
-                </p>
-              </div>
-            </div>
+            <img
+              id={`issuer-btn-img-${issuerFinder(el.name)?.name}`}
+              class={`${modelStylesData.issuerBtn.imgHeight}`}
+              src={issuerFinder(el.name)?.img}
+              alt="issuer-logo-image"
+            />
           </button>
         ))}
       </div>

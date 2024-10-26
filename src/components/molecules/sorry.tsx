@@ -5,7 +5,7 @@ export default component$(() => {
 
   useClientEffect$(() => {
     setTimeout(() => {
-      window.location.href = "https://www.fluxqr.com/";
+      // window.location.href = "https://www.fluxqr.com/";
     }, 1500);
   });
 
