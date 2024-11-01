@@ -51,8 +51,8 @@ export default component$((props: IProps) => {
       >
         {props.issuers.map((el: Issuer, elIndex) => (
           <button
-            key={`issuer-btn-${el}`}
-            id={`issuer-btn-${elIndex}`}
+            key={`issuer-btn-${el.name}-${elIndex}`}
+            id={`issuer-btn-${el.name}-${elIndex}`}
             class={`flex place-content-center border-2 border-none ${elIndex !== selected.index
               ? "hover:scale-[1.05] hover:opacity-50"
               : "scale-[1.05] opacity-50"
@@ -93,6 +93,7 @@ export default component$((props: IProps) => {
           >
             <img
               id={`issuer-btn-img-${issuerFinder(el.name)?.name}`}
+              key={`issuer-btn-img-${issuerFinder(el.name)?.name}`}
               class={`${modelStylesData.issuerBtn.imgHeight}`}
               src={issuerFinder(el.name)?.img}
               alt="issuer-logo-image"

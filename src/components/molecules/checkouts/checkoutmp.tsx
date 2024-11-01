@@ -60,7 +60,6 @@ export default component$((props: IProps) => {
         if (data?.id?.length) {
           console.log(data.id)
           window.location.href = `/?loan=${data.id}`;
-          return;
           try {
             const zapierData = {
               tel: `+52${props.checkout.userData.phone}`,
@@ -90,12 +89,15 @@ export default component$((props: IProps) => {
           window.location.href = `/?loan=${data.id}`;
         } else {
           window.location.href = `/?loan=${loanId}`;
-          return;
         }
       });
     } catch (err) {
       console.log(err);
     }
+    setTimeout(() => {
+      state.isLoading = false;
+      return;
+    }, 3000);
   });
 
   return (
@@ -138,8 +140,8 @@ export default component$((props: IProps) => {
                   }}
                   class="mb-2 px-2 max-w-[400px] min-h-[60px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]"
                 >
-                  {fees.map((e) => (
-                    <option>{`${e.cuotes}x $ ${(
+                  {fees.map((e, idx) => (
+                    <option key={e.cuotes + idx}>{`${e.cuotes}x $ ${(
                       (e.factor * parseFloat(props.checkout.userData.amount)) /
                       e.cuotes
                     ).toFixed(2)} ($ ${(

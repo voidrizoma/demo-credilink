@@ -25,7 +25,7 @@ export default component$((props: IProps) => {
                     <div class={`flex justify-center gap-2`}>
                         {[1, 2, 3, 4, 5, 6].map((value, index) => (
                             <input
-                                key={index}
+                                key={index + "  " +  value}
                                 type="text"
                                 class="text-[22px] font-bold sc350:w-12 sc350:h-14 w-14 h-16 border-[2px] border-gray-300  rounded-[12px] text-center bg-white"
                                 maxLength={1}

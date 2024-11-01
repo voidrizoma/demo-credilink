@@ -48,7 +48,6 @@ export default component$((props: IProps) => {
         if (data?.id?.length) {
           console.log(data.id)
           window.location.href = `/?loan=${data.id}`;
-          return;
           try {
             const zapierData = {
               tel: `+52${props.checkout.userData.phone}`,
@@ -78,12 +77,15 @@ export default component$((props: IProps) => {
           window.location.href = `/?loan=${data.id}`;
         } else {
           window.location.href = `/?loan=${loanId}`;
-          return;
         }
       });
     } catch (err) {
       console.log(err);
     }
+    setTimeout(() => {
+      props.checkout.isLoading = true;
+      return;
+    }, 3000);
   });
 
   return (
@@ -94,7 +96,7 @@ export default component$((props: IProps) => {
           <div class="flex self-center w-[120px] h-[120px]">
             <img
               class="pb-3 max-w-[150px]"
-              src={issuerLogoFinder(props.checkout.issuer)}
+              src={issuerLogoFinder(props.checkout.issuer.name)?.img}
               alt=""
             />
           </div>
