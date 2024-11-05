@@ -14,7 +14,7 @@ export default component$((props: IProps) => {
           <div class="flex self-center w-[150px] h-[150px]">
             <img
               class="pb-3"
-              src={issuerLogoFinder(props.checkout.issuer)}
+              src={issuerLogoFinder(props.checkout.issuer.name)?.img}
               alt=""
             />
           </div>
