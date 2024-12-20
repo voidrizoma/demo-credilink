@@ -16,7 +16,7 @@ export interface IProps {
 }
 
 export default component$((props: IProps) => {
-  const api = envVars.apiUrl;
+  const api = envVars.apiUrlFlux;
 
   const resource = useResource$<any>(async ({ cleanup }) => {
     const abortController = new AbortController();
