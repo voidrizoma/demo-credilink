@@ -42,7 +42,7 @@ export const issuersList: Issuer[] = [
     color: "#FFC107",
 },
 {
-    id: "aplazo-id",
+    id: "mp-id",
     name: IssuerEnum.mp,
     proposal: "Hasta 12 meses sin tarjeta",
     img: mp,
@@ -50,7 +50,7 @@ export const issuersList: Issuer[] = [
     color: "#FFC107",
 },
 {
-    id: "aplazo-id",
+    id: "coppel-id",
     name: IssuerEnum.coppel,
     proposal: "Hasta 12 meses con tu crédito Coppel",
     img: coppel,
@@ -58,7 +58,7 @@ export const issuersList: Issuer[] = [
     color: "#FFC107",
 },
 {
-    id: "aplazo-id",
+    id: "kueski-id",
     name: IssuerEnum.kueski,
     proposal: "Compra ahora y paga después en quincenas \n",
     img: kueski,
@@ -66,7 +66,7 @@ export const issuersList: Issuer[] = [
     color: "#FFC107",
 },
 {
-    id: "aplazo-id",
+    id: "baz-id",
     name: IssuerEnum.baz,
     proposal: "Tu eliges el plazo para pagar",
     img: baz,

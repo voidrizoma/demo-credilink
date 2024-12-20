@@ -7,11 +7,13 @@ import {
 import Checkoutaplazo from "~/components/molecules/checkouts/checkoutaplazo";
 import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutkueski from "~/components/molecules/checkouts/checkoutkueski";
+import Checkoutkueski2 from "~/components/molecules/checkouts/checkoutkueski2";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
 import Logincoppel from "~/components/molecules/logins/logincoppel";
 import Loginkueski from "~/components/molecules/logins/loginkueski";
+import Loginkueski2 from "~/components/molecules/logins/loginkueski2";
 import Loginmp from "~/components/molecules/logins/loginmp";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
@@ -24,7 +26,7 @@ import { envVars } from "~/models/global-vars";
 import { modelStylesData } from "~/models/modelStyles";
 
 export const onGet: RequestHandler<Credilink | null> = async ({ params }) => {
-  const res = await fetch(`${envVars.apiUrl}credilink/${params.slug}`);
+  const res = await fetch(`${envVars.apiUrlFlux}credilink/${params.slug}`);
   if (res.status > 299 || res.status < 200) {
     return null;
   } else {
@@ -88,7 +90,8 @@ export default component$(() => {
                   <Logincoppel checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "kueski" && (
-                  <Loginkueski checkout={checkoutStore} />
+                  <Loginkueski2 checkout={checkoutStore}/>
+                  // <Loginkueski checkout={checkoutStore} />
                 )}
               </div>
             )}
@@ -105,8 +108,11 @@ export default component$(() => {
                   <Checkoutcoppel credilink={found} checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "kueski" && (
-                  <Checkoutkueski credilink={found} checkout={checkoutStore} />
+                  <Checkoutkueski2 credilink={found} checkout={checkoutStore} />
                 )}
+                {/* {checkoutStore.issuer.name === "kueski" && (
+                  <Checkoutkueski credilink={found} checkout={checkoutStore} />
+                )} */}
               </div>
             )}
           </>

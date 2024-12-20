@@ -5,7 +5,6 @@ import { CheckoutModel } from "~/models/checkout-model";
 export interface IProps {
     checkout: CheckoutModel;
     checkoutSubmit: QRL<(id: string) => void>;
-
 }
 
 export default component$((props: IProps) => {

@@ -27,7 +27,7 @@ export interface Credilink {
     emailSender: "",
     commerceName: "",
     commerce: "",
-    issuer: "",
+    issuer: "kueski",
     colorPrimary: "",
     colorSecondary: "",
     sender: "",
