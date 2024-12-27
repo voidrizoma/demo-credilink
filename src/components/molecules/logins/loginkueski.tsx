@@ -1,84 +1,139 @@
 import { component$ } from "@builder.io/qwik";
 import { CheckoutModel } from "~/models/checkout-model";
+import kueskiLogo from "~/assets/kueskilogo.png";
 
 export interface IProps {
     checkout: CheckoutModel;
 }
 
-// #0075ff
 
 export default component$((props: IProps) => {
-    console.log(props);
-
     return (
-        <>
-            <div class="flex flex-col place-content-center gap-6 px-[10px]">
-                {/* <img src={logo} alt="kueski-logo" class="my-[20px] h-[30px]" /> */}
-                <div class="flex flex-col px-4 gap-3">
-                    <div class="h-[20px]"></div>
-                    <div class="flex">
-                        <p class="items-start font-bold text-[24px]">Verifica tu identidad</p>
-                    </div>
-                    <p class='sc350:text-sm text-md'>Ingresa el NIP que te enviamos por SMS y WhatsApp al número <span class='font-bold'>****** 16.</span> </p>
-                    <p>Código <span class='font-bold sc350:text-sm text-md'>482557</span> </p>
-                    <p class='font-semibold sc350:text-sm text-md'>NIP</p>
-                    <div class={`flex justify-center gap-2`}>
-                        {[1, 2, 3, 4, 5, 6].map((value, index) => (
-                            <input
-                                key={index + "  " +  value}
-                                type="text"
-                                class="text-[22px] font-bold sc350:w-12 sc350:h-14 w-14 h-16 border-[2px] border-gray-300  rounded-[12px] text-center bg-white"
-                                maxLength={1}
-                                value={value}
-                                disabled
-                            />
-                        ))}
-                    </div>
-                    <div class='flex flex-row gap-2'>
-                        <p class='sc350:text-[12px] text-[16px] font-semibold'>¿No recibiste el NIP?</p>
-                        <p class='sc350:text-[12px] text-[16px] self-end'>Reenviar NIP: 01:19</p>
-
-                    </div>
-                    <div class="h-[10px]"></div>
-                    <div class='flex flex-row gap-2'>
-                        <div>
-                            <input
-                                type="checkbox"
-                                checked
-                                class="self-start border-blue-500 rounded-md text-blue-500 focus:ring-blue-500"
-                                onChange$={(ev) => {
-                                    (ev.target as HTMLInputElement).value = (ev.target as HTMLInputElement).value
-                                }}
-                                onInput$={(ev) => (ev.target as HTMLInputElement).value = (ev.target as HTMLInputElement).value
-                                }
-                            />
-                        </div>
-                        <p class='sc350:text-xs text-sm'>
-                            Por este conducto autorizo expresamente a Kueski, S.A.P.I de C.V, SOFOM E.N.R., Para qué A través de sus funcionarios facultados realice Las investigaciones correspondientes sobre mi comportamiento e historial crediticio Ante las sociedades de información crediticia.
-                        </p>
-                    </div>
-                    <div class="h-[10px]"></div>
-                    <a href="" class="text-[#0075ff] font-bold sc350:text-md self-center">Ver más</a>
-                    <div class="h-[30px]"></div>
-                    <button
-                        class="self-center sc350:rounded-[40px] rounded-[50px] sc350:w-[256px] sc350:h-[42px] w-[320px] h-[52px] mt-3 text-white text-[20px] bg-[#0075ff]"
-                        preventdefault:click
-                        onClick$={() => {
-                            props.checkout.isLoading = true;
-                            // console.log(props.checkout.isLoading)
-                            setTimeout(() => {
-                                props.checkout.isLoading = false;
-                                props.checkout.isLogin = false;
-                                props.checkout.isCheckout = true;
-                                // console.log(props.checkout.isLoading)
-                            }, 2000);
-                        }}
+        <div class="min-h-screen bg-white flex flex-col">
+            {/* Header */}
+            <header class="flex items-center justify-between p-4 border-b">
+                <div class="flex items-center gap-2">
+                    <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        class="text-blue-600"
+                        stroke="currentColor"
+                        strokeWidth="2"
                     >
-                        Verificar
-                    </button>
-                    <div class="h-[30px]"></div>
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                    <span class="text-gray-800">Comercio</span>
                 </div>
-            </div>
-        </>
-    );
+                <span class="font-mono">{props.checkout.userData.amount}</span>
+            </header>
+
+            <main class="flex-grow flex flex-col justify-center items-center px-4 py-8">
+                <div class="w-full max-w-md">
+                    {/* Logo */}
+                    <div class="flex justify-center mb-12">
+                        <img
+                            class="max-w-[200px] self-center"
+                            src={kueskiLogo}
+                            alt="kueski-login-logo-1"
+                        />
+                        {/* <div class="text-2xl font-bold text-blue-600">
+                            kueski<span class="text-green-500">.</span>
+                        </div> */}
+                    </div>
+
+                    {/* Login Form */}
+                    <div class="space-y-6">
+                        <h1 class="text-2xl font-semibold text-center">Inicia sesión</h1>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1" for="email">
+                                    Correo electrónico*
+                                </label>
+                                <input
+                                    disabled
+                                    id="email"
+                                    type="email"
+                                    placeholder="demo@fluxqr.com"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            <div class="relative">
+                                <label class="block text-sm text-gray-600 mb-1" for="password">
+                                    Contraseña*
+                                </label>
+                                <div class="relative">
+                                    <input
+                                        disabled
+                                        id="password"
+                                        type="password"
+                                        value="password"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                                    />
+                                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            class="text-gray-400"
+                                        >
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                            <circle cx="12" cy="12" r="3" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a
+                            href="#"
+                            class="block text-blue-600 text-sm text-center"
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </a>
+
+                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full py-3 px-4 transition duration-300 ease-in-out"
+                            preventdefault:click
+                            onClick$={() => {
+                                props.checkout.isLoading = true;
+                                // console.log(props.checkout.isLoading)
+                                setTimeout(() => {
+                                    props.checkout.isLoading = false;
+                                    props.checkout.isLogin = false;
+                                    props.checkout.isCheckout = true;
+                                    // console.log(props.checkout.isLoading)
+                                }, 2000);
+                            }}
+
+                        >
+                            Iniciar sesión
+                        </button>
+
+                        <div class="text-center space-y-4">
+                            <p class="text-gray-600">
+                                ¿Aún no tienes cuenta?{" "}
+                                <a href="#" class="text-blue-600 hover:underline">
+                                    Crear una cuenta
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            {/* Footer */}
+            <footer class="w-full p-4 text-center text-sm text-gray-500 space-x-4">
+                <span>Kueski © 2024</span>
+                <a href="#" class="hover:text-gray-700">Términos</a>
+                <a href="#" class="hover:text-gray-700">Privacidad</a>
+            </footer>
+        </div>
+    )
 });
+

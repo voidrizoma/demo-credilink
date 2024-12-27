@@ -1,8 +1,10 @@
 interface ModelStyles {
   textSize: {
+    tiny: string;
     normal: string;
     subtitle: string;
     title: string;
+    biggest: string;
     input: string;
   };
   textWeight: {
@@ -50,12 +52,16 @@ interface ModelStyles {
 
 export const modelStylesData: ModelStyles = {
   textSize: {
+    tiny:
+      "text-[5px] sc200:text-[6px] sc250:text-[7px] sc300:text-[8px] sc350:text-[10px] sc400:text-[12px] cs500:text-[15px]",
     normal:
       "text-[6px] sc200:text-[8px] sc250:text-[10px] sc300:text-[12px] sc350:text-[13px] sc400:text-[14px] cs500:text-[16px]",
     subtitle:
       "text-[8px] sc200:text-[10px] sc250:text-[12px] sc300:text-[14px] sc350:text-[15px] sc400:text-[16px] cs500:text-[18px]",
     title:
       "text-[10px] sc200:text-[12px] sc250:text-[14px] sc300:text-[16px] sc350:text-[17px] sc400:text-[18px] cs500:text-[20px]",
+    biggest:
+      "text-[12px] sc200:text-[14px] sc250:text-[16px] sc300:text-[18px] sc350:text-[20px] sc400:text-[22px] cs500:text-[24px]",
     input:
       "text-[9px] sc200:text-[11px] sc250:text-[13px] sc300:text-[15px] sc350:text-[16px] sc400:text-[17px] cs500:text-[19px]",
   },

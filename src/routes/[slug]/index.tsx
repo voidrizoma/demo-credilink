@@ -7,13 +7,11 @@ import {
 import Checkoutaplazo from "~/components/molecules/checkouts/checkoutaplazo";
 import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutkueski from "~/components/molecules/checkouts/checkoutkueski";
-import Checkoutkueski2 from "~/components/molecules/checkouts/checkoutkueski2";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 import CustomForm from "~/components/molecules/customForm";
 import Login from "~/components/molecules/login";
 import Logincoppel from "~/components/molecules/logins/logincoppel";
-import Loginkueski from "~/components/molecules/logins/loginkueski";
-import Loginkueski2 from "~/components/molecules/logins/loginkueski2";
+import Loginkueski2 from "~/components/molecules/logins/loginkueski";
 import Loginmp from "~/components/molecules/logins/loginmp";
 import { ModalLoading } from "~/components/molecules/modalLoading";
 import Sorry from "~/components/molecules/sorry";
@@ -41,7 +39,7 @@ export default component$(() => {
   const checkoutStore: CheckoutModel = useStore(initialCheckout);
 
   return (
-    <div class="flex place-content-center m-0 p-0">
+    <div class="flex place-content-center m-0 p-0 h-full bg-white">
       <Resource
         value={resource}
         onPending={() => <ModalLoading />}
@@ -91,7 +89,6 @@ export default component$(() => {
                 )}
                 {checkoutStore.issuer.name === "kueski" && (
                   <Loginkueski2 checkout={checkoutStore}/>
-                  // <Loginkueski checkout={checkoutStore} />
                 )}
               </div>
             )}
@@ -99,7 +96,7 @@ export default component$(() => {
             {checkoutStore.isCheckout && (
               <div class="flex justify-center items-start bg-white h-full w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
-                  <Checkoutaplazo credilink={found} checkout={checkoutStore} />
+                  <Checkoutaplazo credilink={found} checkout={checkoutStore}/>
                 )}
                 {checkoutStore.issuer.name === "mp" && (
                   <Checkoutmp credilink={found} checkout={checkoutStore} />
@@ -108,11 +105,8 @@ export default component$(() => {
                   <Checkoutcoppel credilink={found} checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "kueski" && (
-                  <Checkoutkueski2 credilink={found} checkout={checkoutStore} />
-                )}
-                {/* {checkoutStore.issuer.name === "kueski" && (
                   <Checkoutkueski credilink={found} checkout={checkoutStore} />
-                )} */}
+                )}
               </div>
             )}
           </>

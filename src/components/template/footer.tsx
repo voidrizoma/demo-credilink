@@ -31,14 +31,14 @@ export default component$((props: IProps) => {
         {props.isSlug && (
           <div
             id="flux-footer-text-scroll"
-            class={`mx-4 my-0 h-[100%] w-[100%] py-0 ${modelStylesData.textSize.normal} font-[500] text-white`}
+            class={`mx-2 my-0 h-[100%] w-[100%] py-0 ${modelStylesData.textSize.tiny} font-[500] text-white`}
           >
             <Text
               text="Servicio proporcionado por Flux QR."
               margin="mt-2"
               color="text-white"
               weight={modelStylesData.textWeight.normal}
-              size={modelStylesData.textSize.normal}
+              size={modelStylesData.textSize.tiny}
               position="text-start"
             />
 
@@ -49,8 +49,8 @@ export default component$((props: IProps) => {
               <Text
                 text="Política de Privacidad"
                 url={"https://www.fluxqr.com/politica-de-privacidad"}
-                weight={modelStylesData.textWeight.subTitle}
-                size={modelStylesData.textSize.normal}
+                weight={modelStylesData.textWeight.normal}
+                size={modelStylesData.textSize.tiny}
               />
               <p class="flex items-center text-center">
                 y
@@ -58,8 +58,8 @@ export default component$((props: IProps) => {
               <Text
                 text="Términos y Condiciones"
                 url={"https://www.fluxqr.com/tyc"}
-                weight={modelStylesData.textWeight.subTitle}
-                size={modelStylesData.textSize.normal}
+                weight={modelStylesData.textWeight.normal}
+                size={modelStylesData.textSize.tiny}
               />
             </div>
           </div>

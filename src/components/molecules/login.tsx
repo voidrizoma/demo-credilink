@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
-import { issuerLogoFinder } from "~/helpers/issuer-methods";
+// import { issuerLogoFinder } from "~/helpers/issuer-methods";
 import { CheckoutModel } from "~/models/checkout-model";
+import aplazoLogo from "~/assets/aplazo.svg"
 
 export interface IProps {
   checkout: CheckoutModel;
@@ -14,7 +15,7 @@ export default component$((props: IProps) => {
           <div class="flex self-center w-[150px] h-[150px]">
             <img
               class="pb-3"
-              src={issuerLogoFinder(props.checkout.issuer.name)?.img}
+              src={aplazoLogo}
               alt=""
             />
           </div>

@@ -1,10 +1,8 @@
-import { component$, $, useStore } from "@builder.io/qwik";
-import { Credilink } from "~/models/credilink-model";
-import { CheckoutModel } from "~/models/checkout-model";
-import { envVars } from "~/models/global-vars";
-import { ModalLoading } from "../modalLoading";
-import coppel1 from "../../../assets/checkout/coppel1.png";
+import { $, component$, useStore } from "@builder.io/qwik";
 import { getExpDate } from "~/helpers/dates";
+import { CheckoutModel } from "~/models/checkout-model";
+import { Credilink } from "~/models/credilink-model";
+import { envVars } from "~/models/global-vars";
 
 export interface IProps {
   credilink: Credilink;
@@ -14,7 +12,6 @@ export interface IProps {
 export default component$((props: IProps) => {
   // NAVIGATES TO /?loan=<ID>
   const state = useStore({
-    currentOption: "",
     isLoading: false,
   });
 
@@ -90,86 +87,97 @@ export default component$((props: IProps) => {
   });
 
   return (
-    <>
-      {state.isLoading && <ModalLoading />}
-      <div class="flex flex-col gap-1 max-w-[500px] m-3 px-8 py-2 rounded-[8px] border-solid border-[2px] border-[#1a64ad]">
-        <img src={coppel1} alt="coppel1-img-head" />
-        <p class="text-[20px] font-bold">Hola</p>
-        <p class="text-[14px]">Estás a punto de terminar tu compra de</p>
-        <p class="text-[14px] font-bold">Crédito Coppel Pay</p>
-        <div class="flex flex-col">
-          {/* inputs */}
-          {/* AMOUNT */}
-          <p class="text-[14px] text-[#818080]">Precio de contado:</p>
-          <p class="text-[14px] font-bold">{`$${parseInt(
-            props.checkout.userData.amount
-          ).toLocaleString("es-MX", {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          })}`}</p>
-          <div class="border-b-2 border-grey"></div>
-          <p class="text-[14px] text-[#818080]">
-            Recuerda que el monto máximo por transacción de Coppel Pay online es
-            de $15,000
-          </p>
-          <div class="py-2"></div>
-          {/* CREDIT */}
-          <p class="text-[14px] text-[#818080]">
-            Precio con crédito de Coppel Pay:
-          </p>
-          <div class="flex flex-row items-center">
-            <p class="text-[14px] font-bold pr-2">{`$${(
-              parseInt(props.checkout.userData.amount) * 1.43
-            ).toLocaleString("es-MX", {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })}`}</p>
-            <p class="text-[14px] text-[#818080]">en 12 mensualidades</p>
+    <div class="max-w-[480px] mx-auto p-8 font-sans">
+      <header class="mb-10 text-center">
+        <div class="flex items-center justify-center gap-2 mb-1">
+          <span class="text-[#003B7A] text-2xl font-bold">Coppel</span>
+          <div class="flex relative">
+            <div class="w-8 h-6 bg-[#FFD100] -rotate-8 absolute z-10"></div>
+            <div class="w-8 h-6 bg-[#FF4438] -rotate-4 absolute left-1 z-20"></div>
+            <div class="w-8 h-6 bg-[#003B7A] relative left-2 z-30"></div>
           </div>
-          <div class="border-b-2 border-grey"></div>
-          <div class="py-2"></div>
-          {/* CUOTES */}
-          <p class="text-[14px] text-[#818080]">Tu abono mensual será de:</p>
-          <div class="flex flex-row items-center">
-            <p class="text-[14px] font-bold pr-2">{`$${(
-              (parseInt(props.checkout.userData.amount) * 1.43) /
-              12
-            ).toLocaleString("es-MX", {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })}`}</p>
-            <p class="text-[14px] text-[#818080]">el día 24 de cada mes</p>
-          </div>
-          <div class="border-b-2 border-grey"></div>
-          <div class="py-2"></div>
-          {/* EMAIL */}
-          <p class="text-[14px] text-[#818080]">
-            Enviaremos tu recibo a este correo:
-          </p>
-          <p class="text-[14px] font-bold pr-2">{envVars.fixedEmail}</p>
-          <div class="border-b-2 border-grey"></div>
-          <div class="pb-4"></div>
-          {/* ending texts */}
-          <p class="text-[16px] font-bold">Finaliza tu compra</p>
-          <p class="text-[14px] pt-1">
-            Da clic en el botón para finalizar tu compra.
-          </p>
-          <p class="text-[14px]">
-            Enviaremos tu recibo por correo. Recuerda revisar la bandeja de
-            correo no deseado y promociones
+          <span class="text-[#003B7A] text-2xl font-bold">Pay</span>
+        </div>
+        <p class="text-[#003B7A] text-sm m-0">
+          Tu mismo crédito, más posibilidades.
+        </p>
+      </header>
+
+      <main class="space-y-6">
+        <div>
+          <h1 class="text-3xl font-normal mb-4">
+            Finaliza tu compra
+          </h1>
+          <p class="text-gray-600 text-lg">
+            Esta es la información de tus abonos, si estás de acuerdo, finaliza tu compra de flux qr
           </p>
         </div>
-        <button
-          class="max-w-[200px] self-center rounded-[25px] h-[34px] mt-3 text-white bg-[#1a64ad] text-[18px] w-full"
+
+        <div class="border rounded-xl overflow-hidden">
+          <div class="p-4 border-b">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Precio de contado</span>
+              <span class="text-xl">{`$${parseFloat(props.checkout.userData.amount).toFixed(2)}`}</span>
+            </div>
+          </div>
+
+          <div class="p-4 border-b">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-gray-600">Precio con crédito<br />Coppel Pay</span>
+              <span class="text-right">
+                <span class="text-xl">{`$${(parseFloat(props.checkout.userData.amount) * 1.45).toFixed(2)}`}</span>
+                <span class="block text-gray-600">en 12 mensualidades</span>
+              </span>
+            </div>
+            <button class="text-[#003B7A] text-sm flex items-center">
+              Descubre como ahorrar intereses
+              <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="p-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Tu abono mensual<br />será de</span>
+              <span class="text-right">
+                <span class="text-xl">{`$${Math.ceil((parseFloat(props.checkout.userData.amount) * 1.45 / 12)).toFixed(2)}`}</span>
+                <span class="block text-gray-600">el día 29 de cada mes</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-gray-600 mb-2">Enviaremos tu recibo a este correo:</p>
+          <div class="border rounded-lg p-4">
+            {envVars.fixedEmail}
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 text-gray-500">
+          <svg class="w-5 h-5 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+          <p class="text-sm">
+            Recuerda revisar la bandeja de correo no deseado y promociones
+          </p>
+        </div>
+
+        <button class="w-full py-4 px-4 text-base font-medium text-white bg-[#003B7A] rounded-full hover:bg-[#002b5c] transition-colors duration-200"
           preventdefault:click
           onClick$={() => {
             checkoutSubmit(props.checkout.issuer.id);
           }}
           disabled={state.isLoading}
+
         >
-          Pagar
+          Finalizar Compra
         </button>
-      </div>
-    </>
-  );
-});
+      </main>
+    </div>
+  )
+})
+
