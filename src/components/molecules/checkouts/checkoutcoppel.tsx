@@ -3,6 +3,8 @@ import { getExpDate } from "~/helpers/dates";
 import { CheckoutModel } from "~/models/checkout-model";
 import { Credilink } from "~/models/credilink-model";
 import { envVars } from "~/models/global-vars";
+import coppelLogo from "~/assets/coppel.svg"
+
 
 export interface IProps {
   credilink: Credilink;
@@ -90,13 +92,11 @@ export default component$((props: IProps) => {
     <div class="max-w-[480px] mx-auto p-8 font-sans">
       <header class="mb-10 text-center">
         <div class="flex items-center justify-center gap-2 mb-1">
-          <span class="text-[#003B7A] text-2xl font-bold">Coppel</span>
-          <div class="flex relative">
-            <div class="w-8 h-6 bg-[#FFD100] -rotate-8 absolute z-10"></div>
-            <div class="w-8 h-6 bg-[#FF4438] -rotate-4 absolute left-1 z-20"></div>
-            <div class="w-8 h-6 bg-[#003B7A] relative left-2 z-30"></div>
-          </div>
-          <span class="text-[#003B7A] text-2xl font-bold">Pay</span>
+          <img
+            class="max-w-[200px] self-start"
+            src={coppelLogo}
+            alt="coppel-img-1"
+          />
         </div>
         <p class="text-[#003B7A] text-sm m-0">
           Tu mismo crédito, más posibilidades.

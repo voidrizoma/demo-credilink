@@ -14,11 +14,18 @@ export default component$((props: IProps) => {
     <>
       <div class="flex flex-col align-center my-4">
         <div class="flex flex-col align-center max-w-[400px] gap-6 m-2 px-4 pb-2 rounded-[8px]">
-          <img
-            class="max-w-[200px] self-start"
-            src={coppelLogo}
-            alt="coppel-img-1"
-          />
+          <header class="mb-10 text-center">
+            <div class="flex items-center justify-center gap-2 mb-1">
+              <img
+                class="max-w-[200px] self-start"
+                src={coppelLogo}
+                alt="coppel-img-1"
+              />
+            </div>
+            <p class="text-[#003B7A] text-sm m-0">
+              Tu mismo crédito, más posibilidades.
+            </p>
+          </header>
           <h1 class={`mb-4 ${modelStylesData.textWeight.subTitle} ${modelStylesData.textSize.biggest}`}>
             Inicia sesión para realizar tu compra
           </h1>
