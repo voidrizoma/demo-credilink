@@ -9,7 +9,7 @@ import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutkueski from "~/components/molecules/checkouts/checkoutkueski";
 import Checkoutmp from "~/components/molecules/checkouts/checkoutmp";
 import CustomForm from "~/components/molecules/customForm";
-import Login from "~/components/molecules/login";
+import Loginaplazo from "~/components/molecules/logins/loginaplazo";
 import Logincoppel from "~/components/molecules/logins/logincoppel";
 import Loginkueski2 from "~/components/molecules/logins/loginkueski";
 import Loginmp from "~/components/molecules/logins/loginmp";
@@ -79,7 +79,7 @@ export default component$(() => {
             {checkoutStore.isLogin && (
               <div class="flex justify-center items-start bg-white h-full w-screen">
                 {checkoutStore.issuer.name === "aplazo" && (
-                  <Login checkout={checkoutStore} />
+                  <Loginaplazo checkout={checkoutStore} />
                 )}
                 {checkoutStore.issuer.name === "mp" && (
                   <Loginmp checkout={checkoutStore} />
