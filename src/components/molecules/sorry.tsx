@@ -1,13 +1,13 @@
-import { component$, useClientEffect$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import Logo from "~/components/atoms/logo";
 
 export default component$(() => {
 
-  useClientEffect$(() => {
-    setTimeout(() => {
-      // window.location.href = "https://www.fluxqr.com/";
-    }, 1500);
-  });
+  // useClientEffect$(() => {
+  //   setTimeout(() => {
+  //     // window.location.href = "https://www.fluxqr.com/";
+  //   }, 1500);
+  // });
 
   return (
     <div class="flex place-content-center w-screen h-screen p-8 text-white bg-gradient-to-r from-[#558cc2] to-[#224c7e]">

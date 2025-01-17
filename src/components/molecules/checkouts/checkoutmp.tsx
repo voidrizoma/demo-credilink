@@ -134,7 +134,7 @@ export default component$((props: IProps) => {
               <div class="flex flex-col py-1 px-4">
                 <p class="text-[18px] text-[#444444]">Meses</p>
                 <select
-                  onChange$={(e) => {
+                  onChange$={(e: any) => {
                     console.log(e.target.value);
                     state.currentOption = e.target.value;
                   }}

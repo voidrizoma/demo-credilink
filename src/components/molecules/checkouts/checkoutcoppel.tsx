@@ -131,7 +131,7 @@ export default component$((props: IProps) => {
             </div>
             <button class="text-[#003B7A] text-sm flex items-center">
               Descubre como ahorrar intereses
-              <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 9l-7 7-7-7" />
               </svg>
             </button>
@@ -156,7 +156,7 @@ export default component$((props: IProps) => {
         </div>
 
         <div class="flex items-start gap-3 text-gray-500">
-          <svg class="w-5 h-5 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg class="w-5 h-5 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10" />
             <path d="M12 16v-4" />
             <path d="M12 8h.01" />

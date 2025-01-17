@@ -20,7 +20,7 @@ export default component$((props: IProps) => {
                         fill="none"
                         class="text-blue-600"
                         stroke="currentColor"
-                        strokeWidth="2"
+                        stroke-width="2"
                     >
                         <polyline points="15 18 9 12 15 6" />
                     </svg>
@@ -80,7 +80,7 @@ export default component$((props: IProps) => {
                                             viewBox="0 0 24 24"
                                             fill="none"
                                             stroke="currentColor"
-                                            strokeWidth="2"
+                                            stroke-width="2"
                                             class="text-gray-400"
                                         >
                                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
