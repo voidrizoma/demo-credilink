@@ -8,7 +8,7 @@ import Header from "../template/header";
 import Footer from "../template/footer";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
-import logoFwhite from "../../assets/loan/logo_flux_white.png"
+// import logoFwhite from "../../assets/loan/logo_flux_white.png"
 // import Logo from "../atoms/logo";
 
 export interface IProps {
@@ -44,7 +44,7 @@ export default component$((props: IProps) => {
               {found == null && <Sorry />}
               {found !== null && (
                 <div class="flex flex-col h-full w-full text-center text-white">
-                  <Header imgSrc={logoFwhite} />
+                  {/* <Header imgSrc={logoFwhite} /> */}
                   <div class='flex flex-col gap-4 h-full items-center'>
                     <div class='h-[30px]'></div>
                     <Text
@@ -85,8 +85,8 @@ export default component$((props: IProps) => {
                       weight={modelStylesData.textWeight.normal}
                     />
                   </div>
-                  <Footer isSlug={false} />
-                </div>
+                  <Footer isSlug={false} textBoxState={null} issuerNames={[""]} />
+                  </div>
               )}
             </>
           );

@@ -1,12 +1,49 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
 
 interface IProps {
   isSlug: boolean;
+  textBoxState: any;
+  issuerNames: string[];
 }
 
 export default component$((props: IProps) => {
+  const footerStore = useStore({
+    padding: "",
+    wWidth: 0,
+    wHeight: 0,
+    footerHeight: 0,
+    footerWidth: 0,
+    isDesktop: false
+  });
+
+  useVisibleTask$(() => {
+    if (window) {
+      footerStore.isDesktop = ["Win32"].includes(window.navigator.platform);
+    }
+    const issuersEl = document.getElementById("flux-issuers");
+    if (issuersEl && issuersEl.style.pointerEvents === 'none') {
+      issuersEl.style.pointerEvents = 'auto';
+    }
+    const wWidth = window.innerWidth;
+    const wHeight = window.innerHeight;
+    const divWidth = document
+      .getElementById("flux-footer")
+      ?.getBoundingClientRect().width;
+    const divHeight = document
+      .getElementById("flux-footer")
+      ?.getBoundingClientRect().height;
+    if (wWidth > 0 && wHeight > 0 && divWidth !== undefined && divWidth > 0 && divHeight !== undefined && divHeight > 0) {
+      const pad = `${((wWidth - divWidth) / 2 + 10).toFixed(0)}px`;
+      footerStore.padding = pad;
+      footerStore.wWidth = wWidth;
+      footerStore.wHeight = wHeight;
+      footerStore.footerHeight = divHeight;
+      footerStore.footerWidth = divWidth;
+    }
+  }, { strategy: "document-ready" });
+
   return (
     <div
       class={`flex h-full text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height}`}
@@ -27,6 +64,16 @@ export default component$((props: IProps) => {
             </a>
           </div>
         )}
+
+        {/* {props.isSlug && (
+          <div
+            id="flux-footer-text-scroll"
+            class={`mx-2 my-0 h-[100%] w-[100%] py-0 ${modelStylesData.textSize.tiny} font-[500] text-white`}
+            >
+              Flux QR.
+            </a>
+          </div>
+        )} */}
 
         {props.isSlug && (
           <div

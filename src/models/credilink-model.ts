@@ -7,6 +7,7 @@ export interface Credilink {
     commerceName: string;
     commerce: string;
     issuer: string;
+    issuers: Issuer[];
     colorPrimary: string;
     colorSecondary: string;
     sender: string;
@@ -18,7 +19,6 @@ export interface Credilink {
     bg: string;
     min: number;
     max: number;
-    issuers: Issuer[];
   }
 
   export const initialCredilink = {
@@ -28,6 +28,7 @@ export interface Credilink {
     commerceName: "",
     commerce: "",
     issuer: "kueski",
+    issuers: [],
     colorPrimary: "",
     colorSecondary: "",
     sender: "",

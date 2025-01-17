@@ -1,4 +1,4 @@
-import { $, component$, useStore, useWatch$ } from "@builder.io/qwik";
+import { $, component$, useStore } from "@builder.io/qwik";
 import Amount from "../atoms/amount";
 import { Text } from "../atoms/text";
 import { Credilink } from "~/models/credilink-model";
@@ -24,22 +24,22 @@ export default component$((props: IProps) => {
   const store = useStore<StoreData>(initialStoreData);
   const validationStore = useStore<Validation>(initValidation);
 
-  useWatch$(({ track }) => {
-    const formState = track(() => store);
-    if (
-      formState.amount?.length > 0 &&
-      !isValidAmount(props.credilink.min, props.credilink.max, formState.amount)
-    ) {
-      validationStore.validAmount = false;
-    } else {
-      validationStore.validAmount = true;
-    }
-    if (formState.phone?.length > 0 && !isValidPhone(formState.phone)) {
-      validationStore.validPhone = false;
-    } else {
-      validationStore.validPhone = true;
-    }
-  });
+  // useWatch$(({ track }) => {
+  //   const formState = track(() => store);
+  //   if (
+  //     formState.amount?.length > 0 &&
+  //     !isValidAmount(props.credilink.min, props.credilink.max, formState.amount)
+  //   ) {
+  //     validationStore.validAmount = false;
+  //   } else {
+  //     validationStore.validAmount = true;
+  //   }
+  //   if (formState.phone?.length > 0 && !isValidPhone(formState.phone)) {
+  //     validationStore.validPhone = false;
+  //   } else {
+  //     validationStore.validPhone = true;
+  //   }
+  // });
 
   const submitData = $(async () => {
     console.log("SUBMIT OK");
@@ -95,7 +95,7 @@ export default component$((props: IProps) => {
             </div>
           </div>
         </div>
-        {props.credilink.issuers.length && (
+        {props.credilink && props.credilink.issuers.length > 0 && (
             <Issuers
               issuers={props.credilink.issuers}
               store={store}

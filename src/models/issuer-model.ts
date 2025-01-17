@@ -23,7 +23,7 @@ export interface Issuer {
   name: string;
   proposal: string;
   img: string;
-  url: string;
+  url?: string;
   color: string;
 }
 
