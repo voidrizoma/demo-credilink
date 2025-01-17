@@ -1,4 +1,4 @@
-import { component$, useStore } from "@builder.io/qwik";
+import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { DocumentHead } from "@builder.io/qwik-city";
 import Loan from "~/components/molecules/loan";
 import { ModalLoading } from "~/components/molecules/modalLoading";
@@ -10,12 +10,12 @@ export default component$(() => {
     isLoading: true,
   });
 
-  // useClientEffect$(() => {
-  //   if (window.location.href.includes("?loan=")) {
-  //     state.loan = window.location.href.split("=")[1];
-  //   }
-  //   state.isLoading = false;
-  // });
+  useVisibleTask$(() => {
+    if (window.location.href.includes("?loan=")) {
+      state.loan = window.location.href.split("=")[1];
+    }
+    state.isLoading = false;
+  });
 
   return (
     <div class="flex w-full h-full place-content-center">
