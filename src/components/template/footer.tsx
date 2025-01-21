@@ -1,4 +1,4 @@
-import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
+import { $, component$, useStore, useTask$, useVisibleTask$ } from "@builder.io/qwik";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
 import ModalHelpBtn from "../molecules/help/modalHelpBtn";
@@ -10,18 +10,10 @@ interface IProps {
 }
 
 export default component$((props: IProps) => {
-  const footerStore = useStore({
-    padding: "",
-    wWidth: 0,
-    wHeight: 0,
-    footerHeight: 0,
-    footerWidth: 0,
-    isDesktop: false
-  });
 
-  useVisibleTask$(() => {
+  const getDims = $(() => {
     if (window) {
-      footerStore.isDesktop = ["Win32"].includes(window.navigator.platform);
+      props.textBoxState.isDesktop = ["Win32"].includes(window.navigator.platform);
     }
     const issuersEl = document.getElementById("flux-issuers");
     if (issuersEl && issuersEl.style.pointerEvents === 'none') {
@@ -35,18 +27,38 @@ export default component$((props: IProps) => {
     const divHeight = document
       .getElementById("flux-footer")
       ?.getBoundingClientRect().height;
-    if (wWidth > 0 && wHeight > 0 && divWidth !== undefined && divWidth > 0 && divHeight !== undefined && divHeight > 0) {
-      const pad = `${((wWidth - divWidth) / 2 + 10).toFixed(0)}px`;
-      footerStore.padding = pad;
-      footerStore.wWidth = wWidth;
-      footerStore.wHeight = wHeight;
-      footerStore.footerHeight = divHeight;
-      footerStore.footerWidth = divWidth;
+    // if (wWidth > 0 && wHeight > 0 && divWidth !== undefined && divWidth > 0 && divHeight !== undefined && divHeight > 0) {
+    //   const pad = `${((wWidth - divWidth) / 2 + 10).toFixed(0)}px`;
+    //   props.textBoxState.padding = pad;
+    //   props.textBoxState.wWidth = wWidth;
+    //   props.textBoxState.wHeight = wHeight;
+    //   props.textBoxState.footerHeight = divHeight;
+    //   props.textBoxState.footerWidth = divWidth;
+    // }
+    if (
+      props.textBoxState.wWidth !== wWidth ||
+      props.textBoxState.wHeight !== wHeight ||
+      props.textBoxState.footerWidth !== divWidth ||
+      props.textBoxState.footerHeight !== divHeight
+    ) {
+      if (divWidth) {
+        const pad = `${((wWidth - divWidth) / 2 + 10).toFixed(0)}px`;
+        props.textBoxState.padding = pad;
+        props.textBoxState.wWidth = wWidth;
+        props.textBoxState.wHeight = wHeight;
+        props.textBoxState.footerHeight = divHeight;
+        props.textBoxState.footerWidth = divWidth;
+      }
     }
+  })
+
+  useVisibleTask$(() => {
+    getDims()
   }, { strategy: "document-ready" });
 
   return (
     <div
+      id="flux-footer"
       class={`flex h-full text-white ${modelStylesData.labelSize.width} ${modelStylesData.labelSize.height}`}
       style={{ borderTop: "1px solid" }}
     >
@@ -111,14 +123,9 @@ export default component$((props: IProps) => {
               />
               <ModalHelpBtn
                 textBoxState={props.textBoxState}
-                padding={footerStore.padding}
-                wWidth={footerStore.wWidth}
-                wHeight={footerStore.wHeight}
-                footerHeight={footerStore.footerHeight}
-                footerWidth={footerStore.footerWidth}
                 sizePercentage={0.8}
-                isDesktop={footerStore.isDesktop}
                 issuerNames={props.issuerNames}
+                getDims={getDims}
               />
             </div>
           </div>

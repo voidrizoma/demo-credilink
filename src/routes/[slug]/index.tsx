@@ -43,8 +43,14 @@ export default component$(() => {
   const checkoutStore: CheckoutModel = useStore(initialCheckout);
 
   const textBoxState = useStore({
-    isOpen: true,
+    isOpen: false,
     hasLoan: false,
+    padding: "",
+    wWidth: 0,
+    wHeight: 0,
+    footerHeight: 0,
+    footerWidth: 0,
+    isDesktop: false
   });
 
   return (
@@ -52,7 +58,8 @@ export default component$(() => {
       onClick$={(e) => {
         const target = e.target as HTMLElement;
         console.log("target.id ", target.id)
-        if (target.id?.length && target.id.includes("help-") && textBoxState.isOpen) {
+        console.log(target.id.includes("help-"))
+        if (!target.id.includes("help-") && textBoxState.isOpen) {
           textBoxState.isOpen = false;
         }
       }}

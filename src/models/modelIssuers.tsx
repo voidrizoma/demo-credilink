@@ -101,7 +101,7 @@ export const issuersHelpList: IssuerHelp[] = [
     url: "https://youtube.com/embed/2hwbvaiAQOA?feature=shared",
     show: false,
     img: kueskiHelp,
-    name: "kueskipay"
+    name: "kueski"
   },
   {
     url: "https://youtube.com/embed/RKOIdBL4Y1A?feature=shared",
@@ -113,13 +113,13 @@ export const issuersHelpList: IssuerHelp[] = [
     url: "https://youtube.com/embed/u6ObUs7u9qg?feature=shared",
     show: false,
     img: mpHelp,
-    name: "mercadocredito"
+    name: "mp"
   },
   {
     url: "https://youtube.com/embed/tEL3MemnAxI?feature=shared",
     show: false,
     img: coppelHelp,
-    name: "coppelpay"
+    name: "coppel"
   },
   {
     url: "",
