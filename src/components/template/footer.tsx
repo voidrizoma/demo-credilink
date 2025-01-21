@@ -1,4 +1,4 @@
-import { $, component$, useStore, useTask$, useVisibleTask$ } from "@builder.io/qwik";
+import { $, component$, useVisibleTask$ } from "@builder.io/qwik";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
 import ModalHelpBtn from "../molecules/help/modalHelpBtn";
