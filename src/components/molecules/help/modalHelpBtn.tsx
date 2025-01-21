@@ -1,4 +1,4 @@
-import { $, component$, useStore, useTask$, useVisibleTask$ } from "@builder.io/qwik";
+import { $, component$, useStore } from "@builder.io/qwik";
 import helpIcon from "../../../assets/help/helpIcon.png";
 import close from "../../../assets/help/close.png";
 import { modelStylesData } from "~/models/modelStyles";
