@@ -43,7 +43,7 @@ export default component$(() => {
   const checkoutStore: CheckoutModel = useStore(initialCheckout);
 
   const textBoxState = useStore({
-    isOpen: false,
+    isOpen: true,
     hasLoan: false,
   });
 

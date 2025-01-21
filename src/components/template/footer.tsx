@@ -1,6 +1,7 @@
 import { component$, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import { Text } from "../atoms/text";
 import { modelStylesData } from "~/models/modelStyles";
+import ModalHelpBtn from "../molecules/help/modalHelpBtn";
 
 interface IProps {
   isSlug: boolean;
@@ -107,6 +108,17 @@ export default component$((props: IProps) => {
                 url={"https://www.fluxqr.com/tyc"}
                 weight={modelStylesData.textWeight.normal}
                 size={modelStylesData.textSize.tiny}
+              />
+              <ModalHelpBtn
+                textBoxState={props.textBoxState}
+                padding={footerStore.padding}
+                wWidth={footerStore.wWidth}
+                wHeight={footerStore.wHeight}
+                footerHeight={footerStore.footerHeight}
+                footerWidth={footerStore.footerWidth}
+                sizePercentage={0.8}
+                isDesktop={footerStore.isDesktop}
+                issuerNames={props.issuerNames}
               />
             </div>
           </div>
