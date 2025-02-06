@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import Logo from "~/components/atoms/logo";
+import logoflux from "../../assets/flux_blanco.png"
 
 export default component$(() => {
 
@@ -15,9 +16,7 @@ export default component$(() => {
         <p class="text-2xl text-center">¡Lo sentimos!</p>
         <div class=" hover:scale-110">
           <Logo
-            url={
-              "https://firebasestorage.googleapis.com/v0/b/regalinks-7429a.appspot.com/o/logo_flux_blanco.png?alt=media&token=ccc61afe-ad8b-483c-8443-1aa92b491387"
-            }
+            url={logoflux}
             redirect={"https://www.fluxqr.com/"}
           />
         </div>

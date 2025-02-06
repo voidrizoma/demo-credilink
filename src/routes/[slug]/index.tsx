@@ -3,6 +3,7 @@ import {
   DocumentHead,
   routeLoader$,
 } from "@builder.io/qwik-city";
+import { createDiffieHellman } from "crypto";
 import Checkoutaplazo from "~/components/molecules/checkouts/checkoutaplazo";
 import Checkoutcoppel from "~/components/molecules/checkouts/checkoutcoppel";
 import Checkoutkueski from "~/components/molecules/checkouts/checkoutkueski";
@@ -21,6 +22,7 @@ import { CheckoutModel, initialCheckout } from "~/models/checkout-model";
 import { initialCredilink, type Credilink } from "~/models/credilink-model";
 import { envVars } from "~/models/global-vars";
 import { modelStylesData } from "~/models/modelStyles";
+import logoflux from "../../assets/flux_blanco.png"
 
 export const useGetSlugData = routeLoader$(async ({ params }) => {
   let credilink = initialCredilink;
@@ -34,6 +36,7 @@ export const useGetSlugData = routeLoader$(async ({ params }) => {
       ...credilink,
       ...data
     }
+    credilink.logo = logoflux
     return credilink;
   }
 });

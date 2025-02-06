@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import LinkText from "../atoms/linkText";
+import logoflux from "../../assets/flux_blanco.png"
 
 export interface IProps {
   bgColor: string;
@@ -14,7 +15,7 @@ export default component$((props: IProps) => {
     >
       <img
         class="h-[30px] md:h-[40px]"
-        src="https://firebasestorage.googleapis.com/v0/b/regalinks-7429a.appspot.com/o/logo_flux_blanco.png?alt=media&token=ccc61afe-ad8b-483c-8443-1aa92b491387"
+        src={logoflux}
         alt="logo"
       />
       {props.logoCommerce ? (
