@@ -63,7 +63,7 @@ export default component$(() => {
 
   return (
     <div
-      class="flex place-content-center h-full bg-white"
+      class="flex place-content-center bg-white"
       onClick$={(e) => {
         const t = (e.target as HTMLElement).id;
         if (!t.includes("help-") && textBoxState.isOpen) {
@@ -75,10 +75,10 @@ export default component$(() => {
       {checkoutStore.isLoading && <ModalLoading />}
 
       {!checkoutStore.isCheckout && !checkoutStore.isLogin && cl && cl.commerce.length > 0 && (
-        <div class="flex flex-col w-screen h-full sc600:w-[600px]">
+        <div class="flex flex-col w-screen  sc600:w-[600px]">
           {cl.logo ? <Header imgSrc={cl.logo} /> : <HeaderNoImage name={cl.commerce} />}
           <div
-            class={`flex flex-col w-screen h-full ${modelStylesData.bgColor.gradient} sc600:w-[600px]`}
+            class={`flex flex-col w-screen ${modelStylesData.bgColor.gradient} sc600:w-[600px]`}
           >
             <CustomForm credilink={cl} checkout={checkoutStore} />
             <Footer
@@ -91,7 +91,7 @@ export default component$(() => {
       )}
 
       {checkoutStore.isLogin && cl && (
-        <div class="flex justify-center items-start bg-white h-full w-screen">
+        <div class="flex justify-center items-start bg-white  w-screen">
           {checkoutStore.issuer.name === "aplazo" && <Loginaplazo checkout={checkoutStore} />}
           {checkoutStore.issuer.name === "mp" && <Loginmp checkout={checkoutStore} />}
           {checkoutStore.issuer.name === "coppel" && <Logincoppel checkout={checkoutStore} />}
@@ -100,7 +100,7 @@ export default component$(() => {
       )}
 
       {checkoutStore.isCheckout && cl && (
-        <div class="flex justify-center items-start bg-white h-full w-screen">
+        <div class="flex justify-center items-start bg-white  w-screen">
           {checkoutStore.issuer.name === "aplazo" && (
             <Checkoutaplazo credilink={cl} checkout={checkoutStore} />
           )}
