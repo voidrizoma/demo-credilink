@@ -65,28 +65,28 @@ export default component$((props: IProps) => {
       });
 
       const data = await res.json();
-        const response = data.data;
+      const response = data.data;
 
-        if (response?.id?.length) {
-          qrData.id = response.id;
-          qrData.qr = response.qr;
-          qrData.amount = response.amount;
-          qrData.title = "Creditea";
-          qrData.expiration = response.expiration;
-          qrData.commerce = response.commerce;
-          qrData.customer = response.customer;
-          qrData.enabled = response.enabled;
-          qrData.isPayable = response.isPayable;
-          showQR.value = true; // Mostrar QR al éxito
-        } else {
-          console.error("No se recibió un ID de préstamo válido de la API.");
-          // Manejar caso de error si la API no devuelve ID
-        }
-      } catch (err) {
-        console.error("Error en checkoutSubmit:", err);
-      } finally {
-        props.checkout.isLoading = false; // 3 segundos de ejemplo, ajustar
+      if (response?.id?.length) {
+        qrData.id = response.id;
+        qrData.qr = response.qr;
+        qrData.amount = response.amount;
+        qrData.title = "Creditea";
+        qrData.expiration = response.expiration;
+        qrData.commerce = response.commerce;
+        qrData.customer = response.customer;
+        qrData.enabled = response.enabled;
+        qrData.isPayable = response.isPayable;
+        showQR.value = true; // Mostrar QR al éxito
+      } else {
+        console.error("No se recibió un ID de préstamo válido de la API.");
+        // Manejar caso de error si la API no devuelve ID
       }
+    } catch (err) {
+      console.error("Error en checkoutSubmit:", err);
+    } finally {
+      props.checkout.isLoading = false; // 3 segundos de ejemplo, ajustar
+    }
   });
 
   return (
@@ -186,9 +186,9 @@ export default component$((props: IProps) => {
         <div class={`flex h-screen w-screen flex-col place-content-center text-white sc600:w-[600px] ${modelStylesData.bgColor.gradient}`}>
           <div class="flex flex-col h-full w-full text-center text-white">
             <Header imgSrc={logoWhite} />
-            <div class='flex flex-col gap-4 h-full items-center'>
+            <div class='flex flex-col gap-1 h-full items-center'>
               <div class='h-[30px]'></div>
-              <img src={CoppelLoan} alt={coppelLogo} width={200} height={60} />
+              <img src={CoppelLoan} alt={coppelLogo} width={150} height={50} />
               <Text
                 text="Presenta el siguiente código QR en caja para pagar tus productos."
                 size={modelStylesData.textSize.subtitle}
@@ -214,7 +214,8 @@ export default component$((props: IProps) => {
               </p>
               <Text
                 text={`Expira el ${formatDate(qrData.expiration)}`}
-                size={modelStylesData.textSize.subtitle}
+                size={modelStylesData.textSize.tiny
+                }
                 weight={modelStylesData.textWeight.normal}
               />
             </div>

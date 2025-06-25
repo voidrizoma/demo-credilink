@@ -52,14 +52,14 @@ export default component$<CrediteaFlowProps>(
     })
 
     // Form states
-    const firstName = useSignal("")
-    const middleName = useSignal("")
-    const lastName = useSignal("")
-    const motherLastName = useSignal("")
-    const email = useSignal("")
+    const firstName = useSignal("Ana")
+    const middleName = useSignal("María")
+    const lastName = useSignal("Torres")
+    const motherLastName = useSignal("García")
+    const email = useSignal("ana_torres@gmail.com")
     const acceptNews = useSignal(false)
-    const curp = useSignal("")
-    const phone = useSignal("")
+    const curp = useSignal("TOGA900315MDFRRN01")
+    const phone = useSignal("5555225522")
     const acceptTerms = useSignal(false)
     const promoCode = useSignal("HOTSALEMS") // Valor por defecto
 
@@ -182,7 +182,7 @@ export default component$<CrediteaFlowProps>(
         </div>
       </div>
     ));
-    
+
 
     // Step Indicator Component
     const StepIndicator = component$(() => (
@@ -190,24 +190,22 @@ export default component$<CrediteaFlowProps>(
         {Array.from({ length: 4 }, (_, i) => (
           <div key={i} class="flex items-center shrink-0">
             <div
-              class={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white text-sm md:text-base font-bold ${
-                i + 1 <= currentStep.value ? "bg-teal-700" : "bg-gray-300"
-              }`}
+              class={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white text-sm md:text-base font-bold ${i + 1 <= currentStep.value ? "bg-teal-700" : "bg-gray-300"
+                }`}
             >
               {i + 1}
             </div>
             {i < 3 && (
               <div
-                class={`w-8 md:w-16 h-1 ${
-                  i + 1 < currentStep.value ? "bg-teal-700" : "bg-gray-300"
-                }`}
+                class={`w-8 md:w-16 h-1 ${i + 1 < currentStep.value ? "bg-teal-700" : "bg-gray-300"
+                  }`}
               />
             )}
           </div>
         ))}
       </div>
     ));
-    
+
 
     // Step 1: Registration
     const Step1Registration = component$(() => {
@@ -520,9 +518,9 @@ export default component$<CrediteaFlowProps>(
     const renderStep = () => {
       switch (currentStep.value) {
         case 1:
-          return <Step1Registration />
-        case 2:
           return <Step2Welcome />
+        case 2:
+          return <Step1Registration />
         case 3:
           return <Step3FinalConfirmation />
         case 4:
@@ -549,15 +547,15 @@ export default component$<CrediteaFlowProps>(
           <div class={`flex h-screen w-screen flex-col place-content-center text-white sc600:w-[600px] ${modelStylesData.bgColor.gradient}`}>
             <div class="flex flex-col h-full w-full text-center text-white">
               <Header imgSrc={logoWhite} />
-              <div class='flex flex-col gap-4 h-full items-center'>
+              <div class='flex flex-col gap-1 h-full items-center'>
                 <div class='h-[30px]'></div>
-                <img src={crediteaLoan} alt={crediteaLoan} width={200} height={60}/>
+                <img src={crediteaLoan} alt={crediteaLoan} width={150} height={50} />
                 <Text
                   text="Presenta el siguiente código QR en caja para pagar tus productos."
                   size={modelStylesData.textSize.subtitle}
                   weight={modelStylesData.textWeight.normal}
                   position="self-center"
-                  padding="px-2 py-3"
+                  padding="px-2 py-1"
                 />
                 <Text
                   text="¡Disfruta tu compra!"
@@ -572,12 +570,12 @@ export default component$<CrediteaFlowProps>(
                   size={modelStylesData.textSize.subtitle}
                   weight={modelStylesData.textWeight.normal}
                 />
-                <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px]'>
+                <p class='text-[12px] sc200:text-[30px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px]'>
                   {"$" + (parseFloat(qrData.amount as any) / 100).toFixed(2)}
                 </p>
                 <Text
                   text={`Expira el ${formatDate(qrData.expiration)}`}
-                  size={modelStylesData.textSize.subtitle}
+                  size={modelStylesData.textSize.tiny}
                   weight={modelStylesData.textWeight.normal}
                 />
               </div>

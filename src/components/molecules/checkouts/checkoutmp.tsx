@@ -47,7 +47,7 @@ export default component$((props: IProps) => {
       day: "numeric",
     });
   };
-const checkoutSubmit = $(async () => {
+  const checkoutSubmit = $(async () => {
     // Asumiendo que 'state' es alguna señal o store que contiene 'isLoading'
     // Si 'state' no está definido aquí, ajusta a 'props.checkout.isLoading' o similar.
     // Por el contexto del componente principal, asumo que es props.checkout.isLoading
@@ -77,111 +77,111 @@ const checkoutSubmit = $(async () => {
       });
 
       const data = await res.json();
-        const response = data.data;
+      const response = data.data;
 
-        if (response?.id?.length) {
-          qrData.id = response.id;
-          qrData.qr = response.qr;
-          qrData.amount = response.amount;
-          qrData.title = "Creditea";
-          qrData.expiration = response.expiration;
-          qrData.commerce = response.commerce;
-          qrData.customer = response.customer;
-          qrData.enabled = response.enabled;
-          qrData.isPayable = response.isPayable;
-          showQR.value = true; // Mostrar QR al éxito
-        } else {
-          console.error("No se recibió un ID de préstamo válido de la API.");
-          // Manejar caso de error si la API no devuelve ID
-        }
-      } catch (err) {
-        console.error("Error en checkoutSubmit:", err);
-      } finally {
-        props.checkout.isLoading = false; // 3 segundos de ejemplo, ajustar
+      if (response?.id?.length) {
+        qrData.id = response.id;
+        qrData.qr = response.qr;
+        qrData.amount = response.amount;
+        qrData.title = "Creditea";
+        qrData.expiration = response.expiration;
+        qrData.commerce = response.commerce;
+        qrData.customer = response.customer;
+        qrData.enabled = response.enabled;
+        qrData.isPayable = response.isPayable;
+        showQR.value = true; // Mostrar QR al éxito
+      } else {
+        console.error("No se recibió un ID de préstamo válido de la API.");
+        // Manejar caso de error si la API no devuelve ID
       }
+    } catch (err) {
+      console.error("Error en checkoutSubmit:", err);
+    } finally {
+      props.checkout.isLoading = false; // 3 segundos de ejemplo, ajustar
+    }
   });
 
   return (
     <>
       {state.isLoading && <ModalLoading />}
       {!showQR.value && (
-              <div class="flex flex-col rounded max-w-[500px]">
-              <img src={mp1} alt="mp-top-image-logo" />
-              <div class="flex flex-row justify-between place-content-center px-8 py-1">
-                <CustomText
-                  text={props.credilink.commerceName}
-                  color="#646464"
-                  size="18px"
-                />
-                <CustomText
-                  text={`$${parseFloat(props.checkout.userData.amount).toFixed(2)}`}
-                  color="#646464"
-                  size="18px"
-                />
-              </div>
-              <div class="bg-[#f0f0f0] px-6 py-3">
-                <div class="flex justify-center">
-                  <img class="max-w-[280px]" src={mp2} alt="mp-middle-image-logo" />
+        <div class="flex flex-col rounded max-w-[500px]">
+          <img src={mp1} alt="mp-top-image-logo" />
+          <div class="flex flex-row justify-between place-content-center px-8 py-1">
+            <CustomText
+              text={props.credilink.commerceName}
+              color="#646464"
+              size="18px"
+            />
+            <CustomText
+              text={`$${parseFloat(props.checkout.userData.amount).toFixed(2)}`}
+              color="#646464"
+              size="18px"
+            />
+          </div>
+          <div class="bg-[#f0f0f0] px-6 py-3">
+            <div class="flex justify-center">
+              <img class="max-w-[280px]" src={mp2} alt="mp-middle-image-logo" />
+            </div>
+            <div class="py-2 bg-white rounded-[5px]">
+              <img src={mp22} alt="mp22-image" />
+              <div class="flex items-center">
+                <div class="flex justify-center items-center mx-2 w-[54px] h-[54px] rounded-[50px] border-[#c2c0c0] border-[1px]">
+                  <p class="text-[18px] text-[#02b1e9] font-bold p-0 m-0">
+                    {!state.currentOption?.length
+                      ? "1x"
+                      : state.currentOption.slice(0, 3)}
+                  </p>
                 </div>
-                <div class="py-2 bg-white rounded-[5px]">
-                  <img src={mp22} alt="mp22-image" />
-                  <div class="flex items-center">
-                    <div class="flex justify-center items-center mx-2 w-[54px] h-[54px] rounded-[50px] border-[#c2c0c0] border-[1px]">
-                      <p class="text-[18px] text-[#02b1e9] font-bold p-0 m-0">
-                        {!state.currentOption?.length
-                          ? "1x"
-                          : state.currentOption.slice(0, 3)}
-                      </p>
-                    </div>
-                    <div class="flex flex-col py-1 px-4">
-                      <p class="text-[18px] text-[#444444]">Meses</p>
-                      <select
-                        onChange$={(e: any) => {
-                          console.log(e.target.value);
-                          state.currentOption = e.target.value;
-                        }}
-                        class="mb-2 px-2 max-w-[400px] min-h-[60px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]"
-                      >
-                        {fees.map((e, idx) => (
-                          <option key={e.cuotes + idx}>{`${e.cuotes}x $ ${(
-                            (e.factor * parseFloat(props.checkout.userData.amount)) /
-                            e.cuotes
-                          ).toFixed(2)} ($ ${(
-                            e.factor * parseFloat(props.checkout.userData.amount)
-                          ).toFixed(2)})`}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                {/* QUOTES */}
-                <div class="flex flex-col items-center text-[20px] font-semibold pt-3">
-                  <div class="max-w-[350px]">
-                    <img src={mp23} alt="mp23-image-logo" />
-                  </div>
-                  <button
-                    class="text-white rounded-[5px] border-none h-[40px] w-full bg-[#02b1e9]"
-                    preventdefault:click
-                    onClick$={() => {
-                      checkoutSubmit();
+                <div class="flex flex-col py-1 px-4">
+                  <p class="text-[18px] text-[#444444]">Meses</p>
+                  <select
+                    onChange$={(e: any) => {
+                      console.log(e.target.value);
+                      state.currentOption = e.target.value;
                     }}
-                    disabled={state.isLoading}
+                    class="mb-2 px-2 max-w-[400px] min-h-[60px] text-[#646464] border-gray-200 border-[2px] rounded-[5px]"
                   >
-                    Pagar
-                  </button>
-                  <div class="max-w-[120px]">
-                    <img src={mp3} alt="mp3-image" />
-                  </div>
+                    {fees.map((e, idx) => (
+                      <option key={e.cuotes + idx}>{`${e.cuotes}x $ ${(
+                        (e.factor * parseFloat(props.checkout.userData.amount)) /
+                        e.cuotes
+                      ).toFixed(2)} ($ ${(
+                        e.factor * parseFloat(props.checkout.userData.amount)
+                      ).toFixed(2)})`}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
+            {/* QUOTES */}
+            <div class="flex flex-col items-center text-[20px] font-semibold pt-3">
+              <div class="max-w-[350px]">
+                <img src={mp23} alt="mp23-image-logo" />
+              </div>
+              <button
+                class="text-white rounded-[5px] border-none h-[40px] w-full bg-[#02b1e9]"
+                preventdefault:click
+                onClick$={() => {
+                  checkoutSubmit();
+                }}
+                disabled={state.isLoading}
+              >
+                Pagar
+              </button>
+              <div class="max-w-[120px]">
+                <img src={mp3} alt="mp3-image" />
+              </div>
+            </div>
+          </div>
+        </div>
       )}{showQR.value && (
         <div class={`flex h-screen w-screen flex-col place-content-center text-white sc600:w-[600px] ${modelStylesData.bgColor.gradient}`}>
           <div class="flex flex-col h-full w-full text-center text-white">
             <Header imgSrc={logoWhite} />
-            <div class='flex flex-col gap-4 h-full items-center'>
+            <div class='flex flex-col gap-1 h-full items-center'>
               <div class='h-[30px]'></div>
-              <img src={MPLoan} alt={MPLoan} width={200} height={60} />
+              <img src={MPLoan} alt={MPLoan} width={150} height={50} />
               <Text
                 text="Presenta el siguiente código QR en caja para pagar tus productos."
                 size={modelStylesData.textSize.subtitle}

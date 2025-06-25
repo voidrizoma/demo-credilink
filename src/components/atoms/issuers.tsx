@@ -23,13 +23,13 @@ export default component$((props: IProps) => {
   const selected = useStore({ index: -1 });
 
   return (
-    <div class="flex flex-col border-b border-gray-700 pb-1 sc600:w-[600px]">
+    <div class="flex flex-col border-b border-gray-700 sc600:w-[600px]">
       <Text
         text="Selecciona una opción:"
         color="text-white"
         weight="font-bold"
         size={modelStylesData.textSize.subtitle}
-        padding="py-2 sc300:py-4"
+        padding="py-1 sc300:py-2"
       />
       <div class="flex place-content-center">
         <input
@@ -47,7 +47,7 @@ export default component$((props: IProps) => {
 
       <div
         id="flux-issuers"
-        class="grid grid-cols-2 gap-4 justify-items-center"
+        class="grid grid-cols-2 justify-items-center"
         style={{
           gridTemplateRows: `repeat(auto-fill, minmax(120px, 1fr))`,
         }}
@@ -104,8 +104,8 @@ export default component$((props: IProps) => {
               class={`${modelStylesData.issuerBtn.imgHeight} select-none`}
               src={issuerFinder(el.name)?.img}
               alt="issuer-logo-image"
-              height={50}
-              width={200}
+              height={20}
+              width={170}
               draggable={false}
             />
           </button>

@@ -79,7 +79,7 @@ export default component$((props: IProps) => {
       <div class="flex flex-col gap-[1px] text-[8px] h-[100%] text-white">
         <div
           id="flux-white-container"
-          class="flex items-center justify-center pb-3"
+          class="flex items-center justify-center"
         >
           <div
             class={`mx-4 flex flex-col ${modelStylesData.form.gap} ${modelStylesData.form.padding}`}

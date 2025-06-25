@@ -10,7 +10,7 @@ export interface IProps {
 export default component$((props: IProps) => {
   return (
     <p
-      class={`flex place-content-center text-center px-4`}
+      class={`flex place-content-center text-center px-2`}
       style={{ color: props.color ?? "white", fontWeight: props.weight ?? "600", fontSize: props.size ?? "14px"}}
     >
       {props.text}

@@ -53,17 +53,17 @@ interface ModelStyles {
 export const modelStylesData: ModelStyles = {
   textSize: {
     tiny:
-      "text-[5px] sc200:text-[6px] sc250:text-[7px] sc300:text-[8px] sc350:text-[10px] sc400:text-[12px] cs500:text-[15px]",
+      "text-[5px] sc200:text-[6px] sc250:text-[7px] sc300:text-[6px] sc350:text-[10px] sc400:text-[12px] cs500:text-[15px]",
     normal:
-      "text-[6px] sc200:text-[8px] sc250:text-[10px] sc300:text-[12px] sc350:text-[13px] sc400:text-[14px] cs500:text-[16px]",
+      "text-[6px] sc200:text-[8px] sc250:text-[10px] sc300:text-[10px] sc350:text-[13px] sc400:text-[14px] cs500:text-[16px]",
     subtitle:
-      "text-[8px] sc200:text-[10px] sc250:text-[12px] sc300:text-[14px] sc350:text-[15px] sc400:text-[16px] cs500:text-[18px]",
+      "text-[8px] sc200:text-[10px] sc250:text-[12px] sc300:text-[12px] sc350:text-[15px] sc400:text-[16px] cs500:text-[18px]",
     title:
-      "text-[10px] sc200:text-[12px] sc250:text-[14px] sc300:text-[16px] sc350:text-[17px] sc400:text-[18px] cs500:text-[20px]",
+      "text-[10px] sc200:text-[12px] sc250:text-[14px] sc300:text-[14px] sc350:text-[17px] sc400:text-[18px] cs500:text-[20px]",
     biggest:
-      "text-[12px] sc200:text-[14px] sc250:text-[16px] sc300:text-[18px] sc350:text-[20px] sc400:text-[22px] cs500:text-[24px]",
+      "text-[12px] sc200:text-[14px] sc250:text-[16px] sc300:text-[14px] sc350:text-[20px] sc400:text-[22px] cs500:text-[24px]",
     input:
-      "text-[9px] sc200:text-[11px] sc250:text-[13px] sc300:text-[15px] sc350:text-[16px] sc400:text-[17px] cs500:text-[19px]",
+      "text-[9px] sc200:text-[11px] sc250:text-[13px] sc300:text-[14px] sc350:text-[16px] sc400:text-[17px] cs500:text-[19px]",
   },
   textWeight: {
     normal: "font-semibold",
@@ -71,7 +71,7 @@ export const modelStylesData: ModelStyles = {
     title: "font-extrabold",
   },
   input: {
-    height: "h-[30px] sc200:h-[36px] sc300:h-[38px] sc400:h-[40px]",
+    height: "h-[30px] sc200:h-[38px] sc300:h-[38px] sc400:h-[40px]",
     width: "",
     border: "rounded-[15px] border-[#e8eef5] focus:outline-white",
     textColor: "text-[#ffffff] placeholder-[#f4f3f2]",
@@ -79,7 +79,7 @@ export const modelStylesData: ModelStyles = {
   },
   imgSize: {
     commerce:
-      "w-auto py-[5px] sc300:py-[14px] sc400:py-[16px] h-[50px] sc200:h-[60px] sc300:h-[65px] sc350:h-[70px] sc400:h-[80px] sc500:h-[100px]",
+      "w-auto py-[5px] sc300:py-[10px] sc400:py-[16px] h-[50px] sc200:h-[60px] sc300:h-[60px] sc350:h-[70px] sc400:h-[80px] sc500:h-[100px]",
     issuer:
       "w-[60px] sc200:w-[80px] sc300:w-[100px] sc350:w-[120px] sc400:w-[140px] sc500:w-[200px]",
     qr: "w-[70px] sc200:w-[90px] sc300:w-[110px] sc350:w-[160px] sc375:w-[170px] sc400:w-[180px] sc500:w-[240px]",
