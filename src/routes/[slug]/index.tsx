@@ -126,6 +126,6 @@ export const head: DocumentHead = () => ({
   title: "Credilink CCP",
   meta: [
     { name: "robots", content: "noindex" },
-    { name: "description", content: "Credilink ccp estático sin fetch" },
+    { name: "description", content: "Demo Credilink" },
   ],
 });
