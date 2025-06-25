@@ -3,7 +3,7 @@ import aplazo from "../assets/aplazo.png";
 import mp from "../assets/mp.png";
 import coppel from "../assets/coppel.png";
 import kueski from "../assets/kueski.png";
-import baz from "../assets/baz.svg";
+import creditea from '../assets/crediteaButton.png'
 // LOGOS
 import aplazol from "../assets/loan/aplazo_small.png";
 import mpl from "../assets/loan/mercadopago_small.png";
@@ -16,6 +16,7 @@ export enum IssuerEnum {
   coppel = "coppel",
   kueski = "kueski",
   baz = "baz",
+  creditea = "creditea"
 }
 
 export interface Issuer {
@@ -65,11 +66,11 @@ export const issuersList: Issuer[] = [
     url: "https://cdn.fluxqr.net/images/issuers/kueskipay.svg",
     color: "#FFC107",
 },
-{
-    id: "baz-id",
-    name: IssuerEnum.baz,
+  {
+    id: "creditea-id",
+    name: IssuerEnum.creditea,
     proposal: "Tu eliges el plazo para pagar",
-    img: baz,
+    img: creditea,
     url: "https://cdn.fluxqr.net/images/issuers/prestamoazteca.svg",
     color: "#FFC107",
   },
@@ -91,5 +92,9 @@ export const issuerLogosList: IssuerLogo[] = [
   {
     name: IssuerEnum.kueski,
     img: kueskil,
+  },
+  {
+    name: IssuerEnum.creditea,
+    img: creditea,
   },
 ];

@@ -10,6 +10,7 @@ export default component$(() => {
     isLoading: true,
   });
 
+  // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(() => {
     if (window.location.href.includes("?loan=")) {
       state.loan = window.location.href.split("=")[1];

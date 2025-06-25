@@ -34,10 +34,11 @@ export default component$((props: IProps) => {
                     email: props.checkout.userData.email,
                 },
             };
-            await fetch(`${baseUrl}coupons`, {
+            await fetch(`${baseUrl}/giftcards`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json', // Important for JSON requests
+                                Authorization: `Bearer ${envVars.refreshToken}`,
                 },
                 body: JSON.stringify(dataCoupon),
             }).then(async (res) => {

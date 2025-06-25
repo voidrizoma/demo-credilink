@@ -38,10 +38,11 @@ export default component$((props: IProps) => {
                     email: props.checkout.userData.email,
                 },
             };
-            await fetch(`${baseUrl}coupons`, {
+            await fetch(`${baseUrl}/giftcards`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json', // Important for JSON requests
+                    'Content-Type': 'application/json', 
+                    Authorization: `Bearer ${envVars.refreshToken}`,// Important for JSON requests
                 },
                 body: JSON.stringify(dataCoupon),
             }).then(async (res) => {
@@ -146,11 +147,11 @@ export default component$((props: IProps) => {
                 <div class="relative">
                     <div class="absolute left-2 top-0 bottom-0 w-0.5 bg-gray-200"></div>
                     {[
-                        { date: 'Paga hoy', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18)/5).toFixed(2)}`, active: true },
-                        { date: '01 de ene', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18)/5).toFixed(2)}` },
-                        { date: '16 de ene', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18)/5).toFixed(2)}` },
-                        { date: '31 de ene', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18)/5).toFixed(2)}` },
-                        { date: '15 de feb', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18)/5).toFixed(2)}` }
+                        { date: 'Paga hoy', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18) / 5).toFixed(2)}`, active: true },
+                        { date: '01 de ene', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18) / 5).toFixed(2)}` },
+                        { date: '16 de ene', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18) / 5).toFixed(2)}` },
+                        { date: '31 de ene', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18) / 5).toFixed(2)}` },
+                        { date: '15 de feb', amount: `$${((parseFloat(props.checkout.userData.amount) * 1.18) / 5).toFixed(2)}` }
                     ].map((payment, i) => (
                         <div key={i} class="flex items-center mb-4 relative">
                             <div class={`w-5 h-4 rounded-full ${payment.active ? 'bg-cyan-400' : 'bg-white border-2 border-gray-200'} mr-4`}></div>

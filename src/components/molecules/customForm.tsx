@@ -14,13 +14,13 @@ import { CheckoutModel } from "~/models/checkout-model";
 import Phone from "../atoms/phone";
 import { modelStylesData } from "~/models/modelStyles";
 import Issuers from "../atoms/issuers";
+
 export interface IProps {
   credilink: Credilink;
   checkout: CheckoutModel;
 }
 
 export default component$((props: IProps) => {
-  // const api = envVars.apiUrl;
   const store = useStore<StoreData>(initialStoreData);
   const validationStore = useStore<Validation>(initValidation);
 
@@ -34,6 +34,7 @@ export default component$((props: IProps) => {
     } else {
       validationStore.validAmount = true;
     }
+
     if (formState.phone?.length > 0 && !isValidPhone(formState.phone)) {
       validationStore.validPhone = false;
     } else {
@@ -46,9 +47,28 @@ export default component$((props: IProps) => {
 
     store.isLoading = true;
 
+    const selectedIssuer = store.issuer;
+    console.log(selectedIssuer)
+
+    if (selectedIssuer) {
+      console.log("➡️ Seleccionado:", selectedIssuer.name);
+
+      props.checkout.issuer = selectedIssuer;
+      props.checkout.isCheckout = true;
+
+      props.checkout.userData = {
+        phone: store.phone,
+        amount: store.amount,
+        email: store.email || "user@example.com", // fallback por si no se pidió email aún
+      };
+
+      console.log("➡️ Checkout activado", props.checkout);
+    } else {
+      console.warn("⚠️ No se ha seleccionado un issuer");
+    }
+
     setTimeout(() => {
       store.isLoading = false;
-      props.checkout.isLogin = true;
     }, 2000);
   });
 
@@ -95,27 +115,18 @@ export default component$((props: IProps) => {
             </div>
           </div>
         </div>
+
         {props.credilink && props.credilink.issuers.length > 0 && (
-            <Issuers
-              issuers={props.credilink.issuers}
-              store={store}
-              validationStore={validationStore}
-              submitData={submitData}
-              credilink={props.credilink}
-              checkout={props.checkout}
-            />
+          <Issuers
+            issuers={props.credilink.issuers}
+            store={store}
+            validationStore={validationStore}
+            submitData={submitData}
+            credilink={props.credilink}
+            checkout={props.checkout}
+          />
         )}
       </div>
-
-      {/* variable called "type" to change issuer's UI appearance */}
-      {/* <Issuers
-          issuers={props.credilink.issuers}
-          store={store}
-          validationStore={validationStore}
-          submitData={submitData}
-          credilink={props.credilink}
-          checkout={props.checkout}
-        /> */}
     </>
   );
 });

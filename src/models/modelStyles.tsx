@@ -107,9 +107,9 @@ export const modelStylesData: ModelStyles = {
   },
   issuerBtn: {
     boxSize:
-      "w-[90px] sc200:w-[100px] sc300:w-[105px] sc375:w-[110px] sc400:w-[130px] sc500:w-[140px] h-[90px] sc200:h-[100px] sc300:h-[105px] sc375:h-[110px] sc400:h-[130px] sc500:h-[140px]",
+      "w-[90px] sc200:w-[100px] sc300:w-[105px] sc375:w-[110px] sc400:w-[100px] sc500:w-[140px] h-[90px] sc200:h-[100px] sc300:h-[105px] sc375:h-[110px] sc400:h-[130px] sc500:h-[140px]",
     imgHeight:
-      "h-[90px] sc200:h-[100px] sc300:h-[105px] sc375:h-[110px] sc400:h-[130px] sc500:h-[140px]",
+      "h-[90px] sc200:h-[100px] sc300:h-[105px] sc375:h-[110px] sc400:h-[80px] sc500:h-[140px]",
     borderRadius: "sc375:rounded-[15px] rounded-[20px]",
     boxShadow: "shadow-[5px_5px_#0e0d0d]",
   },
