@@ -173,82 +173,41 @@ export default component$<CrediteaFlowProps>(
       </div>
     ))
 
-    // Mobile Header Component
-    const MobileHeader = component$(() => (
-      <div class="bg-gray-800 text-white p-4">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-2 text-sm">
-            <span>9:04</span>
-            <div class="flex gap-1">
-              <div class="w-4 h-2 bg-white rounded-sm"></div>
-              <div class="w-4 h-2 bg-white rounded-sm"></div>
-              <div class="w-4 h-2 bg-white rounded-sm"></div>
-            </div>
-          </div>
-          <div class="flex items-center gap-1 text-sm">
-            <div class="flex gap-1">
-              <div class="w-4 h-2 bg-white rounded-sm"></div>
-              <div class="w-4 h-2 bg-white rounded-sm"></div>
-              <div class="w-4 h-2 bg-white rounded-sm"></div>
-            </div>
-            <span>62%</span>
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            <div class="w-5 h-5 bg-white rounded"></div>
-          </div>
-          <div class="text-center">
-            <div class="font-medium">Creditea</div>
-            <div class="text-xs text-gray-300">commerce.creditea.com</div>
-          </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" />
-            </svg>
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-            </svg>
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="1" />
-              <circle cx="12" cy="5" r="1" />
-              <circle cx="12" cy="19" r="1" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    ))
-
     // Creditea Logo Component
     const CrediteaLogo = component$(() => (
-      <div class="bg-teal-700 text-white p-4 flex items-center">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-white transform rotate-45"></div>
-          <span class="text-xl font-bold">creditea</span>
+      <div class="bg-teal-700 text-white p-4 flex  w-full overflow-hidden">
+        <div class="flex items-center gap-2 max-w-full flex-wrap">
+          <div class="w-5 h-6 bg-white transform rotate-45 shrink-0"></div>
+          <span class="text-lg md:text-xl font-bold truncate">creditea</span>
         </div>
       </div>
-    ))
+    ));
+    
 
     // Step Indicator Component
     const StepIndicator = component$(() => (
-      <div class="flex items-center justify-center gap-4 py-6">
+      <div class="flex items-center justify-center gap-4 py-6 w-full overflow-x-auto">
         {Array.from({ length: 4 }, (_, i) => (
-          <div key={i} class="flex items-center">
+          <div key={i} class="flex items-center shrink-0">
             <div
-              class={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${i + 1 <= currentStep.value ? "bg-teal-700" : "bg-gray-300"
-                }`}
+              class={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white text-sm md:text-base font-bold ${
+                i + 1 <= currentStep.value ? "bg-teal-700" : "bg-gray-300"
+              }`}
             >
               {i + 1}
             </div>
-            {i < 3 && <div class={`w-16 h-1 ${i + 1 < currentStep.value ? "bg-teal-700" : "bg-gray-300"}`} />}
+            {i < 3 && (
+              <div
+                class={`w-8 md:w-16 h-1 ${
+                  i + 1 < currentStep.value ? "bg-teal-700" : "bg-gray-300"
+                }`}
+              />
+            )}
           </div>
         ))}
       </div>
-    ))
+    ));
+    
 
     // Step 1: Registration
     const Step1Registration = component$(() => {
@@ -579,7 +538,6 @@ export default component$<CrediteaFlowProps>(
         {state.isLoading && <ModalLoading />}
         {!showQR.value && (
           <>
-            <MobileHeader />
             <CrediteaLogo />
             <StepIndicator />
             <div class="bg-white min-h-screen rounded-lg p-6 sm:p-8 md:p-10 shadow-inner">
