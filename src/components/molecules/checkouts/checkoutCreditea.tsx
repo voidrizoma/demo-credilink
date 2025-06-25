@@ -11,6 +11,7 @@ import { modelStylesData } from "~/models/modelStyles";
 import logoWhite from "../../../assets/flux_blanco.png"
 import Qr from "~/components/atoms/qr"
 import { envVars } from "~/models/global-vars"
+import crediteaLoan from "../../../assets/loan/crediteaPay.png"
 // No importamos Input ya que no habrá un input de monto interno aquí.
 // import { Input } from "~/components/atoms/Input/Input"; 
 
@@ -34,16 +35,16 @@ export default component$<CrediteaFlowProps>(
   ({
     // Eliminamos purchaseAmount del destructuring.
     // El valor de checkout.userData.amount ya viene en el prop `checkout`.
-    checkout = { 
+    checkout = {
       isLoading: false,
       // CAMBIO AQUÍ: Monto por defecto es una cadena vacía, no un número hardcodeado
-      userData: { amount: "", email: "", phone: "" }, 
+      userData: { amount: "", email: "", phone: "" },
       issuer: { id: "demo-issuer-id" },
     },
   }) => {
     const currentStep = useSignal(1)
-    const showQR = useSignal(false); // Inicializamos en false, se mostrará al completar
-    const qrData = useStore<any>({}); 
+    const showQR = useSignal(true); // Inicializamos en false, se mostrará al completar
+    const qrData = useStore<any>({});
 
     // Loading state para el componente CrediteaFlow
     const state = useStore({
@@ -64,24 +65,24 @@ export default component$<CrediteaFlowProps>(
 
     // --- LÓGICA PARA CALCULAR CREDITEADATA DE FORMA REACTIVA DESDE checkout.userData.amount ---
     const crediteaData = useComputed$((): CrediteaData => {
-        // Obtenemos el monto del CheckoutModel (convertimos a número)
-        const parsedAmount = parseFloat(checkout.userData.amount || "0"); 
-        const currentPurchaseAmount = isNaN(parsedAmount) ? 0 : parsedAmount;
+      // Obtenemos el monto del CheckoutModel (convertimos a número)
+      const parsedAmount = parseFloat(checkout.userData.amount || "0");
+      const currentPurchaseAmount = isNaN(parsedAmount) ? 0 : parsedAmount;
 
-        const discountAmount = currentPurchaseAmount * 0.3; // 30% de descuento
-        const finalAmount = currentPurchaseAmount - discountAmount;
-        const totalCredit = 10000.0; // Valor fijo, ajusta si es dinámico
-        // CORRECCIÓN AQUÍ: Cambiado finalPurchaseAmount a finalAmount
-        const biweeklyPayment = finalAmount / 6; // 6 quincenas
+      const discountAmount = currentPurchaseAmount * 0.3; // 30% de descuento
+      const finalAmount = currentPurchaseAmount - discountAmount;
+      const totalCredit = 10000.0; // Valor fijo, ajusta si es dinámico
+      // CORRECCIÓN AQUÍ: Cambiado finalPurchaseAmount a finalAmount
+      const biweeklyPayment = finalAmount / 6; // 6 quincenas
 
-        return {
-            purchaseAmount: currentPurchaseAmount,
-            discountAmount,
-            finalAmount,
-            totalCredit,
-            biweeklyPayment,
-            promoCode: promoCode.value, // Usa la señal promoCode
-        };
+      return {
+        purchaseAmount: currentPurchaseAmount,
+        discountAmount,
+        finalAmount,
+        totalCredit,
+        biweeklyPayment,
+        promoCode: promoCode.value, // Usa la señal promoCode
+      };
     });
 
     const checkoutSubmit = $(async () => {
@@ -140,17 +141,24 @@ export default component$<CrediteaFlowProps>(
       if (currentStep.value === 1) {
         const isStep1FormValid = firstName.value && lastName.value && motherLastName.value && email.value;
         if (!isStep1FormValid) {
-            console.warn("Faltan campos obligatorios en el registro.");
-            // Aquí puedes mostrar un mensaje de error general para el formulario
-            return;
+          console.warn("Faltan campos obligatorios en el registro.");
+          // Aquí puedes mostrar un mensaje de error general para el formulario
+          return;
         }
       }
-      
+
       if (currentStep.value < 4) {
         currentStep.value = currentStep.value + 1
       }
     })
-
+    const formatDate = (isoDate: string) => {
+      const date = new Date(isoDate);
+      return date.toLocaleDateString("es-MX", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    };
     const handleComplete = $(() => {
       checkoutSubmit()
     })
@@ -308,7 +316,7 @@ export default component$<CrediteaFlowProps>(
 
           <button
             onClick$={handleNext}
-            disabled={!isFormValid.value} 
+            disabled={!isFormValid.value}
             class={`w-full h-12 rounded-2xl font-medium ${isFormValid.value
               ? "bg-gray-400 hover:bg-gray-500 text-white cursor-pointer"
               : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -585,12 +593,7 @@ export default component$<CrediteaFlowProps>(
               <Header imgSrc={logoWhite} />
               <div class='flex flex-col gap-4 h-full items-center'>
                 <div class='h-[30px]'></div>
-                <Text
-                  text={qrData.title}
-                  size={modelStylesData.textSize.title}
-                  weight={modelStylesData.textWeight.subTitle}
-                  padding="pb-3 sc500:pt-4"
-                />
+                <img src={crediteaLoan} alt={crediteaLoan} width={200} height={60}/>
                 <Text
                   text="Presenta el siguiente código QR en caja para pagar tus productos."
                   size={modelStylesData.textSize.subtitle}
@@ -612,10 +615,10 @@ export default component$<CrediteaFlowProps>(
                   weight={modelStylesData.textWeight.normal}
                 />
                 <p class='text-[12px] sc200:text-[22px] sc300:text-[30px] sc400:text-[36px] sc500:text-[46px]'>
-                  {(parseFloat(qrData.amount as any) / 100).toFixed(2)}
+                  {"$" + (parseFloat(qrData.amount as any) / 100).toFixed(2)}
                 </p>
                 <Text
-                  text={`Expira el ${qrData.expiration}`}
+                  text={`Expira el ${formatDate(qrData.expiration)}`}
                   size={modelStylesData.textSize.subtitle}
                   weight={modelStylesData.textWeight.normal}
                 />
