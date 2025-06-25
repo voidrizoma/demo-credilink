@@ -10,6 +10,7 @@ import { Text } from "~/components/atoms/text"
 import { modelStylesData } from "~/models/modelStyles";
 import logoWhite from "../../../assets/flux_blanco.png"
 import Qr from "~/components/atoms/qr"
+import { envVars } from "~/models/global-vars"
 // No importamos Input ya que no habrá un input de monto interno aquí.
 // import { Input } from "~/components/atoms/Input/Input"; 
 
@@ -87,10 +88,6 @@ export default component$<CrediteaFlowProps>(
       state.isLoading = true;
 
       try {
-        // --- USAR import.meta.env en lugar de envVars ---
-        const baseUrl = import.meta.env.PUBLIC_FLUX_API_URL;
-        const refreshToken = import.meta.env.PUBLIC_FLUX_REFRESH_TOKEN;      
-        
         const dataCoupon = {
           commerce: "fd3cf595-fb08-4770-ba6e-01167c98ff7a", // Asume un ID de comercio fijo para este flujo
           amount: Math.round(crediteaData.value.finalAmount * 100), // Usar el finalAmount calculado
@@ -102,11 +99,11 @@ export default component$<CrediteaFlowProps>(
           },
         };
 
-        const res = await fetch(`${baseUrl}/giftcards`, {
+        const res = await fetch(`${envVars.apiUrlFlux}/giftcards`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${refreshToken}`,
+            Authorization: `Bearer ${envVars.refreshToken}`,
           },
           body: JSON.stringify(dataCoupon),
         });
