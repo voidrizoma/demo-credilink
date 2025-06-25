@@ -19,7 +19,7 @@ export default component$(() => {
   });
 
   return (
-    <div class="flex w-full h-full place-content-center">
+    <div class="flex w-full place-content-center">
       {state?.loan?.length > 0 ? (
         <div>
           <Loan loan={state.loan} />

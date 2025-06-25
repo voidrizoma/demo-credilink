@@ -43,7 +43,7 @@ export default component$<CrediteaFlowProps>(
     },
   }) => {
     const currentStep = useSignal(1)
-    const showQR = useSignal(true); // Inicializamos en false, se mostrará al completar
+    const showQR = useSignal(false); // Inicializamos en false, se mostrará al completar
     const qrData = useStore<any>({});
 
     // Loading state para el componente CrediteaFlow
