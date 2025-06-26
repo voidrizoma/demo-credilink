@@ -51,7 +51,6 @@ export default component$((props: IProps) => {
         color="text-white"
         weight="font-bold"
         size="text-lg sm:text-xl md:text-2xl lg:text-3xl"
-        padding="py-1 sc300:py-2"
       />
       <div class="flex place-content-center">
         <input
@@ -69,7 +68,7 @@ export default component$((props: IProps) => {
 
       <div
         id="flux-issuers"
-        class="grid grid-cols-2 justify-items-center gap-3 sm:gap-4 m-4 md:m-8"
+        class="grid grid-cols-2 justify-items-center gap-3 sm:gap-4 my-1 mx-2 md:m-8"
         style={{
           gridTemplateRows: `repeat(auto-fill, minmax(120px, 1fr))`,
         }}
@@ -152,7 +151,7 @@ export default component$((props: IProps) => {
             </div>
 
             {/* Description Section - Dark Bottom */}
-            <div class="bg-slate-600 p-2 sm:p-3 text-center h-1/2 flex items-center justify-center">
+            <div class="bg-slate-500 p-2 sm:p-3 text-center h-1/2 flex items-center justify-center">
               <p class="text-white text-xs sm:text-sm font-medium leading-tight">
                 {getIssuerDescription(el.name)}
               </p>
