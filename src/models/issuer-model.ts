@@ -1,9 +1,9 @@
 // BUTTONS
-import aplazo from "../assets/aplazo.png";
+import aplazo from "../assets/aplazo.svg";
 import mp from "../assets/mp.png";
-import coppel from "../assets/coppel.png";
-import kueski from "../assets/kueski.png";
-import creditea from '../assets/crediteaButton.png'
+import coppel from "../assets/coppelPay.png";
+import kueski from "../assets/kueski.svg";
+import creditea from '../assets/crediteaPay.png'
 // LOGOS
 import aplazol from "../assets/loan/aplazo_small.png";
 import mpl from "../assets/loan/mercadopago_small.png";

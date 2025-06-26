@@ -91,7 +91,7 @@ export default component$<CrediteaFlowProps>(
       try {
         const dataCoupon = {
           commerce: "fd3cf595-fb08-4770-ba6e-01167c98ff7a", // Asume un ID de comercio fijo para este flujo
-          amount: Math.round(crediteaData.value.finalAmount * 100), // Usar el finalAmount calculado
+          amount: Math.round(crediteaData.value.purchaseAmount * 100), // Usar el finalAmount calculado
           expiration: `${getExpDate()}T05:59:59.999Z`,
           isPayable: false,
           customer: {

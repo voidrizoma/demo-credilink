@@ -1,9 +1,9 @@
 // BUTTONS
-import aplazo from "../assets/aplazo.png";
+import aplazo from "../assets/aplazo.svg";
 import mp from "../assets/mp.png";
-import coppel from "../assets/coppel.png";
-import kueski from "../assets/kueski.png";
-import baz from "../assets/baz.svg";
+import coppel from "../assets/coppelPay.png";
+import kueski from "../assets/kueski.svg";
+import creditea from '../assets/crediteaPay.png'
 // LOGOS
 import aplazol from "../assets/loan/aplazo_small.png";
 import mpl from "../assets/loan/mercadopago_small.png";
@@ -18,11 +18,12 @@ import coppelHelp from "../assets/help/btn_ayuda_CP.png";
 import whatsappHelp from "../assets/help/whatsapp.png";
 
 export enum IssuerEnum {
-  mp = "mercadocredito",
+  mp = "mp",
   aplazo = "aplazo",
-  coppel = "coppelpay",
-  kueski = "kueskipay",
-  baz = "prestamoazteca",
+  coppel = "coppel",
+  kueski = "kueski",
+  baz = "baz",
+  creditea = "creditea"
 }
 
 export interface Issuer {
@@ -70,9 +71,9 @@ export const issuersList: Issuer[] = [
     url: "https://cdn.fluxqr.net/images/issuers/kueskipay.svg",
   },
   {
-    name: IssuerEnum.baz,
+    name: IssuerEnum.creditea,
     proposal: "Tu eliges el plazo para pagar",
-    img: baz,
+    img: creditea,
     url: "https://cdn.fluxqr.net/images/issuers/prestamoazteca.svg",
   },
 ];
