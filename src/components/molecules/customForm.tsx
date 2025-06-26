@@ -76,23 +76,23 @@ export default component$((props: IProps) => {
     <>
       {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
 
-      <div class="flex flex-col gap-[1px] text-[8px] h-[100%] text-white">
-        <div
+      <div class="flex flex-col gap-1 text-sm sm:text-base md:text-lg h-full text-white">
+      <div
           id="flux-white-container"
           class="flex items-center justify-center"
         >
           <div
-            class={`mx-4 flex flex-col ${modelStylesData.form.gap} ${modelStylesData.form.padding}`}
+            class={`mx-4 flex flex-col ${modelStylesData.form.gap} ${modelStylesData.form.padding} sm:mx-6 md:mx-8 w-full`}
           >
             <Text
               text={props.credilink.title}
-              size={modelStylesData.textSize.title}
+              size={`${modelStylesData.textSize.title} text-2xl sm:text-3xl md:text-4xl`}
               weight={modelStylesData.textWeight.title}
               position={`place-content-center text-center`}
             />
             <Text
               text={props.credilink.description}
-              size={modelStylesData.textSize.subtitle}
+              size={`${modelStylesData.textSize.subtitle} text-base sm:text-lg md:text-xl`}
               weight={modelStylesData.textWeight.normal}
               position={`text-center`}
             />
@@ -100,22 +100,21 @@ export default component$((props: IProps) => {
               placeholder="Teléfono de Whatsapp"
               store={store}
               validationStore={validationStore}
-              errorTextStyle="text-[10px] sc300:text-[12px] sc400:text-[13px]"
+              errorTextStyle="text-[10px] sm:text-[12px] md:text-[13px]"
             />
             <div id="flux-scroll-here" class="flex flex-col">
-              <div class="h-[5px]"></div>
+              <div class="h-1 sm:h-2 md:h-3"></div>
               <Amount
                 placeholder="Monto de tu compra"
                 store={store}
                 validationStore={validationStore}
                 min={props.credilink.min}
                 max={props.credilink.max}
-                errorTextStyle="text-[10px] sc300:text-[12px] sc400:text-[13px]"
+                errorTextStyle="text-[10px] sm:text-[12px] md:text-[13px]"
               />
             </div>
           </div>
         </div>
-
         {props.credilink && props.credilink.issuers.length > 0 && (
           <Issuers
             issuers={props.credilink.issuers}
@@ -127,6 +126,7 @@ export default component$((props: IProps) => {
           />
         )}
       </div>
+
     </>
   );
 });

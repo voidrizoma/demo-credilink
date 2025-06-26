@@ -28,7 +28,7 @@ export default component$((props: IProps) => {
         text="Selecciona una opción:"
         color="text-white"
         weight="font-bold"
-        size={modelStylesData.textSize.subtitle}
+        size="text-lg sm:text-xl md:text-2xl lg:text-3xl"
         padding="py-1 sc300:py-2"
       />
       <div class="flex place-content-center">
@@ -47,7 +47,7 @@ export default component$((props: IProps) => {
 
       <div
         id="flux-issuers"
-        class="grid grid-cols-2 justify-items-center"
+        class="grid grid-cols-2 justify-items-center m-4 md:m-8"
         style={{
           gridTemplateRows: `repeat(auto-fill, minmax(120px, 1fr))`,
         }}
@@ -65,7 +65,7 @@ export default component$((props: IProps) => {
             style={{
               gridColumn:
                 props.issuers.length % 2 === 1 && // si cantidad impar
-                elIndex === props.issuers.length - 1
+                  elIndex === props.issuers.length - 1
                   ? "1 / span 2" // último botón ocupa 2 columnas (centrado)
                   : "auto",
             }}
@@ -79,7 +79,7 @@ export default component$((props: IProps) => {
                 );
                 if (props.validationStore.validAmount && props.validationStore.validPhone) {
                   selected.index = elIndex;
-            
+
                   props.store.issuer = el; // ✅ <--- ESTA LÍNEA ES CLAVE
                   props.checkout.issuer = el;
                   props.checkout.userData = {
@@ -87,7 +87,7 @@ export default component$((props: IProps) => {
                     amount: props.store.amount,
                     phone: props.store.phone,
                   };
-            
+
                   props.submitData();
                 }
               } else {
@@ -96,16 +96,14 @@ export default component$((props: IProps) => {
                 props.validationStore.validPhone = false;
               }
             }}
-            
+
           >
             <img
               id={`issuer-btn-img-${issuerFinder(el.name)?.name}`}
               key={`issuer-btn-img-${issuerFinder(el.name)?.name}`}
-              class={`${modelStylesData.issuerBtn.imgHeight} select-none`}
+              class={`${modelStylesData.issuerBtn.imgHeight} select-none w-full h-auto`}
               src={issuerFinder(el.name)?.img}
               alt="issuer-logo-image"
-              height={20}
-              width={170}
               draggable={false}
             />
           </button>

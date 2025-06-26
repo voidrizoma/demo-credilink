@@ -207,7 +207,8 @@ export default component$((props: IProps) => {
         <div class={`flex h-screen w-screen flex-col place-content-center text-white sc600:w-[600px] ${modelStylesData.bgColor.gradient}`}>
           <div class="flex flex-col h-full w-full text-center text-white">
             <Header imgSrc={logoWhite} />
-            <div class='flex flex-col gap-1 h-full items-center'>
+            <div class='flex flex-col gap-1 md:gap-4 h-full items-center'>
+
               <div class='h-[20px]'></div>
               <img src={kueskiLogo} alt={kueskiLogo} width={150} height={50} />
               <Text
