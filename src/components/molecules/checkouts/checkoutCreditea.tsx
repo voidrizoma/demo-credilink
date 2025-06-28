@@ -1,5 +1,4 @@
-import { component$, useSignal, useStore, $, useComputed$ } from "@builder.io/qwik"
-import { getExpDate } from "~/helpers/dates"
+import { component$, useSignal, useStore, $, useComputed$, useTask$ } from "@builder.io/qwik"
 // Eliminamos la importación del Modal externo
 // import Modal from '~/components/molecules/Modal/Modal'; 
 import { CheckoutModel } from "~/models/checkout-model"
@@ -62,6 +61,7 @@ export default component$<CrediteaFlowProps>(
     const phone = useSignal("5555225522")
     const acceptTerms = useSignal(false)
     const promoCode = useSignal("HOTSALEMS") // Valor por defecto
+    const formattedExpirationDisplay = useSignal(''); 
 
     // --- LÓGICA PARA CALCULAR CREDITEADATA DE FORMA REACTIVA DESDE checkout.userData.amount ---
     const crediteaData = useComputed$((): CrediteaData => {
@@ -85,14 +85,40 @@ export default component$<CrediteaFlowProps>(
       };
     });
 
+    const formatDate = $((isoDate: string) => {
+      const date = new Date(isoDate);
+      return date.toLocaleDateString("es-MX", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    })
+
+
+    useTask$(async ({ track }) => {
+      track(() => qrData.expiration); // Rastrea la propiedad expiration del store
+  
+      if (qrData.expiration) {
+        // Llama a la QRL formatDate y await su resultado
+        formattedExpirationDisplay.value = await formatDate(qrData.expiration);
+      } else {
+        formattedExpirationDisplay.value = ''; // Limpiar si no hay fecha
+      }
+    });
+
+    
+
     const checkoutSubmit = $(async () => {
       state.isLoading = true;
 
       try {
+        const expirationDate = new Date();
+        expirationDate.setHours(23, 59, 59, 999); // Ajusta a fin del día
+        const expirationApiFormat = expirationDate.toISOString(); 
         const dataCoupon = {
           commerce: "fd3cf595-fb08-4770-ba6e-01167c98ff7a", // Asume un ID de comercio fijo para este flujo
           amount: Math.round(crediteaData.value.purchaseAmount * 100), // Usar el finalAmount calculado
-          expiration: `${getExpDate()}T05:59:59.999Z`,
+          expiration: expirationApiFormat,
           isPayable: false,
           customer: {
             name: `${firstName.value} ${lastName.value}`, // Usar los nombres ingresados
@@ -123,6 +149,32 @@ export default component$<CrediteaFlowProps>(
           qrData.enabled = response.enabled;
           qrData.isPayable = response.isPayable;
           showQR.value = true; // Mostrar QR al éxito
+          try {
+            const formattedExpirationForZapier = await formatDate(qrData.expiration); 
+            const zapierData = {
+              tel: `+52${checkout.userData.phone}`,
+              id: qrData.id,
+              imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
+                data.qr
+              )}`,
+              amount: `$${parseFloat(qrData.amount) / 100}`,
+              commerce: "Flux QR",
+              expiration: formattedExpirationForZapier,
+              qr: qrData.qr,
+            };
+            console.log("zapierdata", zapierData);
+            const zapierRes = await fetch(envVars.urlZapier, {
+              method: "POST",
+              body: JSON.stringify(zapierData),
+            });
+            const result = await zapierRes.json();
+            console.log("success", result);
+            if (zapierRes?.status === 200) {
+              console.log(data);
+            }
+          } catch (e) {
+            console.log("error", e);
+          }
         } else {
           console.error("No se recibió un ID de préstamo válido de la API.");
           // Manejar caso de error si la API no devuelve ID
@@ -151,14 +203,7 @@ export default component$<CrediteaFlowProps>(
         currentStep.value = currentStep.value + 1
       }
     })
-    const formatDate = (isoDate: string) => {
-      const date = new Date(isoDate);
-      return date.toLocaleDateString("es-MX", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    };
+
     const handleComplete = $(() => {
       checkoutSubmit()
     })
@@ -374,9 +419,9 @@ export default component$<CrediteaFlowProps>(
     // Step 3: Final Confirmation
     const Step3FinalConfirmation = component$(() => (
       <div class="p-6 max-w-md mx-auto">
-        <h1 class="text-2xl font-bold mb-8">¡Gracias por elegir Creditea como tu medio de pago!</h1>
+        <h1 class="text-2xl font-bold mb-8 mx-4">¡Gracias por elegir Creditea como tu medio de pago!</h1>
 
-        <div class="bg-blue-50 rounded-2xl p-6 mb-8">
+        <div class="bg-blue-50 rounded-2xl p-4 mb-8 mx-4">
           <div class="text-center mb-6">
             <div class="font-bold text-lg mb-2">Sin intereses si pagas en las primeras</div>
             <div class="font-bold text-xl">4 quincenas</div>
@@ -434,7 +479,7 @@ export default component$<CrediteaFlowProps>(
           </button>
         </div>
 
-        <p class="text-xs text-gray-600 text-center">
+        <p class="text-xs text-gray-600 text-center mx-8">
           La oferta final será otorgada en función de tu perfil crediticio y nuestras políticas internas. Comprar con
           Creditea te da la oportunidad de obtener una Línea de Crédito de hasta $70,000 pesos.
         </p>
@@ -575,7 +620,7 @@ export default component$<CrediteaFlowProps>(
                   {"$" + (parseFloat(qrData.amount as any) / 100).toFixed(2)}
                 </p>
                 <Text
-                  text={`Expira el ${formatDate(qrData.expiration)}`}
+                  text={`Expira el ${formattedExpirationDisplay.value}`}
                   size={modelStylesData.textSize.tiny}
                   weight={modelStylesData.textWeight.normal}
                 />
