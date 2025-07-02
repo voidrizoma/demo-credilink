@@ -145,7 +145,7 @@ export default component$((props: IProps) => {
                 src={issuerFinder(el.name)?.img || "/placeholder.svg"}
                 alt="issuer-logo-image"
                 draggable={false}
-                height={10}
+                height={20}
                 width={100}
               />
             </div>

@@ -155,7 +155,7 @@ export default component$<CrediteaFlowProps>(
               tel: `+52${checkout.userData.phone}`,
               id: qrData.id,
               imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
-                data.qr
+                qrData.qr
               )}`,
               amount: `$${parseFloat(qrData.amount) / 100}`,
               commerce: "Flux QR",
