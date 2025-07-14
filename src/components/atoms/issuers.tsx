@@ -68,7 +68,7 @@ export default component$((props: IProps) => {
 
       <div
         id="flux-issuers"
-        class="grid grid-cols-2 justify-items-center gap-3 sm:gap-4 my-8 mx-2 md:m-8"
+        class="grid grid-cols-2 justify-items-center gap-3 sm:gap-4 my-2 mx-2 md:m-8"
         style={{
           gridTemplateRows: `repeat(auto-fill, minmax(120px, 1fr))`,
         }}
