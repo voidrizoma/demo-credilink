@@ -45,7 +45,7 @@ export default component$((props: IProps) => {
   const selected = useStore({ index: -1 });
 
   return (
-    <div class="flex flex-col border-b border-gray-700 sc600:w-[600px]">
+    <div class="flex flex-col border-b border-gray-700 sc600:w-[600px] my-8">
       <Text
         text="Selecciona una opción:"
         color="text-white"
@@ -68,7 +68,7 @@ export default component$((props: IProps) => {
 
       <div
         id="flux-issuers"
-        class="grid grid-cols-2 justify-items-center gap-3 sm:gap-4 my-1 mx-2 md:m-8"
+        class="grid grid-cols-2 justify-items-center gap-3 sm:gap-4 my-8 mx-2 md:m-8"
         style={{
           gridTemplateRows: `repeat(auto-fill, minmax(120px, 1fr))`,
         }}
