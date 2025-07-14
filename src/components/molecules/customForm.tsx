@@ -76,7 +76,7 @@ export default component$((props: IProps) => {
     <>
       {(store.isLoading || store.error?.length > 0) && <Modal store={store} />}
 
-      <div class="flex flex-col gap-1 text-sm sm:text-base md:text-lg h-full text-white">
+      <div class="flex flex-col gap-1 text-sm sm:text-base md:text-lg text-white" style="height: calc(100vh - 139px);">
       <div
           id="flux-white-container"
           class="flex items-center justify-center"

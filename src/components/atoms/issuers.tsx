@@ -45,7 +45,7 @@ export default component$((props: IProps) => {
   const selected = useStore({ index: -1 });
 
   return (
-    <div class="flex flex-col border-b border-gray-700 sc600:w-[600px] my-8">
+    <div class="flex flex-col  sc600:w-[600px] my-8">
       <Text
         text="Selecciona una opción:"
         color="text-white"
