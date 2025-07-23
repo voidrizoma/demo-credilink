@@ -106,38 +106,40 @@ export default component$<CrediteaFlowProps>(
       }
     });
 
-    
-
     const checkoutSubmit = $(async () => {
       state.isLoading = true;
-
+    
       try {
+        // 1️⃣ Obtener token vía backend proxy /api/token
+        const tokenRes = await fetch('/api/token', { method: 'POST' });
+        const tokenJson = await tokenRes.json();
+        const validToken = tokenJson?.data?.accessToken;
+        if (!validToken) throw new Error("No se obtuvo el token desde el refreshToken");
+    
+        // 2️⃣ Construir datos del cupón
         const expirationDate = new Date();
-        expirationDate.setHours(23, 59, 59, 999); // Ajusta a fin del día
-        const expirationApiFormat = expirationDate.toISOString(); 
+        expirationDate.setHours(23, 59, 59, 999);
         const dataCoupon = {
-          commerce: "fd3cf595-fb08-4770-ba6e-01167c98ff7a", // Asume un ID de comercio fijo para este flujo
-          amount: Math.round(crediteaData.value.purchaseAmount * 100), // Usar el finalAmount calculado
-          expiration: expirationApiFormat,
+          commerce: "188e2df4-b923-4398-9b81-812866ec08a1",
+          amount: Math.round(crediteaData.value.purchaseAmount * 100),
+          expiration: expirationDate.toISOString(),
           isPayable: false,
           customer: {
-            name: `${firstName.value} ${lastName.value}`, // Usar los nombres ingresados
+            name: `${firstName.value} ${lastName.value}`,
             email: email.value || checkout.userData.email,
           },
         };
-
-        const res = await fetch(`${envVars.apiUrlFlux}/giftcards`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${envVars.refreshToken}`,
-          },
-          body: JSON.stringify(dataCoupon),
+    
+        // 3️⃣ Llamar proxy backend para giftcards, enviando token y datos
+        const res = await fetch('/api/giftcards', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: validToken, dataCoupon }),
         });
-
+    
         const data = await res.json();
         const response = data.data;
-
+    
         if (response?.id?.length) {
           qrData.id = response.id;
           qrData.qr = response.qr;
@@ -148,45 +150,45 @@ export default component$<CrediteaFlowProps>(
           qrData.customer = response.customer;
           qrData.enabled = response.enabled;
           qrData.isPayable = response.isPayable;
-          showQR.value = true; // Mostrar QR al éxito
+          showQR.value = true;
+    
+          // Enviar datos a Zapier
           try {
-            const formattedExpirationForZapier = await formatDate(qrData.expiration); 
+            const formattedExpirationForZapier = await formatDate(qrData.expiration);
             const zapierData = {
               tel: `+52${checkout.userData.phone}`,
               id: qrData.id,
-              imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(
-                qrData.qr
-              )}`,
+              imgUrl: `https://qr.fluxqr.net/?text=${encodeURIComponent(qrData.qr)}`,
               amount: `$${parseFloat(qrData.amount) / 100}`,
               commerce: "Flux QR",
               expiration: formattedExpirationForZapier,
               qr: qrData.qr,
             };
-            console.log("zapierdata", zapierData);
+    
             const zapierRes = await fetch(envVars.urlZapier, {
               method: "POST",
               body: JSON.stringify(zapierData),
             });
-            const result = await zapierRes.json();
-            console.log("success", result);
-            if (zapierRes?.status === 200) {
-              console.log(data);
+    
+            if (zapierRes.ok) {
+              const result = await zapierRes.json();
+              console.log("Datos enviados a Zapier exitosamente:", result);
             }
           } catch (e) {
-            console.log("error", e);
+            console.error("Error al enviar a Zapier:", e);
           }
         } else {
           console.error("No se recibió un ID de préstamo válido de la API.");
-          // Manejar caso de error si la API no devuelve ID
         }
       } catch (err) {
         console.error("Error en checkoutSubmit:", err);
       } finally {
         setTimeout(() => {
           state.isLoading = false;
-        }, 3000); // 3 segundos de ejemplo, ajustar
+        }, 3000);
       }
     });
+    
 
     const handleNext = $(() => {
       // Validar campos de registro antes de avanzar al siguiente paso
